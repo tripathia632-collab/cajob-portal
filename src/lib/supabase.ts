@@ -25,6 +25,41 @@ let inMemoryJobs: Job[] = [...(initialJobs as unknown as Job[])];
 let inMemoryBlogs: Blog[] = [...(initialBlogs as unknown as Blog[])];
 let inMemoryResources: Resource[] = [...(initialResources as unknown as Resource[])];
 
+function mapJobFromDb(row: any): Job {
+  return {
+    id: row.id,
+    title: row.title,
+    employer: row.employer,
+    category: row.category,
+    careerStage: row.career_stage || row.careerStage,
+    city: row.city,
+    workMode: row.work_mode || row.workMode,
+    pay: row.pay,
+    experience: row.experience,
+    description: row.description,
+    applyUrl: row.apply_url || row.applyUrl,
+    postedOn: row.posted_on || row.postedOn,
+    status: row.status,
+    responsibilities: row.responsibilities,
+    requirements: row.requirements,
+    skills: row.skills,
+    aboutCompany: row.about_company,
+  };
+}
+
+function mapBlogFromDb(row: any): Blog {
+  return {
+    slug: row.slug,
+    title: row.title,
+    category: row.category,
+    summary: row.summary,
+    content: row.content,
+    author: row.author,
+    publishedOn: row.published_on || row.publishedOn,
+    status: row.status,
+  };
+}
+
 export async function getJobs(filter?: {
   category?: string;
   careerStage?: string;
@@ -41,7 +76,7 @@ export async function getJobs(filter?: {
         query = query.eq('status', 'Published');
       }
       if (filter?.careerStage) {
-        query = query.ilike('careerStage', `%${filter.careerStage}%`);
+        query = query.ilike('career_stage', `%${filter.careerStage}%`);
       }
       if (filter?.category) {
         query = query.ilike('category', `%${filter.category}%`);
@@ -51,7 +86,7 @@ export async function getJobs(filter?: {
       }
       const { data, error } = await query;
       if (!error && data && data.length > 0) {
-        return data as Job[];
+        return data.map(mapJobFromDb);
       }
     } catch {
       // Fallback on error
@@ -109,7 +144,7 @@ export async function getJobById(id: string): Promise<Job | null> {
         .select('*')
         .eq('id', id)
         .single();
-      if (!error && data) return data as Job;
+      if (!error && data) return mapJobFromDb(data);
     } catch {
       // Fallback
     }
@@ -121,8 +156,26 @@ export async function getJobById(id: string): Promise<Job | null> {
 
 export async function createOrUpdateJob(job: Job): Promise<Job> {
   if (isSupabaseConfigured && supabase) {
-    const { data, error } = await supabase.from('jobs').upsert(job).select().single();
-    if (!error && data) return data as Job;
+    const dbRow = {
+      id: job.id,
+      title: job.title,
+      employer: job.employer,
+      category: job.category,
+      career_stage: job.careerStage,
+      city: job.city,
+      work_mode: job.workMode,
+      pay: job.pay,
+      experience: job.experience,
+      description: job.description,
+      responsibilities: job.responsibilities,
+      requirements: job.requirements,
+      skills: job.skills,
+      apply_url: job.applyUrl,
+      posted_on: job.postedOn,
+      status: job.status,
+    };
+    const { data, error } = await supabase.from('jobs').upsert(dbRow).select().single();
+    if (!error && data) return mapJobFromDb(data);
   }
 
   // Update in memory
@@ -152,8 +205,8 @@ export async function getBlogs(): Promise<Blog[]> {
         .from('blogs')
         .select('*')
         .eq('status', 'Published')
-        .order('publishedOn', { ascending: false });
-      if (!error && data && data.length > 0) return data as Blog[];
+        .order('published_on', { ascending: false });
+      if (!error && data && data.length > 0) return data.map(mapBlogFromDb);
     } catch {
       // Fallback
     }
@@ -170,7 +223,7 @@ export async function getBlogBySlug(slug: string): Promise<Blog | null> {
         .select('*')
         .eq('slug', slug)
         .single();
-      if (!error && data) return data as Blog;
+      if (!error && data) return mapBlogFromDb(data);
     } catch {
       // Fallback
     }

@@ -12,11 +12,25 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.log('❌ Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env');
+  // Try loading from .env.local
+  if (fs.existsSync(path.join(__dirname, '../.env.local'))) {
+    const envContent = fs.readFileSync(path.join(__dirname, '../.env.local'), 'utf-8');
+    envContent.split('\n').forEach((line) => {
+      const [k, ...v] = line.split('=');
+      if (k && v) process.env[k.trim()] = v.join('=').trim();
+    });
+  }
+}
+
+const finalUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const finalKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!finalUrl || !finalKey) {
+  console.log('❌ Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local');
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(finalUrl, finalKey);
 
 async function seed() {
   console.log('🚀 Seeding data to Supabase:', supabaseUrl);
@@ -46,7 +60,17 @@ async function seed() {
   // 2. Blogs
   const blogsData = JSON.parse(fs.readFileSync(path.join(__dirname, '../src/data/initial-blogs.json'), 'utf-8'));
   console.log(`Inserting ${blogsData.length} blogs...`);
-  const { error: blogsErr } = await supabase.from('blogs').upsert(blogsData);
+  const formattedBlogs = blogsData.map((b) => ({
+    slug: b.slug,
+    title: b.title,
+    category: b.category,
+    summary: b.summary,
+    content: b.content,
+    author: b.author,
+    published_on: b.publishedOn,
+    status: b.status,
+  }));
+  const { error: blogsErr } = await supabase.from('blogs').upsert(formattedBlogs);
   if (blogsErr) console.error('Blogs error:', blogsErr);
   else console.log('✅ Blogs seeded successfully.');
 

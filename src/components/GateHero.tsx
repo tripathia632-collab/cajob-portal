@@ -4,13 +4,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Search, MapPin, Briefcase, ArrowUpRight } from 'lucide-react';
+import { Search, MapPin, Briefcase, Clock, ArrowUpRight } from 'lucide-react';
+import { EXPERIENCE_SLABS } from '@/lib/utils';
 
 export function GateHero() {
   const router = useRouter();
   const [keyword, setKeyword] = useState('');
   const [city, setCity] = useState('');
   const [careerStage, setCareerStage] = useState('');
+  const [experience, setExperience] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ export function GateHero() {
     if (keyword) params.set('q', keyword);
     if (city) params.set('city', city);
     if (careerStage) params.set('stage', careerStage);
+    if (experience) params.set('exp', experience);
     router.push(`/jobs?${params.toString()}`);
   };
 
@@ -139,7 +142,7 @@ export function GateHero() {
         {/* Compact Search Card */}
         <div className="mt-8 bg-white rounded-2xl shadow-sm border border-[#DCE5E0] p-4 sm:p-5">
           <form onSubmit={handleSearch} className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-10 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
               {/* Field 1: Role, skill or employer */}
               <div className="lg:col-span-4 relative">
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#52676D] mb-1">
@@ -158,7 +161,7 @@ export function GateHero() {
               </div>
 
               {/* Field 2: Location */}
-              <div className="lg:col-span-3 relative">
+              <div className="lg:col-span-2 relative">
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#52676D] mb-1">
                   Where?
                 </label>
@@ -180,7 +183,7 @@ export function GateHero() {
                   Career Stage
                 </label>
                 <div className="relative">
-                  <Briefcase className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Briefcase className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <select
                     value={careerStage}
                     onChange={(e) => setCareerStage(e.target.value)}
@@ -195,8 +198,29 @@ export function GateHero() {
                 </div>
               </div>
 
+              {/* Field 4: Experience */}
+              <div className="lg:col-span-2 relative">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#52676D] mb-1">
+                  Experience
+                </label>
+                <div className="relative">
+                  <Clock className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <select
+                    value={experience}
+                    onChange={(e) => setExperience(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all appearance-none cursor-pointer"
+                  >
+                    {EXPERIENCE_SLABS.map((slab) => (
+                      <option key={slab.id} value={slab.id}>
+                        {slab.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
               {/* Search Button */}
-              <div className="lg:col-span-1 flex items-end">
+              <div className="lg:col-span-2 flex items-end">
                 <button
                   type="submit"
                   className="w-full py-2 px-4 bg-[#08765D] hover:bg-[#065F4B] text-white font-medium text-sm rounded-xl shadow-xs transition-colors flex items-center justify-center gap-1.5 h-[38px]"

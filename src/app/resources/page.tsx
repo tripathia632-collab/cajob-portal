@@ -49,10 +49,10 @@ export default async function ResourcesPage() {
           {resources.map((res) => (
             <div
               key={res.id}
-              className="bg-white rounded-3xl border border-[#DCE5E0] p-6 shadow-xs flex flex-col justify-between hover:border-[#08765D] transition-colors"
+              className="bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
             >
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 transition-transform duration-300 hover:scale-110">
                   <FileText className="w-6 h-6" />
                 </div>
                 <div className="text-[11px] font-bold uppercase tracking-wider text-[#08765D] mb-1">
@@ -70,7 +70,7 @@ export default async function ResourcesPage() {
                 <a
                   href={res.fileUrl}
                   download
-                  className="w-full py-3 px-4 bg-[#08765D] hover:bg-[#065F4B] text-white font-semibold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
+                  className="w-full py-3 px-4 bg-[#08765D] hover:bg-[#065F4B] text-white font-semibold text-sm rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-xs cursor-pointer btn-press-effect hover:shadow-md hover:scale-[1.02]"
                 >
                   <Download className="w-4 h-4" />
                   Download Free Template

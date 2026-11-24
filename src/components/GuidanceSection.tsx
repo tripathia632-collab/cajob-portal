@@ -73,7 +73,7 @@ export function GuidanceSection() {
           {/* Card 1: Career Guides */}
           <Link
             href="/blog"
-            className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D] p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+            className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -91,14 +91,14 @@ export function GuidanceSection() {
             </div>
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#08765D]">
               Read the guides
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </div>
           </Link>
 
           {/* Card 2: Free Resources */}
           <Link
             href="/resources"
-            className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D] p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+            className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -116,14 +116,14 @@ export function GuidanceSection() {
             </div>
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#08765D]">
               Explore resources
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </div>
           </Link>
 
           {/* Card 3: Courses (Coming Soon) */}
           <Link
             href="/courses"
-            className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D] p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+            className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -141,7 +141,7 @@ export function GuidanceSection() {
             </div>
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#08765D]">
               Join the waitlist
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </div>
           </Link>
         </div>

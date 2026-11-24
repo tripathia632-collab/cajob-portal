@@ -75,10 +75,10 @@ export default function ToolsHubPage() {
               <Link
                 key={t.slug}
                 href={`/tools/${t.slug}`}
-                className="group bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D] p-6 shadow-xs hover:shadow-md transition-all flex flex-col justify-between"
+                className="group bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-6 h-6" />
                   </div>
                   <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#EAF4EF] text-[#08765D]">
@@ -94,7 +94,7 @@ export default function ToolsHubPage() {
 
                 <div className="pt-4 border-t border-[#F0F4F2] flex items-center justify-between text-xs">
                   <span className="font-semibold text-[#08765D]">Launch Tool</span>
-                  <ArrowUpRight className="w-4 h-4 text-[#08765D] group-hover:translate-x-0.5 transition-transform" />
+                  <ArrowUpRight className="w-4 h-4 text-[#08765D] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
               </Link>
             );

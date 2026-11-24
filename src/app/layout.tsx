@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { NavigationProgress } from '@/components/NavigationProgress';
+import { ScrollToTop } from '@/components/ScrollToTop';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,9 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans bg-[#F5F7F6] text-[#102D37]">
+    <html lang="en" className={`${inter.variable} h-full antialiased scroll-smooth`}>
+      <body className="min-h-full flex flex-col font-sans bg-[#F5F7F6] text-[#102D37] selection:bg-[#EAF4EF] selection:text-[#08765D]">
+        <NavigationProgress />
         {children}
+        <ScrollToTop />
       </body>
     </html>
   );

@@ -64,10 +64,10 @@ export function ToolsSection() {
               <Link
                 key={t.title}
                 href={t.href}
-                className="group bg-[#F5F7F6] hover:bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D] p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+                className="group bg-[#F5F7F6] hover:bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 sm:p-7 shadow-xs card-hover-effect flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-6 h-6" />
                   </div>
                   <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-[#EAF4EF] text-[#08765D]">
@@ -83,7 +83,7 @@ export function ToolsSection() {
 
                 <div className="pt-4 border-t border-[#DCE5E0]/60 flex items-center justify-between text-xs font-bold text-[#08765D]">
                   <span>{t.cta}</span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
               </Link>
             );

@@ -55,7 +55,7 @@ export default async function BlogPage() {
           <div className="mb-12">
             <Link
               href={`/blog/${blogs[0].slug}`}
-              className="group block bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D] p-8 sm:p-10 shadow-xs hover:shadow-md transition-all duration-200"
+              className="group block bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-8 sm:p-10 shadow-xs card-hover-effect"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-8 space-y-4">
@@ -98,7 +98,7 @@ export default async function BlogPage() {
             <Link
               key={blog.slug}
               href={`/blog/${blog.slug}`}
-              className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D] p-6 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+              className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">

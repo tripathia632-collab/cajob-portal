@@ -68,7 +68,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
                 </Link>
 
                 {jobsDropdownOpen && (
-                  <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-[#DCE5E0] p-2 py-3 z-50">
+                  <div className="absolute top-full left-0 w-64 bg-white rounded-2xl shadow-xl border border-[#DCE5E0] p-2 py-3 z-50 animate-dropdown backdrop-blur-md">
                     <Link
                       href="/jobs"
                       className="block px-3 py-2 text-sm font-medium text-[#102D37] hover:bg-[#EAF4EF] rounded-lg transition-colors"
@@ -191,7 +191,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
 
             <Link
               href="/for-employers"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-white bg-[#08765D] hover:bg-[#065F4B] rounded-lg shadow-sm transition-all"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-semibold text-white bg-[#08765D] hover:bg-[#065F4B] rounded-xl shadow-xs hover:shadow-md transition-all duration-200 btn-press-effect hover:scale-[1.02]"
             >
               Post a job
               <ArrowUpRight className="w-4 h-4" />

@@ -39,12 +39,12 @@ export function JobCard({ job, isSaved = false, onToggleSave }: JobCardProps) {
   const firstLetter = (job.employer || job.title || 'C').charAt(0).toUpperCase();
 
   return (
-    <div className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/40 p-5 sm:p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between">
+    <div className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-5 sm:p-6 shadow-xs card-hover-effect flex flex-col justify-between">
       <div>
         {/* Top Header: Company Avatar & Bookmark */}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#EAF4EF] text-[#08765D] font-bold text-base flex items-center justify-center border border-[#bcdbc8] flex-shrink-0 group-hover:bg-[#08765D] group-hover:text-white transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-[#EAF4EF] text-[#08765D] font-bold text-base flex items-center justify-center border border-[#bcdbc8] flex-shrink-0 group-hover:bg-[#08765D] group-hover:text-white transition-all duration-300 group-hover:scale-105">
               {firstLetter}
             </div>
             <div>
@@ -140,10 +140,10 @@ export function JobCard({ job, isSaved = false, onToggleSave }: JobCardProps) {
 
           <Link
             href={`/job/${job.id}`}
-            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#08765D] hover:text-white bg-[#EAF4EF] hover:bg-[#08765D] rounded-lg transition-all"
+            className="inline-flex items-center gap-1 px-3.5 py-1.5 text-xs font-semibold text-[#08765D] hover:text-white bg-[#EAF4EF] hover:bg-[#08765D] rounded-xl transition-all duration-200 btn-press-effect hover:shadow-xs group/btn"
           >
             View job
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
           </Link>
         </div>
       </div>

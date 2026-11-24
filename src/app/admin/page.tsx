@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import {
   ShieldCheck,
   Briefcase,
@@ -18,17 +19,32 @@ import {
   AlertCircle,
   Search,
   ArrowLeft,
+  LogOut,
   X,
 } from 'lucide-react';
 import { SUPER_ADMIN_EMAIL } from '@/lib/supabase';
+import { getStoredSession, isAuthorizedAdmin, clearSession } from '@/lib/auth';
 import initialJobs from '@/data/initial-jobs.json';
 import initialBlogs from '@/data/initial-blogs.json';
 import initialResources from '@/data/initial-resources.json';
 import { Job, Blog, Resource } from '@/types';
 
 export default function AdminDashboardPage() {
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [activeTab, setActiveTab] = useState<'jobs' | 'blogs' | 'resources' | 'tools' | 'users'>('jobs');
   const [currentAdmin, setCurrentAdmin] = useState(SUPER_ADMIN_EMAIL);
+
+  // Strict session check on mount
+  useEffect(() => {
+    const session = getStoredSession();
+    if (!session || !isAuthorizedAdmin(session.user?.email)) {
+      router.replace('/login?redirect=/admin');
+      return;
+    }
+    setCurrentAdmin(session.user.email);
+    setAuthorized(true);
+  }, [router]);
 
   // Dynamic state
   const [jobs, setJobs] = useState<Job[]>(initialJobs as unknown as Job[]);
@@ -266,6 +282,26 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const handleSignOut = () => {
+    clearSession();
+    router.push('/login');
+  };
+
+  if (authorized === null) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F5F7F6]">
+        <div className="w-10 h-10 border-3 border-[#08765D] border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-xs font-bold text-[#52676D] uppercase tracking-wider">
+          Verifying administrator authorization...
+        </p>
+      </div>
+    );
+  }
+
+  if (!authorized) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-[#F5F7F6] flex flex-col">
       {/* Toast Alert */}
@@ -282,11 +318,11 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-4">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
-                src="/brand/doorway.svg"
+                src="/brand/doorway-icon.png"
                 alt="Doorway"
                 width={28}
-                height={32}
-                className="brightness-125"
+                height={36}
+                className="object-contain"
               />
               <span className="font-extrabold text-xl tracking-tight text-white">
                 cajob<span className="text-[#76d7b2]">.in</span>
@@ -302,15 +338,22 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-3">
             <div className="text-right hidden sm:block">
               <div className="text-xs font-bold text-white">{currentAdmin}</div>
-              <div className="text-[10px] text-[#8ca89a]">Primary Administrator</div>
+              <div className="text-[10px] text-[#8ca89a]">Authorized Administrator</div>
             </div>
             <Link
               href="/"
               className="px-3 py-1.5 bg-[#174450] hover:bg-[#1f5767] text-xs font-semibold text-white rounded-lg transition-colors flex items-center gap-1.5"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              View Live Website
+              Back to Website
             </Link>
+            <button
+              onClick={handleSignOut}
+              className="px-3 py-1.5 bg-red-950/60 hover:bg-red-900 text-xs font-semibold text-red-200 border border-red-800 rounded-lg transition-colors flex items-center gap-1.5"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Sign out
+            </button>
           </div>
         </div>
       </header>

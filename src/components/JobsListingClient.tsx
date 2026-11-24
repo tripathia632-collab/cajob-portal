@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { Job } from '@/types';
 import { JobCard } from '@/components/JobCard';
-import { Search, MapPin, SlidersHorizontal, X, Briefcase, Filter } from 'lucide-react';
+import { Search, MapPin, SlidersHorizontal, X, Briefcase, Filter, ArrowLeft } from 'lucide-react';
 
 interface JobsListingClientProps {
   initialJobs: Job[];
@@ -108,6 +109,19 @@ export function JobsListingClient({
 
   return (
     <div className="py-10">
+      {/* Breadcrumb & Home Link */}
+      <nav className="flex items-center gap-2 text-xs text-[#52676D] mb-5">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 font-semibold text-[#52676D] hover:text-[#08765D] transition-colors"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Home
+        </Link>
+        <span className="text-[#DCE5E0]">/</span>
+        <span className="text-[#102D37] font-semibold">{pageTitle}</span>
+      </nav>
+
       {/* Page Header */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-[#102D37] tracking-tight">

@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, ArrowLeft } from 'lucide-react';
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -18,7 +19,20 @@ export default function ContactPage() {
     <div className="min-h-screen flex flex-col bg-[#F5F7F6]">
       <Navbar />
 
-      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        {/* Breadcrumb & Home Link */}
+        <nav className="flex items-center gap-2 text-xs text-[#52676D] mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 font-semibold text-[#52676D] hover:text-[#08765D] transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Home
+          </Link>
+          <span className="text-[#DCE5E0]">/</span>
+          <span className="text-[#102D37] font-semibold">Contact</span>
+        </nav>
+
         <div className="text-center max-w-xl mx-auto mb-12">
           <span className="text-xs font-bold tracking-widest uppercase text-[#08765D]">
             Get In Touch

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { getBlogs } from '@/lib/supabase';
-import { BookOpen, ArrowUpRight, Calendar, User, Clock } from 'lucide-react';
+import { BookOpen, ArrowUpRight, Calendar, User, Clock, ArrowLeft } from 'lucide-react';
 import { formatDate } from '@/lib/utils';
 import { Metadata } from 'next';
 
@@ -23,7 +23,20 @@ export default async function BlogPage() {
     <div className="min-h-screen flex flex-col bg-[#F5F7F6]">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        {/* Breadcrumb & Home Link */}
+        <nav className="flex items-center gap-2 text-xs text-[#52676D] mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 font-semibold text-[#52676D] hover:text-[#08765D] transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Home
+          </Link>
+          <span className="text-[#DCE5E0]">/</span>
+          <span className="text-[#102D37] font-semibold">Career Guides</span>
+        </nav>
+
         {/* Header */}
         <div className="mb-10 text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold tracking-widest uppercase text-[#08765D]">

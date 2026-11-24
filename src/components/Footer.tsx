@@ -11,15 +11,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#1f4e5c]">
           {/* Brand & Purpose */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center gap-3">
+            <Link href="/" className="inline-flex items-center gap-2.5">
               <Image
-                src="/brand/doorway.svg"
-                alt="CAJob.in Doorway"
+                src="/brand/doorway-icon.png"
+                alt="cajob.in"
                 width={32}
-                height={36}
-                className="brightness-125"
+                height={42}
+                className="object-contain"
               />
-              <span className="font-bold text-2xl tracking-tight text-white">
+              <span className="font-extrabold text-2xl tracking-tight text-white">
                 cajob<span className="text-[#76d7b2]">.in</span>
               </span>
             </Link>
@@ -120,11 +120,6 @@ export function Footer() {
               <li>
                 <Link href="/for-employers" className="hover:text-white transition-colors">
                   For employers
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="hover:text-white transition-colors text-emerald-300">
-                  Admin portal
                 </Link>
               </li>
             </ul>

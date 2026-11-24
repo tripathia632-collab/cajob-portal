@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Mail, Lock, ArrowRight, ShieldCheck, CheckCircle2, AlertCircle, Eye, EyeOff, KeyRound } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Mail, Lock, ArrowRight, ArrowLeft, AlertCircle, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import {
   SUPER_ADMIN_EMAIL,
   DEFAULT_ADMIN_PASSWORD,
@@ -15,8 +15,11 @@ import {
 } from '@/lib/auth';
 import { UserProfile } from '@/types';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTarget = searchParams.get('redirect') || '';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -26,17 +29,17 @@ export default function LoginPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
-  // Prefill check
+  // If already authenticated, redirect
   useEffect(() => {
     const session = getStoredSession();
     if (session) {
       if (isAuthorizedAdmin(session.user.email)) {
-        router.push('/admin');
+        router.push(redirectTarget || '/admin');
       } else {
-        router.push('/dashboard');
+        router.push(redirectTarget || '/dashboard');
       }
     }
-  }, [router]);
+  }, [router, redirectTarget]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +49,7 @@ export default function LoginPage() {
 
     const cleanEmail = email.trim().toLowerCase();
 
-    // 1. Admin Login check
+    // 1. Super Administrator Login
     if (cleanEmail === SUPER_ADMIN_EMAIL.toLowerCase()) {
       const storedAdminPass = typeof window !== 'undefined'
         ? localStorage.getItem('cajob_admin_custom_password') || DEFAULT_ADMIN_PASSWORD
@@ -54,20 +57,20 @@ export default function LoginPage() {
 
       if (password !== storedAdminPass) {
         setLoading(false);
-        setErrorMsg('Invalid password for Super Administrator. Default password is: ' + DEFAULT_ADMIN_PASSWORD);
+        setErrorMsg('Invalid credentials. Please verify your email and password.');
         return;
       }
 
       // Success Super Admin Login
       saveSession(INITIAL_ADMIN_PROFILE);
-      setSuccessMsg('Authenticated as Super Administrator. Redirecting to CMS...');
+      setSuccessMsg('Authenticated as Super Administrator. Loading CMS...');
       setTimeout(() => {
-        router.push('/admin');
+        router.push(redirectTarget || '/admin');
       }, 500);
       return;
     }
 
-    // 2. Candidate / Employer login
+    // 2. Candidate Sign up
     if (isSignUp) {
       if (!fullName) {
         setLoading(false);
@@ -83,14 +86,20 @@ export default function LoginPage() {
         savedJobs: [],
       };
       saveSession(newUser);
-      setSuccessMsg('Account created successfully! Redirecting...');
+      setSuccessMsg('Account created successfully. Redirecting...');
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push(redirectTarget || '/dashboard');
       }, 500);
       return;
     }
 
-    // Normal sign in
+    // 3. Normal Sign in
+    if (!password) {
+      setLoading(false);
+      setErrorMsg('Please enter your password.');
+      return;
+    }
+
     const user: UserProfile = {
       id: `usr-${Date.now()}`,
       email: cleanEmail,
@@ -100,73 +109,56 @@ export default function LoginPage() {
       savedJobs: [],
     };
     saveSession(user);
-    setSuccessMsg('Signed in successfully! Redirecting...');
+    setSuccessMsg('Signed in successfully. Redirecting...');
     setTimeout(() => {
       if (isAuthorizedAdmin(cleanEmail)) {
-        router.push('/admin');
+        router.push(redirectTarget || '/admin');
       } else {
-        router.push('/dashboard');
+        router.push(redirectTarget || '/dashboard');
       }
     }, 500);
   };
 
-  const handleFillAdmin = () => {
-    setEmail(SUPER_ADMIN_EMAIL);
-    const pass = typeof window !== 'undefined'
-      ? localStorage.getItem('cajob_admin_custom_password') || DEFAULT_ADMIN_PASSWORD
-      : DEFAULT_ADMIN_PASSWORD;
-    setPassword(pass);
-    setErrorMsg(null);
-  };
-
   return (
     <div className="min-h-screen flex flex-col justify-center bg-[#F5F7F6] py-12 px-4 sm:px-6 lg:px-8">
+      {/* Top back navigation */}
+      <div className="sm:mx-auto sm:w-full sm:max-w-md mb-2">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52676D] hover:text-[#08765D] transition-colors"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          Back to cajob.in
+        </Link>
+      </div>
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-flex items-center gap-3">
+        {/* User's Exact Doorway Logo */}
+        <Link href="/" className="inline-flex items-center gap-2.5">
           <Image
-            src="/brand/doorway.svg"
-            alt="CAJob.in"
-            width={40}
+            src="/brand/doorway-icon.png"
+            alt="cajob.in"
+            width={36}
             height={48}
             className="object-contain"
+            priority
           />
           <span className="font-extrabold text-3xl tracking-tight text-[#102D37]">
             cajob<span className="text-[#08765D]">.in</span>
           </span>
         </Link>
         <h2 className="mt-4 text-2xl font-extrabold text-[#102D37] tracking-tight">
-          {isSignUp ? 'Create your account' : 'Sign in to CAJob.in'}
+          {isSignUp ? 'Create candidate account' : 'Sign in to CAJob.in'}
         </h2>
         <p className="mt-1.5 text-xs text-[#52676D]">
           {isSignUp
             ? 'Save job vacancies, track applications and access free resources'
-            : 'Access your candidate dashboard or manage administrator tools'}
+            : 'Access candidate dashboard and saved vacancies'}
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-6 sm:px-10 rounded-3xl border border-[#DCE5E0] shadow-sm space-y-6">
-          {/* Super Admin Quick Helper Banner */}
-          <div className="p-4 bg-gradient-to-r from-emerald-50 to-[#EAF4EF] rounded-2xl border border-emerald-200 space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-emerald-950 font-bold text-xs">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                Super Admin Access
-              </div>
-              <button
-                type="button"
-                onClick={handleFillAdmin}
-                className="text-[11px] font-bold text-emerald-800 bg-emerald-200/60 hover:bg-emerald-200 px-2.5 py-1 rounded-md transition-colors"
-              >
-                Auto-fill credentials
-              </button>
-            </div>
-            <div className="text-[11px] text-emerald-900/80 font-mono space-y-0.5">
-              <div>Email: <strong>{SUPER_ADMIN_EMAIL}</strong></div>
-              <div>Password: <strong>{DEFAULT_ADMIN_PASSWORD}</strong></div>
-            </div>
-          </div>
-
           {errorMsg && (
             <div className="p-3 bg-red-50 text-red-800 rounded-xl text-xs font-semibold border border-red-200 flex items-start gap-2">
               <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
@@ -192,15 +184,15 @@ export default function LoginPage() {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="e.g. Ashish Tripathi"
-                  className="w-full px-4 py-2.5 bg-[#F5F7F6] rounded-xl text-sm border border-[#DCE5E0] focus:outline-none focus:border-[#08765D]"
+                  placeholder="e.g. Rahul Sharma"
+                  className="w-full px-3.5 py-2.5 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all placeholder:text-[#52676D]/60"
                 />
               </div>
             )}
 
             <div>
               <label className="block text-xs font-bold uppercase text-[#52676D] mb-1.5">
-                Email address
+                Email Address
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -209,23 +201,16 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="e.g. tripathia632@gmail.com"
-                  className="w-full pl-10 pr-4 py-2.5 bg-[#F5F7F6] rounded-xl text-sm border border-[#DCE5E0] focus:outline-none focus:border-[#08765D]"
+                  placeholder="name@example.com"
+                  className="w-full pl-10 pr-3.5 py-2.5 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all placeholder:text-[#52676D]/60"
                 />
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-bold uppercase text-[#52676D]">
-                  Password
-                </label>
-                {!isSignUp && (
-                  <span className="text-[11px] text-[#52676D]">
-                    Protected login
-                  </span>
-                )}
-              </div>
+              <label className="block text-xs font-bold uppercase text-[#52676D] mb-1.5">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
@@ -234,7 +219,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 bg-[#F5F7F6] rounded-xl text-sm border border-[#DCE5E0] focus:outline-none focus:border-[#08765D]"
+                  className="w-full pl-10 pr-10 py-2.5 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all"
                 />
                 <button
                   type="button"
@@ -249,27 +234,25 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-[#08765D] hover:bg-[#065F4B] text-white font-bold text-sm rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full py-3 px-4 bg-[#08765D] hover:bg-[#065F4B] text-white font-semibold text-sm rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              <span>{loading ? 'Authenticating...' : isSignUp ? 'Create Free Account' : 'Sign In'}</span>
+              <span>{loading ? 'Authenticating...' : isSignUp ? 'Create account' : 'Sign in'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
-          <div className="pt-4 border-t border-[#F0F4F2] text-center">
+          <div className="pt-4 border-t border-[#DCE5E0] text-center">
             <button
               type="button"
               onClick={() => {
                 setIsSignUp(!isSignUp);
                 setErrorMsg(null);
               }}
-              className="text-xs text-[#52676D] hover:text-[#102D37]"
+              className="text-xs font-semibold text-[#08765D] hover:underline"
             >
-              {isSignUp ? (
-                <>Already have an account? <span className="font-bold text-[#08765D]">Sign In</span></>
-              ) : (
-                <>New candidate? <span className="font-bold text-[#08765D]">Create free candidate profile</span></>
-              )}
+              {isSignUp
+                ? 'Already have an account? Sign in'
+                : "Don't have an account yet? Create one"}
             </button>
           </div>
         </div>
@@ -277,3 +260,16 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-[#F5F7F6]">
+        <div className="w-8 h-8 border-3 border-[#08765D] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}
+

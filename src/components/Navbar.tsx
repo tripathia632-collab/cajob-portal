@@ -1,45 +1,55 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Menu, X, ArrowUpRight, ShieldCheck, User, Wrench } from 'lucide-react';
+import { Search, Menu, X, ArrowUpRight, ShieldCheck, User, Wrench, LogOut } from 'lucide-react';
+import { getStoredSession, isAuthorizedAdmin, clearSession } from '@/lib/auth';
 
 interface NavbarProps {
   userEmail?: string | null;
 }
 
-export function Navbar({ userEmail }: NavbarProps) {
+export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [jobsDropdownOpen, setJobsDropdownOpen] = useState(false);
+  const [currentUserEmail, setCurrentUserEmail] = useState<string | null>(initialUserEmail || null);
 
-  const isAdmin = userEmail?.toLowerCase() === 'tripathia632@gmail.com';
+  useEffect(() => {
+    const session = getStoredSession();
+    if (session?.user?.email) {
+      setCurrentUserEmail(session.user.email);
+    }
+  }, []);
+
+  const isAdmin = isAuthorizedAdmin(currentUserEmail);
+
+  const handleLogout = () => {
+    clearSession();
+    setCurrentUserEmail(null);
+    window.location.href = '/';
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-[#F5F7F6]/90 backdrop-blur-md border-b border-[#DCE5E0]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Brand Logo with Doorway Gate */}
+          {/* Brand Logo - Official Doorway 3D Icon */}
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-9 h-10 flex-shrink-0 transition-transform duration-200 group-hover:scale-105">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative w-8 h-10 flex-shrink-0 transition-transform duration-200 group-hover:scale-105">
                 <Image
-                  src="/brand/doorway.svg"
-                  alt="CAJob.in Doorway"
-                  width={36}
-                  height={40}
+                  src="/brand/doorway-icon.png"
+                  alt="cajob.in"
+                  width={32}
+                  height={44}
                   className="w-full h-full object-contain"
                   priority
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl tracking-tight text-[#102D37]">
-                  cajob<span className="text-[#08765D]">.in</span>
-                </span>
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-[#52676D] -mt-1">
-                  Finance Careers
-                </span>
-              </div>
+              <span className="font-extrabold text-2xl tracking-tight text-[#102D37]">
+                cajob<span className="text-[#08765D]">.in</span>
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -145,20 +155,39 @@ export function Navbar({ userEmail }: NavbarProps) {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-emerald-800 bg-emerald-100 hover:bg-emerald-200 rounded-lg transition-colors border border-emerald-300"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-lg transition-colors border border-emerald-200"
               >
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
                 Admin CMS
               </Link>
             )}
 
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors"
-            >
-              <User className="w-4 h-4" />
-              Sign in
-            </Link>
+            {currentUserEmail ? (
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-[#102D37] hover:text-[#08765D] transition-colors"
+                >
+                  <User className="w-4 h-4 text-[#08765D]" />
+                  Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="p-2 text-[#52676D] hover:text-red-600 rounded-lg transition-colors"
+                  title="Sign out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors"
+              >
+                <User className="w-4 h-4" />
+                Sign in
+              </Link>
+            )}
 
             <Link
               href="/for-employers"
@@ -258,13 +287,15 @@ export function Navbar({ userEmail }: NavbarProps) {
             >
               Courses (Coming Soon)
             </Link>
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-base font-semibold text-emerald-800 bg-emerald-50 rounded-lg"
-            >
-              Admin Dashboard
-            </Link>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 text-base font-semibold text-emerald-800 bg-emerald-50 rounded-lg"
+              >
+                Admin CMS
+              </Link>
+            )}
           </div>
 
           <div className="pt-3 border-t border-[#DCE5E0] flex flex-col gap-2">

@@ -13,8 +13,9 @@ export const metadata: Metadata = {
   description:
     'Find articleship, industrial training, qualified Chartered Accountant jobs, and finance careers. Verified vacancies, career guides, free templates and web tools.',
   icons: {
-    icon: '/brand/doorway.svg',
-    shortcut: '/favicon.svg',
+    icon: '/brand/doorway-icon.png',
+    shortcut: '/brand/doorway-icon.png',
+    apple: '/brand/doorway-icon.png',
   },
   openGraph: {
     title: 'CAJob.in — The Focused CA & Finance Career Platform',

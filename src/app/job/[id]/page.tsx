@@ -13,6 +13,7 @@ import {
   Share2,
   Bookmark,
   ArrowUpRight,
+  ArrowLeft,
   ShieldCheck,
   CheckCircle2,
   ChevronRight,
@@ -98,14 +99,23 @@ export default async function JobDetailPage({ params }: JobPageProps) {
       <Navbar />
 
       <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-[#52676D] mb-6">
-          <Link href="/" className="hover:text-[#102D37]">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/jobs" className="hover:text-[#102D37]">Jobs</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-[#102D37] font-semibold truncate max-w-xs">{job.title}</span>
-        </nav>
+        {/* In-Website Back Navigation & Breadcrumb */}
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <Link
+            href="/jobs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#102D37] hover:text-[#08765D] bg-white hover:bg-[#EAF4EF] border border-[#DCE5E0] hover:border-[#08765D]/40 rounded-xl transition-all shadow-2xs"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to all opportunities
+          </Link>
+          <nav className="hidden sm:flex items-center gap-1.5 text-xs text-[#52676D]">
+            <Link href="/" className="hover:text-[#102D37]">Home</Link>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <Link href="/jobs" className="hover:text-[#102D37]">Jobs</Link>
+            <ChevronRight className="w-3.5 h-3.5" />
+            <span className="text-[#102D37] font-semibold truncate max-w-xs">{job.title}</span>
+          </nav>
+        </div>
 
         {/* Top Header Card */}
         <div className="bg-white rounded-3xl border border-[#DCE5E0] p-6 sm:p-8 shadow-xs mb-8">
@@ -237,6 +247,17 @@ export default async function JobDetailPage({ params }: JobPageProps) {
                 </p>
               </div>
             )}
+
+            {/* Bottom In-Website Back Button */}
+            <div className="pt-4">
+              <Link
+                href="/jobs"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#102D37] hover:text-[#08765D] bg-white hover:bg-[#EAF4EF] border border-[#DCE5E0] hover:border-[#08765D]/40 rounded-xl transition-all shadow-2xs"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to all opportunities
+              </Link>
+            </div>
           </div>
 
           {/* Sidebar Info */}

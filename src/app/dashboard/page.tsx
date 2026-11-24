@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { User, Bookmark, FileText, Wrench, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { User, Bookmark, FileText, Wrench, ShieldCheck, ArrowUpRight, ArrowLeft } from 'lucide-react';
 import { SUPER_ADMIN_EMAIL } from '@/lib/supabase';
 
 export default function CandidateDashboardPage() {
@@ -21,7 +21,18 @@ export default function CandidateDashboardPage() {
     <div className="min-h-screen flex flex-col bg-[#F5F7F6]">
       <Navbar userEmail={userEmail} />
 
-      <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        {/* In-Website Back Link */}
+        <div className="mb-6">
+          <Link
+            href="/jobs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#102D37] hover:text-[#08765D] bg-white hover:bg-[#EAF4EF] border border-[#DCE5E0] hover:border-[#08765D]/30 rounded-xl transition-all shadow-2xs"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Explore Jobs
+          </Link>
+        </div>
+
         {/* Welcome Header */}
         <div className="bg-white rounded-3xl border border-[#DCE5E0] p-6 sm:p-8 mb-8 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">

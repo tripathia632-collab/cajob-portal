@@ -152,6 +152,17 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             </div>
           </div>
         )}
+
+        {/* Bottom Back Navigation */}
+        <div className="mt-10 pt-6 border-t border-[#DCE5E0]">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#102D37] hover:text-[#08765D] bg-white hover:bg-[#EAF4EF] border border-[#DCE5E0] hover:border-[#08765D]/40 rounded-xl transition-all shadow-2xs"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to all career guides
+          </Link>
+        </div>
       </main>
 
       <Footer />

@@ -48,7 +48,7 @@ export default async function HomePage() {
         <FeaturedCategories />
 
         {/* Featured Jobs Section (Figma specification) */}
-        <section className="py-16 bg-[#F5F7F6]">
+        <section className="py-16 bg-white border-y border-[#DCE5E0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
               <div>
@@ -65,7 +65,7 @@ export default async function HomePage() {
 
               <Link
                 href="/jobs"
-                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-[#08765D] hover:text-white bg-white hover:bg-[#08765D] border border-[#bcdbc8] rounded-xl shadow-2xs transition-all w-fit"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-[#08765D] hover:text-white bg-[#EAF4EF] hover:bg-[#08765D] border border-[#bcdbc8] rounded-xl shadow-2xs transition-all w-fit btn-press-effect"
               >
                 View all jobs ({allJobs.length})
                 <ArrowUpRight className="w-4 h-4" />

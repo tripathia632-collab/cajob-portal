@@ -31,7 +31,7 @@ export function ToolsSection() {
   ];
 
   return (
-    <section className="py-16 bg-white border-y border-[#DCE5E0]">
+    <section className="py-16 bg-[#F5F7F6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
@@ -49,7 +49,7 @@ export function ToolsSection() {
 
           <Link
             href="/tools"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-[#08765D] hover:text-white bg-white hover:bg-[#08765D] border border-[#bcdbc8] rounded-xl shadow-2xs transition-all w-fit"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-[#08765D] hover:text-white bg-white hover:bg-[#08765D] border border-[#bcdbc8] rounded-xl shadow-2xs transition-all w-fit btn-press-effect"
           >
             All web tools
             <ArrowUpRight className="w-4 h-4" />
@@ -64,7 +64,7 @@ export function ToolsSection() {
               <Link
                 key={t.title}
                 href={t.href}
-                className="group bg-[#F5F7F6] hover:bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 sm:p-7 shadow-xs card-hover-effect flex flex-col justify-between"
+                className="group bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 sm:p-7 shadow-xs card-hover-effect flex flex-col justify-between"
               >
                 <div>
                   <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">

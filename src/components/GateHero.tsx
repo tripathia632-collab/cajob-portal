@@ -22,7 +22,7 @@ export function GateHero() {
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-[#F5F7F6] via-[#EAF4EF]/30 to-[#F5F7F6] pt-8 pb-10 border-b border-[#DCE5E0]">
+    <section className="relative bg-gradient-to-b from-[#EAF4EF] via-[#EAF4EF]/60 to-[#F5F7F6] pt-8 pb-10 border-b border-[#DCE5E0]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top: Concise Headline & Signature Doorway with Orbiting Categories */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -45,14 +45,14 @@ export function GateHero() {
           {/* Right: Signature 3D Doorway with Orbiting Category Tags */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             <div className="relative w-full max-w-[340px] aspect-square flex items-center justify-center">
-              {/* Authentic User 3D Doorway (No background drops or artificial shapes) */}
-              <div className="relative w-44 sm:w-48 h-56 flex items-center justify-center z-10">
+              {/* Authentic User 3D Doorway - Ultra-HD without background drops or artificial shapes */}
+              <div className="relative w-48 sm:w-52 h-60 sm:h-64 flex items-center justify-center z-10">
                 <Image
                   src="/brand/doorway-icon.png"
                   alt="cajob.in"
-                  width={192}
-                  height={270}
-                  className="w-full h-full object-contain"
+                  width={220}
+                  height={310}
+                  className="w-full h-full object-contain filter drop-shadow-sm"
                   priority
                 />
               </div>

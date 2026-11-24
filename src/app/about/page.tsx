@@ -80,11 +80,11 @@ export default function AboutPage() {
         <div className="bg-[#102D37] rounded-3xl p-8 sm:p-12 text-white flex flex-col md:flex-row items-center gap-8 mb-16">
           <div className="w-20 h-24 flex-shrink-0 relative">
             <Image
-              src="/brand/doorway.svg"
+              src="/brand/doorway-icon.png"
               alt="Doorway"
               width={80}
               height={96}
-              className="w-full h-full object-contain brightness-125"
+              className="w-full h-full object-contain"
             />
           </div>
           <div className="space-y-3">

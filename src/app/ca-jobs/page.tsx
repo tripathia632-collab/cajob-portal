@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Newly qualified and experienced Chartered Accountant jobs in Audit, Tax, Advisory, and Industry.',
 };
 
+export const revalidate = 3600;
 
 export default async function QualifiedCAJobsPage() {
   const jobs = await getJobs();

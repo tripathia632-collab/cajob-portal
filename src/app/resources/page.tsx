@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description: 'Download free CA articleship CV templates, application email scripts, and opportunity comparison worksheets.',
 };
 
+export const revalidate = 3600;
 
 export default async function ResourcesPage() {
   const resources = await getResources();

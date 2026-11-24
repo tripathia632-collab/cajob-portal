@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Verified CA Industrial Training vacancies in top corporates, investment banks, and MNCs.',
 };
 
+export const revalidate = 3600;
 
 export default async function IndustrialTrainingPage() {
   const jobs = await getJobs();

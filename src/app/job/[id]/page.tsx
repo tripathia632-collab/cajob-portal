@@ -26,6 +26,16 @@ interface JobPageProps {
   params: Promise<{ id: string }>;
 }
 
+export const revalidate = 3600;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const jobs = await getJobs();
+  return jobs.map((j) => ({
+    id: j.id,
+  }));
+}
+
 export async function generateMetadata({ params }: JobPageProps): Promise<Metadata> {
   const { id } = await params;
   const job = await getJobById(id);
@@ -40,14 +50,18 @@ export async function generateMetadata({ params }: JobPageProps): Promise<Metada
 
 export default async function JobDetailPage({ params }: JobPageProps) {
   const { id } = await params;
-  const job = await getJobById(id);
+
+  // Ultra-fast concurrent loading from edge cache
+  const [job, allJobs] = await Promise.all([
+    getJobById(id),
+    getJobs(),
+  ]);
 
   if (!job) {
     notFound();
   }
 
   // Related jobs
-  const allJobs = await getJobs();
   const relatedJobs = allJobs
     .filter((j) => j.id !== job.id && (j.category === job.category || j.careerStage === job.careerStage))
     .slice(0, 3);

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Verified CA Articleship openings with clear stipends, transfer policies, and firm details.',
 };
 
+export const revalidate = 3600;
 
 export default async function ArticleshipPage() {
   const jobs = await getJobs();

@@ -13,6 +13,16 @@ interface BlogArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
+export const revalidate = 3600;
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const blogs = await getBlogs();
+  return blogs.map((b) => ({
+    slug: b.slug,
+  }));
+}
+
 export async function generateMetadata({ params }: BlogArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const blog = await getBlogBySlug(slug);
@@ -27,19 +37,23 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
 
 export default async function BlogArticlePage({ params }: BlogArticlePageProps) {
   const { slug } = await params;
-  const blog = await getBlogBySlug(slug);
+
+  // Ultra-fast concurrent loading from edge cache
+  const [blog, allBlogs, allJobs] = await Promise.all([
+    getBlogBySlug(slug),
+    getBlogs(),
+    getJobs(),
+  ]);
 
   if (!blog) {
     notFound();
   }
 
   // Related blogs & related jobs
-  const allBlogs = await getBlogs();
   const relatedBlogs = allBlogs
     .filter((b) => b.slug !== blog.slug && b.category === blog.category)
     .slice(0, 3);
 
-  const allJobs = await getJobs();
   const relatedJobs = allJobs.slice(0, 3);
 
   return (

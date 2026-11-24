@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: '50+ comprehensive blogs for CA articleship, industrial training, interview frameworks, and finance skills.',
 };
 
+export const revalidate = 3600;
 
 export default async function BlogPage() {
   const blogs = await getBlogs();

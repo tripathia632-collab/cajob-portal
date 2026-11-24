@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Finance jobs for CA Inter, semi-qualified, financial analysts, accountants, and FP&A specialists.',
 };
 
+export const revalidate = 3600;
 
 export default async function FinanceJobsPage() {
   const jobs = await getJobs();

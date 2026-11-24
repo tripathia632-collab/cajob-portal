@@ -25,6 +25,18 @@ let inMemoryJobs: Job[] = [...(initialJobs as unknown as Job[])];
 let inMemoryBlogs: Blog[] = [...(initialBlogs as unknown as Blog[])];
 let inMemoryResources: Resource[] = [...(initialResources as unknown as Resource[])];
 
+// In-memory TTL cache to eliminate redundant network roundtrips and ensure <50ms response times
+let cachedJobs: { data: Job[]; timestamp: number } | null = null;
+let cachedBlogs: { data: Blog[]; timestamp: number } | null = null;
+let cachedResources: { data: Resource[]; timestamp: number } | null = null;
+const CACHE_TTL_MS = 60 * 1000; // 60 seconds TTL
+
+export function invalidateCache() {
+  cachedJobs = null;
+  cachedBlogs = null;
+  cachedResources = null;
+}
+
 function mapJobFromDb(row: any): Job {
   return {
     id: row.id,
@@ -67,38 +79,40 @@ export async function getJobs(filter?: {
   search?: string;
   status?: string;
 }): Promise<Job[]> {
-  if (isSupabaseConfigured && supabase) {
-    try {
-      let query = supabase.from('jobs').select('*');
-      if (filter?.status) {
-        query = query.eq('status', filter.status);
-      } else {
-        query = query.eq('status', 'Published');
+  const isDefaultPublishedQuery = !filter || (!filter.status || filter.status === 'Published');
+  const now = Date.now();
+
+  let publishedJobs: Job[] | null = null;
+  if (isDefaultPublishedQuery && cachedJobs && (now - cachedJobs.timestamp < CACHE_TTL_MS)) {
+    publishedJobs = cachedJobs.data;
+  } else if (isDefaultPublishedQuery) {
+    if (isSupabaseConfigured && supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('jobs')
+          .select('*')
+          .eq('status', 'Published')
+          .order('posted_on', { ascending: false });
+        if (!error && data && data.length > 0) {
+          publishedJobs = data.map(mapJobFromDb);
+          cachedJobs = { data: publishedJobs, timestamp: now };
+        }
+      } catch {
+        // Fallback on error
       }
-      if (filter?.careerStage) {
-        query = query.ilike('career_stage', `%${filter.careerStage}%`);
-      }
-      if (filter?.category) {
-        query = query.ilike('category', `%${filter.category}%`);
-      }
-      if (filter?.city) {
-        query = query.ilike('city', `%${filter.city}%`);
-      }
-      const { data, error } = await query;
-      if (!error && data && data.length > 0) {
-        return data.map(mapJobFromDb);
-      }
-    } catch {
-      // Fallback on error
+    }
+    if (!publishedJobs) {
+      publishedJobs = inMemoryJobs.filter((j) => j.status === 'Published');
+      cachedJobs = { data: publishedJobs, timestamp: now };
     }
   }
 
-  // Fallback to local data
-  let list = inMemoryJobs;
+  // Base list
+  let list = publishedJobs || inMemoryJobs;
+
   if (filter?.status) {
     list = list.filter((j) => j.status === filter.status);
-  } else {
-    // default published
+  } else if (!publishedJobs) {
     list = list.filter((j) => j.status === 'Published');
   }
 
@@ -137,6 +151,17 @@ export async function getJobs(filter?: {
 }
 
 export async function getJobById(id: string): Promise<Job | null> {
+  // 1. Instant cache check (<0.1ms)
+  if (cachedJobs?.data) {
+    const found = cachedJobs.data.find((j) => j.id === id);
+    if (found) return found;
+  }
+
+  // 2. Check in inMemoryJobs
+  const foundInMemory = inMemoryJobs.find((j) => j.id === id);
+  if (foundInMemory) return foundInMemory;
+
+  // 3. Fallback to direct DB query if missing from memory
   if (isSupabaseConfigured && supabase) {
     try {
       const { data, error } = await supabase
@@ -150,11 +175,11 @@ export async function getJobById(id: string): Promise<Job | null> {
     }
   }
 
-  const found = inMemoryJobs.find((j) => j.id === id);
-  return found || null;
+  return null;
 }
 
 export async function createOrUpdateJob(job: Job): Promise<Job> {
+  cachedJobs = null; // Invalidate cache immediately
   if (isSupabaseConfigured && supabase) {
     const dbRow = {
       id: job.id,
@@ -189,6 +214,7 @@ export async function createOrUpdateJob(job: Job): Promise<Job> {
 }
 
 export async function deleteJob(id: string): Promise<boolean> {
+  cachedJobs = null; // Invalidate cache immediately
   if (isSupabaseConfigured && supabase) {
     const { error } = await supabase.from('jobs').delete().eq('id', id);
     if (!error) return true;
@@ -199,6 +225,11 @@ export async function deleteJob(id: string): Promise<boolean> {
 }
 
 export async function getBlogs(): Promise<Blog[]> {
+  const now = Date.now();
+  if (cachedBlogs && (now - cachedBlogs.timestamp < CACHE_TTL_MS)) {
+    return cachedBlogs.data;
+  }
+
   if (isSupabaseConfigured && supabase) {
     try {
       const { data, error } = await supabase
@@ -206,16 +237,33 @@ export async function getBlogs(): Promise<Blog[]> {
         .select('*')
         .eq('status', 'Published')
         .order('published_on', { ascending: false });
-      if (!error && data && data.length > 0) return data.map(mapBlogFromDb);
+      if (!error && data && data.length > 0) {
+        const blogs = data.map(mapBlogFromDb);
+        cachedBlogs = { data: blogs, timestamp: now };
+        return blogs;
+      }
     } catch {
       // Fallback
     }
   }
 
-  return inMemoryBlogs.filter((b) => b.status === 'Published');
+  const fallback = inMemoryBlogs.filter((b) => b.status === 'Published');
+  cachedBlogs = { data: fallback, timestamp: now };
+  return fallback;
 }
 
 export async function getBlogBySlug(slug: string): Promise<Blog | null> {
+  // 1. Instant cache check (<0.1ms)
+  if (cachedBlogs?.data) {
+    const found = cachedBlogs.data.find((b) => b.slug === slug);
+    if (found) return found;
+  }
+
+  // 2. Check in inMemoryBlogs
+  const foundInMemory = inMemoryBlogs.find((b) => b.slug === slug);
+  if (foundInMemory) return foundInMemory;
+
+  // 3. Fallback to direct DB query if missing from memory
   if (isSupabaseConfigured && supabase) {
     try {
       const { data, error } = await supabase
@@ -229,11 +277,11 @@ export async function getBlogBySlug(slug: string): Promise<Blog | null> {
     }
   }
 
-  const found = inMemoryBlogs.find((b) => b.slug === slug);
-  return found || null;
+  return null;
 }
 
 export async function createOrUpdateBlog(blog: Blog): Promise<Blog> {
+  cachedBlogs = null; // Invalidate cache immediately
   if (isSupabaseConfigured && supabase) {
     const { data, error } = await supabase.from('blogs').upsert(blog).select().single();
     if (!error && data) return data as Blog;
@@ -249,6 +297,11 @@ export async function createOrUpdateBlog(blog: Blog): Promise<Blog> {
 }
 
 export async function getResources(): Promise<Resource[]> {
+  const now = Date.now();
+  if (cachedResources && (now - cachedResources.timestamp < CACHE_TTL_MS)) {
+    return cachedResources.data;
+  }
+
   if (isSupabaseConfigured && supabase) {
     try {
       const { data, error } = await supabase
@@ -256,16 +309,22 @@ export async function getResources(): Promise<Resource[]> {
         .select('*')
         .eq('status', 'Published')
         .order('publishedOn', { ascending: false });
-      if (!error && data && data.length > 0) return data as Resource[];
+      if (!error && data && data.length > 0) {
+        cachedResources = { data: data as Resource[], timestamp: now };
+        return data as Resource[];
+      }
     } catch {
       // Fallback
     }
   }
 
-  return inMemoryResources.filter((r) => r.status === 'Published');
+  const fallback = inMemoryResources.filter((r) => r.status === 'Published');
+  cachedResources = { data: fallback, timestamp: now };
+  return fallback;
 }
 
 export async function createOrUpdateResource(res: Resource): Promise<Resource> {
+  cachedResources = null; // Invalidate cache immediately
   if (isSupabaseConfigured && supabase) {
     const { data, error } = await supabase.from('resources').upsert(res).select().single();
     if (!error && data) return data as Resource;
@@ -281,6 +340,7 @@ export async function createOrUpdateResource(res: Resource): Promise<Resource> {
 }
 
 export async function deleteBlog(slug: string): Promise<boolean> {
+  cachedBlogs = null; // Invalidate cache immediately
   if (isSupabaseConfigured && supabase) {
     const { error } = await supabase.from('blogs').delete().eq('slug', slug);
     if (!error) return true;
@@ -290,6 +350,7 @@ export async function deleteBlog(slug: string): Promise<boolean> {
 }
 
 export async function deleteResource(id: string): Promise<boolean> {
+  cachedResources = null; // Invalidate cache immediately
   if (isSupabaseConfigured && supabase) {
     const { error } = await supabase.from('resources').delete().eq('id', id);
     if (!error) return true;

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description: 'Search verified articleship, industrial training, qualified CA and finance opportunities.',
 };
 
+export const revalidate = 3600;
 
 export default async function JobsPage() {
   const jobs = await getJobs();

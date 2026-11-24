@@ -12,6 +12,7 @@ import { JobCard } from '@/components/JobCard';
 import { getJobs } from '@/lib/supabase';
 import { ArrowUpRight } from 'lucide-react';
 
+export const revalidate = 3600;
 
 export default async function HomePage() {
   const allJobs = await getJobs();

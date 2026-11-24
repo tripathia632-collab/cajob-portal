@@ -75,7 +75,7 @@ export default function ContactPage() {
             <div className="space-y-6">
               <h3 className="text-xl font-bold text-white">Contact Information</h3>
               <p className="text-xs text-[#bad1c5] leading-relaxed">
-                Connect directly with the CAJob.in operations and editorial desk.
+                Connect directly with us for inquiries, partnerships, and suggestions.
               </p>
 
               <div className="space-y-4 text-xs">
@@ -111,7 +111,7 @@ export default function ContactPage() {
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white">WhatsApp Broadcast Channel</div>
+                    <div className="font-semibold text-white">WhatsApp Community</div>
                     <div className="text-[11px] text-[#bad1c5]">Core Finance for CAs</div>
                   </div>
                   <ArrowUpRight className="w-3.5 h-3.5 ml-auto text-[#76d7b2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -129,7 +129,7 @@ export default function ContactPage() {
             </div>
 
             <div className="text-[11px] text-[#76d7b2] pt-2 border-t border-white/10">
-              Direct line: {WHATSAPP_FEEDBACK_NUMBER} · Average response: within a few hours
+              Official WhatsApp: {WHATSAPP_FEEDBACK_NUMBER}
             </div>
           </div>
 

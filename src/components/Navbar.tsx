@@ -134,7 +134,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
                 href="/community"
                 className="text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors flex items-center gap-1.5"
               >
-                Channels
+                WhatsApp Community
                 <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse"></span>
               </Link>
 

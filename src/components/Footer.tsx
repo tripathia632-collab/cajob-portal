@@ -125,9 +125,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-[#bad1c5]">
               <li>
                 <Link href="/community" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  WhatsApp Channels Hub
+                  WhatsApp Community
                   <span className="text-[10px] uppercase font-bold bg-[#25D366]/20 text-[#a7e9d4] px-1.5 py-0.2 rounded border border-[#25D366]/40">
-                    8 Channels
+                    Join
                   </span>
                 </Link>
               </li>
@@ -138,7 +138,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors flex items-center gap-1"
                 >
-                  Core Finance Channel <ArrowUpRight className="w-3 h-3 text-[#76d7b2]" />
+                  Core Finance Community <ArrowUpRight className="w-3 h-3 text-[#76d7b2]" />
                 </a>
               </li>
               <li className="pt-1.5 border-t border-[#1f4e5c]/60">

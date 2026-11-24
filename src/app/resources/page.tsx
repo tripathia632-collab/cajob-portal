@@ -89,7 +89,7 @@ export default async function ResourcesPage() {
           <ShieldCheck className="w-8 h-8 text-[#08765D] mx-auto" />
           <h3 className="text-lg font-bold text-[#102D37]">More resources added weekly</h3>
           <p className="text-xs sm:text-sm text-[#52676D] leading-relaxed">
-            Have a specific template or Excel model you need? Let our editorial team know and we will curate it for our community.
+            Have a specific template or Excel model you need? Let us know and we will curate it for the community.
           </p>
           <div className="pt-2">
             <Link

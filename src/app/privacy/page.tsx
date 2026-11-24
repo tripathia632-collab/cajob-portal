@@ -42,7 +42,7 @@ export default function PrivacyPage() {
               We adhere strictly to the Digital Personal Data Protection Act (DPDP), 2023. You have full right to request deletion of your account or unsubscribe from any communications at any time.
             </p>
 
-            <h2 className="text-lg font-bold text-[#102D37] pt-4">5. Contact Our Privacy Desk</h2>
+            <h2 className="text-lg font-bold text-[#102D37] pt-4">5. Contact Us Regarding Privacy</h2>
             <p>
               For any data privacy concerns or requests, reach out directly to privacy@cajob.in.
             </p>

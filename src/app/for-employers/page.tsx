@@ -97,7 +97,7 @@ export default function ForEmployersPage() {
             <Sparkles className="w-8 h-8 text-[#08765D]" />
             <h3 className="text-lg font-bold text-[#102D37]">Free Pilot Postings</h3>
             <p className="text-xs text-[#52676D] leading-relaxed">
-              Post your initial vacancies at zero cost while our team verifies and formats them for maximum reach.
+              Post your initial vacancies at zero cost while we verify and format them for maximum reach.
             </p>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function ForEmployersPage() {
           <div className="mb-8 pb-6 border-b border-[#F0F4F2]">
             <h2 className="text-2xl font-bold text-[#102D37]">Post a Vacancy</h2>
             <p className="text-xs sm:text-sm text-[#52676D] mt-1">
-              Submit your opening details below. Our team reviews and activates listings within 12 hours.
+              Submit your opening details below. We review and activate listings within 12 hours.
             </p>
           </div>
 

@@ -509,7 +509,7 @@ export default function AdminDashboardPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#DCE5E0]">
               <div>
-                <h2 className="text-xl font-bold text-[#102D37]">Jobs Desk</h2>
+                <h2 className="text-xl font-bold text-[#102D37]">Jobs Manager</h2>
                 <p className="text-xs text-[#52676D]">Manage, verify, publish or archive vacancies</p>
               </div>
 
@@ -662,7 +662,7 @@ export default function AdminDashboardPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#DCE5E0]">
               <div>
-                <h2 className="text-xl font-bold text-[#102D37]">Free Resources Desk</h2>
+                <h2 className="text-xl font-bold text-[#102D37]">Free Resources Manager</h2>
                 <p className="text-xs text-[#52676D]">Upload downloadable CV templates, comparison sheets, email scripts</p>
               </div>
 

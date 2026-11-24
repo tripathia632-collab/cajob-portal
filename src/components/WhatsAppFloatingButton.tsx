@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MessageSquare, X, ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import { X, ArrowUpRight } from 'lucide-react';
 import { WHATSAPP_FEEDBACK_NUMBER, WHATSAPP_FEEDBACK_URL } from '@/lib/community';
 
 export function WhatsAppFloatingButton() {
@@ -11,10 +12,10 @@ export function WhatsAppFloatingButton() {
   if (isDismissed) return null;
 
   return (
-    <aside aria-label="WhatsApp Feedback and Support" className="fixed bottom-6 left-6 z-40 flex flex-col items-start gap-2 select-none">
+    <aside aria-label="WhatsApp Feedback and Support" className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2 select-none">
       {/* Popover Card */}
       {isOpen && (
-        <div className="bg-white rounded-2xl p-4 shadow-2xl border border-[#DCE5E0] max-w-xs w-72 mb-2 animate-dropdown backdrop-blur-md">
+        <div className="bg-white rounded-2xl p-4 shadow-2xl border border-[#DCE5E0] max-w-xs w-72 mb-2 animate-dropdown backdrop-blur-md text-left">
           <div className="flex items-start justify-between gap-2 mb-2.5">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 shadow-xs">
@@ -55,12 +56,13 @@ export function WhatsAppFloatingButton() {
           </a>
 
           <div className="mt-2.5 pt-2 border-t border-[#F0F4F2] text-center">
-            <a
+            <Link
               href="/community"
+              onClick={() => setIsOpen(false)}
               className="text-[10px] font-semibold text-[#08765D] hover:underline"
             >
-              Looking for WhatsApp Channels instead? View Hub →
-            </a>
+              Looking for our WhatsApp Community? Join here →
+            </Link>
           </div>
         </div>
       )}
@@ -69,7 +71,7 @@ export function WhatsAppFloatingButton() {
       <div className="flex items-center gap-2">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="Contact on WhatsApp for feedback"
+          aria-label="Connect with us on WhatsApp"
           className="group flex items-center gap-2.5 px-3.5 py-2.5 bg-white hover:bg-[#F5F7F6] text-[#102D37] rounded-full shadow-lg border border-[#DCE5E0] hover:border-[#25D366]/50 transition-all duration-300 btn-press-effect"
         >
           <div className="relative w-6 h-6 rounded-full bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -84,7 +86,7 @@ export function WhatsAppFloatingButton() {
           </div>
 
           <div className="hidden sm:flex flex-col text-left pr-1">
-            <span className="text-[11px] font-bold text-[#102D37] leading-tight">WhatsApp Feedback</span>
+            <span className="text-[11px] font-bold text-[#102D37] leading-tight">Connect with us</span>
             <span className="text-[10px] font-semibold text-[#08765D]">{WHATSAPP_FEEDBACK_NUMBER}</span>
           </div>
         </button>

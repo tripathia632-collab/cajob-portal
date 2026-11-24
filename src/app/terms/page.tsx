@@ -29,7 +29,7 @@ export default function TermsPage() {
 
             <h2 className="text-lg font-bold text-[#102D37] pt-4">2. Candidate Verification Responsibility</h2>
             <p>
-              While our editorial team personally verifies listings against official employer channels before publishing, candidates are strongly advised to independently verify all terms of employment, compensation, training periods, and ICAI compliance before signing any contracts or training deeds.
+              While we personally verify listings against official employer channels before publishing, candidates are strongly advised to independently verify all terms of employment, compensation, training periods, and ICAI compliance before signing any contracts or training deeds.
             </p>
 
             <h2 className="text-lg font-bold text-[#102D37] pt-4">3. Absolute No-Fee-to-Apply Guarantee</h2>

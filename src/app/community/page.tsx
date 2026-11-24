@@ -5,9 +5,9 @@ import { CommunityDirectoryClient } from '@/components/CommunityDirectoryClient'
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'WhatsApp Channels Directory | CAJob.in',
+  title: 'WhatsApp Community | CAJob.in',
   description:
-    'Explore official CAJob.in WhatsApp broadcast channels for verified finance roles, articleship openings, and industrial training updates.',
+    'Join the official CAJob.in WhatsApp community for verified CA vacancies, articleship openings, corporate industrial training, and finance opportunities.',
 };
 
 export const revalidate = 3600;

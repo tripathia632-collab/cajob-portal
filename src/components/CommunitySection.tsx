@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   ShieldCheck,
   ChevronRight,
-  Headphones,
   Send,
 } from 'lucide-react';
 import {
@@ -42,7 +41,7 @@ export function CommunitySection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* ============================================================== */}
-        {/* PART 1: WHATSAPP BROADCAST CHANNELS HUB (BROADCASTS ONLY)       */}
+        {/* PART 1: WHATSAPP COMMUNITY (CHANNELS & GROUPS)                 */}
         {/* ============================================================== */}
         <div>
           {/* Section Header */}
@@ -50,13 +49,13 @@ export function CommunitySection() {
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[#08765D] mb-1.5">
                 <Users className="w-3.5 h-3.5" />
-                <span>WhatsApp Broadcast Channels</span>
+                <span>Official WhatsApp Community</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-[#102D37] tracking-tight">
-                Curated WhatsApp Channels for CAs &amp; Finance
+                CAJob.in WhatsApp Community
               </h2>
               <p className="text-sm sm:text-base text-[#52676D] mt-2 max-w-2xl">
-                Get real-time vacancy updates, off-market finance opportunities, and market intelligence directly on your WhatsApp.
+                Join our official WhatsApp community for verified CA vacancies, articleship openings, corporate industrial training, and finance opportunities.
               </p>
             </div>
 
@@ -64,7 +63,7 @@ export function CommunitySection() {
               href="/community"
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-[#08765D] hover:text-white bg-white hover:bg-[#08765D] border border-[#bcdbc8] rounded-xl shadow-2xs transition-all w-fit btn-press-effect"
             >
-              <span>Explore all 8 channels</span>
+              <span>Explore all community groups</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
@@ -75,10 +74,10 @@ export function CommunitySection() {
               <div className="flex flex-wrap items-center gap-2.5">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#25D366]/20 text-[#a7e9d4] border border-[#25D366]/30">
                   <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
-                  Active Now · Official Broadcast Channel
+                  Active Now · Official WhatsApp Community
                 </span>
                 <span className="text-xs text-[#bad1c5]">
-                  Free to Follow · Zero Spam
+                  Free to Join · Zero Spam
                 </span>
               </div>
 
@@ -120,7 +119,7 @@ export function CommunitySection() {
                   >
                     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z" />
                   </svg>
-                  <span>Join &ldquo;Core Finance for CAs&rdquo; Channel</span>
+                  <span>Join WhatsApp Community</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
 
@@ -132,15 +131,15 @@ export function CommunitySection() {
             </div>
           </div>
 
-          {/* CHANNELS FOR ALL KINDS OF THINGS (COMING SOON) */}
+          {/* COMMUNITY GROUPS FOR ALL KINDS OF DOMAINS */}
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
               <div>
                 <h3 className="text-xl font-bold text-[#102D37]">
-                  Upcoming Domain-Specific Channels
+                  Explore Community by Domain
                 </h3>
                 <p className="text-xs sm:text-sm text-[#52676D] mt-0.5">
-                  We are building dedicated WhatsApp broadcast channels for every specialized career stage.
+                  Join domain-specific WhatsApp groups and broadcasts across every stage of your CA journey.
                 </p>
               </div>
               <span className="text-xs font-semibold text-[#08765D] bg-[#EAF4EF] px-3 py-1 rounded-full border border-[#bcdbc8] w-fit">
@@ -170,7 +169,7 @@ export function CommunitySection() {
 
                     {c.audience && (
                       <div className="text-[11px] font-semibold text-[#52676D] mb-2">
-                        Audience: {c.audience}
+                        Target: {c.audience}
                       </div>
                     )}
 
@@ -202,7 +201,7 @@ export function CommunitySection() {
         </div>
 
         {/* ============================================================== */}
-        {/* PART 2: DIRECT WHATSAPP FEEDBACK & CONTACT DESK (SEPARATED)     */}
+        {/* PART 2: DIRECT WHATSAPP FEEDBACK (COMPLETELY SEPARATE)         */}
         {/* ============================================================== */}
         <div className="pt-4 border-t border-[#DCE5E0]">
           <div className="bg-gradient-to-r from-[#F0F7F4] via-white to-[#F5F7F6] rounded-3xl p-6 sm:p-10 border border-[#bcdbc8] shadow-xs">
@@ -210,8 +209,8 @@ export function CommunitySection() {
               
               <div className="lg:col-span-8 space-y-3">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#EAF4EF] text-[#08765D] border border-[#bcdbc8]">
-                  <Headphones className="w-3.5 h-3.5" />
-                  <span>Direct Help &amp; Feedback (1-on-1 Chat)</span>
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Direct 1-on-1 WhatsApp Chat</span>
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl font-extrabold text-[#102D37] tracking-tight">
@@ -219,7 +218,7 @@ export function CommunitySection() {
                 </h3>
 
                 <p className="text-sm text-[#52676D] leading-relaxed max-w-2xl">
-                  Connect with us for portal suggestions, job posting inquiries, or technical support. Whether you found a broken link, have feature suggestions, or need assistance, message us directly on WhatsApp.
+                  Connect with us for portal suggestions, job posting inquiries, or technical questions. Whether you found a broken link, have feature suggestions, or need assistance, message us directly on WhatsApp.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4 pt-1">
@@ -241,7 +240,7 @@ export function CommunitySection() {
               {/* Action Box */}
               <div className="lg:col-span-4 bg-white rounded-2xl p-6 border border-[#DCE5E0] shadow-xs text-center space-y-4">
                 <div className="text-xs text-[#52676D] font-medium">
-                  Official WhatsApp &amp; Support Line:
+                  Official WhatsApp:
                 </div>
                 <div className="text-xl sm:text-2xl font-extrabold text-[#102D37] tracking-tight">
                   {WHATSAPP_FEEDBACK_NUMBER}

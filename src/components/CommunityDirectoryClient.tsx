@@ -13,7 +13,6 @@ import {
   ArrowLeft,
   Sparkles,
   Phone,
-  Headphones,
   Search,
 } from 'lucide-react';
 import {
@@ -35,7 +34,7 @@ export function CommunityDirectoryClient() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const categories = [
-    { id: 'ALL', label: 'All Channels (8)' },
+    { id: 'ALL', label: 'All Community Groups (8)' },
     { id: 'Active', label: 'Active Now (1)' },
     { id: 'Articleship', label: 'Articleship & Training (2)' },
     { id: 'Finance', label: 'Finance & Deals (2)' },
@@ -92,20 +91,20 @@ export function CommunityDirectoryClient() {
           Back to Home
         </Link>
         <span className="text-[#DCE5E0]">/</span>
-        <span className="text-[#102D37] font-semibold">WhatsApp Channels Directory</span>
+        <span className="text-[#102D37] font-semibold">WhatsApp Community</span>
       </nav>
 
       {/* Page Header */}
       <div className="mb-12 text-center max-w-3xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-[#EAF4EF] text-[#08765D] border border-[#bcdbc8]">
           <Users className="w-3.5 h-3.5" />
-          <span>Official WhatsApp Channels</span>
+          <span>Official WhatsApp Community</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold text-[#102D37] tracking-tight">
-          CAJob.in Channels Hub
+          CAJob.in WhatsApp Community
         </h1>
         <p className="text-sm sm:text-base text-[#52676D] leading-relaxed">
-          Follow verified WhatsApp broadcast channels to receive direct job alerts, articleship announcements, market updates, and career advice.
+          Join our official WhatsApp community for verified CA vacancies, articleship openings, corporate industrial training, and finance opportunities.
         </p>
       </div>
 
@@ -117,10 +116,10 @@ export function CommunityDirectoryClient() {
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#25D366]/20 text-[#a7e9d4] border border-[#25D366]/30">
               <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
-              Official WhatsApp Channel · Live &amp; Active
+              Official WhatsApp Community · Live &amp; Active
             </span>
             <span className="text-xs text-[#bad1c5]">
-              One-Way Broadcast · Zero Spam
+              Direct Broadcast · Zero Spam
             </span>
           </div>
 
@@ -139,7 +138,7 @@ export function CommunityDirectoryClient() {
                 {featured.name}
               </h2>
               <p className="text-xs sm:text-sm font-semibold text-[#76d7b2]">
-                {featured.category} · Curated by CAJob.in
+                {featured.category} · Curated on cajob.in
               </p>
             </div>
           </div>
@@ -162,7 +161,7 @@ export function CommunityDirectoryClient() {
               >
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z" />
               </svg>
-              <span>Join Channel on WhatsApp</span>
+              <span>Join WhatsApp Community</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
 
@@ -175,16 +174,16 @@ export function CommunityDirectoryClient() {
       </div>
 
       {/* ============================================================== */}
-      {/* SECTION 2: CHANNELS FOR ALL KINDS OF THINGS                     */}
+      {/* SECTION 2: COMMUNITY GROUPS FOR ALL KINDS OF DOMAINS          */}
       {/* ============================================================== */}
       <div className="mb-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
           <div>
             <h2 className="text-2xl font-bold text-[#102D37]">
-              Browse Channels by Domain
+              Explore Community by Domain
             </h2>
             <p className="text-xs sm:text-sm text-[#52676D] mt-1">
-              Select your career focus below to explore live and upcoming broadcast channels.
+              Select your career focus below to explore live and upcoming WhatsApp groups and broadcasts.
             </p>
           </div>
 
@@ -195,7 +194,7 @@ export function CommunityDirectoryClient() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search channels..."
+              placeholder="Search community groups..."
               className="w-full pl-10 pr-4 py-2 bg-white text-[#102D37] text-xs rounded-xl border border-[#DCE5E0] focus:border-[#08765D] focus:outline-none transition-all placeholder:text-[#52676D]/60"
             />
           </div>
@@ -218,7 +217,7 @@ export function CommunityDirectoryClient() {
           ))}
         </div>
 
-        {/* Channels Grid */}
+        {/* Channels & Groups Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredChannels.map((channel) => {
             const isActive = channel.status === 'Active';
@@ -267,7 +266,7 @@ export function CommunityDirectoryClient() {
                       rel="noopener noreferrer"
                       className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold rounded-xl shadow-xs transition-colors"
                     >
-                      <span>Join WhatsApp Channel</span>
+                      <span>Join WhatsApp Community</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </a>
                   ) : (
@@ -295,7 +294,7 @@ export function CommunityDirectoryClient() {
       </div>
 
       {/* ============================================================== */}
-      {/* SECTION 3: DIRECT WHATSAPP FEEDBACK & HELPDESK (SEPARATE)      */}
+      {/* SECTION 3: DIRECT WHATSAPP FEEDBACK (COMPLETELY SEPARATE)       */}
       {/* ============================================================== */}
       <div className="mt-16 pt-10 border-t border-[#DCE5E0]">
         <div className="bg-[#102D37] rounded-3xl p-6 sm:p-10 text-white shadow-md relative overflow-hidden border border-[#1f4e5c]">
@@ -303,8 +302,8 @@ export function CommunityDirectoryClient() {
             
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#174450] text-[#76d7b2] border border-[#2a6575]">
-                <Headphones className="w-3.5 h-3.5" />
-                <span>Direct Help &amp; Feedback · 1-on-1 Chat</span>
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>Direct WhatsApp · 1-on-1 Chat</span>
               </div>
 
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -312,7 +311,7 @@ export function CommunityDirectoryClient() {
               </h2>
 
               <p className="text-xs sm:text-sm text-[#bad1c5] leading-relaxed max-w-2xl">
-                Connect with us for personal assistance, questions about vacancies, bug reporting, or employer postings. This direct WhatsApp line is completely separate from our broadcast channels above.
+                Connect with us for personal assistance, questions about vacancies, suggestions, or employer postings. This direct WhatsApp line is completely separate from our WhatsApp community groups above.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-[#d2e4dc]">
@@ -334,7 +333,7 @@ export function CommunityDirectoryClient() {
             {/* Right: Contact Box */}
             <div className="lg:col-span-4 bg-[#174450] rounded-2xl p-6 border border-[#2a6575] space-y-4 text-center">
               <div className="text-xs text-[#bad1c5]">
-                Official WhatsApp &amp; Support Line:
+                Official WhatsApp:
               </div>
               <div className="text-xl sm:text-2xl font-extrabold text-white tracking-wide">
                 {WHATSAPP_FEEDBACK_NUMBER}

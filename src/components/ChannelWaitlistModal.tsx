@@ -186,7 +186,7 @@ export function ChannelWaitlistModal({
                 Active right now:
               </div>
               <p className="text-xs text-[#52676D]">
-                Our flagship broadcast channel <strong className="text-[#08765D]">Core Finance for CAs</strong> is already active with live finance roles.
+                Our flagship community group <strong className="text-[#08765D]">Core Finance for CAs</strong> is already active with live finance roles.
               </p>
               <a
                 href={OFFICIAL_WHATSAPP_CHANNEL_URL}
@@ -194,7 +194,7 @@ export function ChannelWaitlistModal({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-[#08765D] hover:underline pt-1"
               >
-                <span>Join Core Finance Channel Now</span>
+                <span>Join Core Finance WhatsApp Community Now</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>

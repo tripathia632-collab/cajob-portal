@@ -3,6 +3,7 @@ import initialJobs from '@/data/initial-jobs.json';
 import initialBlogs from '@/data/initial-blogs.json';
 import initialResources from '@/data/initial-resources.json';
 import { Job, Blog, Resource } from '@/types';
+import { matchesExperienceSlab } from '@/lib/utils';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -48,6 +49,7 @@ function mapJobFromDb(row: any): Job {
     workMode: row.work_mode || row.workMode,
     pay: row.pay,
     experience: row.experience,
+    experienceSlab: row.experience_slab || row.experienceSlab,
     description: row.description,
     applyUrl: row.apply_url || row.applyUrl,
     postedOn: row.posted_on || row.postedOn,
@@ -78,6 +80,7 @@ export async function getJobs(filter?: {
   city?: string;
   search?: string;
   status?: string;
+  experience?: string;
 }): Promise<Job[]> {
   const isDefaultPublishedQuery = !filter || (!filter.status || filter.status === 'Published');
   const now = Date.now();
@@ -147,6 +150,10 @@ export async function getJobs(filter?: {
     );
   }
 
+  if (filter?.experience) {
+    list = list.filter((j) => matchesExperienceSlab(j, filter.experience!));
+  }
+
   return list;
 }
 
@@ -191,6 +198,7 @@ export async function createOrUpdateJob(job: Job): Promise<Job> {
       work_mode: job.workMode,
       pay: job.pay,
       experience: job.experience,
+      experience_slab: job.experienceSlab || null,
       description: job.description,
       responsibilities: job.responsibilities,
       requirements: job.requirements,

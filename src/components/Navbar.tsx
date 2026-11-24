@@ -134,7 +134,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
                 href="/community"
                 className="text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors flex items-center gap-1.5"
               >
-                Community
+                Channels
                 <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse"></span>
               </Link>
 
@@ -293,7 +293,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between px-3 py-2 text-base font-medium text-[#102D37] hover:bg-[#EAF4EF] rounded-lg"
             >
-              <span>Community &amp; WhatsApp Channels</span>
+              <span>WhatsApp Channels Hub</span>
               <span className="w-2 h-2 rounded-full bg-[#25D366]"></span>
             </Link>
             <Link

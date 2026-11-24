@@ -211,6 +211,9 @@ export function GateHero() {
             <div className="pt-1 flex flex-wrap items-center gap-1.5 text-xs text-[#52676D]">
               <span className="font-semibold text-[#102D37]">Popular:</span>
               {[
+                { label: 'Freshers', href: '/jobs?exp=fresher' },
+                { label: '0-2 Yrs', href: '/jobs?exp=0-2' },
+                { label: '2-5 Yrs', href: '/jobs?exp=2-5' },
                 { label: 'Articleship', href: '/articleship' },
                 { label: 'Industrial Training', href: '/industrial-training' },
                 { label: 'Qualified CA Jobs', href: '/ca-jobs' },

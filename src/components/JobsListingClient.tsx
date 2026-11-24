@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Job } from '@/types';
 import { JobCard } from '@/components/JobCard';
-import { Search, MapPin, SlidersHorizontal, X, Briefcase, Filter, ArrowLeft } from 'lucide-react';
+import { Search, MapPin, SlidersHorizontal, X, Briefcase, Filter, ArrowLeft, Clock } from 'lucide-react';
+import { EXPERIENCE_SLABS, matchesExperienceSlab } from '@/lib/utils';
 
 interface JobsListingClientProps {
   initialJobs: Job[];
@@ -28,6 +29,21 @@ export function JobsListingClient({
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [savedOnly, setSavedOnly] = useState(false);
   const [savedJobIds, setSavedJobIds] = useState<string[]>([]);
+
+  // Sync URL search parameters on mount (e.g. ?exp=fresher or ?city=Mumbai or ?stage=Articleship)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('q');
+      const city = params.get('city');
+      const stage = params.get('stage');
+      const exp = params.get('exp');
+      if (q) setSearch(q);
+      if (city) setCityFilter(city);
+      if (stage) setStageFilter(stage);
+      if (exp) setExpFilter(exp);
+    }
+  }, []);
 
   // Unique cities list for dropdown
   const cities = useMemo(() => {
@@ -79,11 +95,9 @@ export function JobsListingClient({
         return false;
       }
 
-      // Experience filter
-      if (expFilter) {
-        if (expFilter === 'fresher' && !job.experience?.toLowerCase().includes('0') && !job.experience?.toLowerCase().includes('fresher') && !job.experience?.toLowerCase().includes('trainee')) {
-          return false;
-        }
+      // Experience slab filter
+      if (expFilter && !matchesExperienceSlab(job, expFilter)) {
+        return false;
       }
 
       return true;
@@ -136,7 +150,7 @@ export function JobsListingClient({
       <div className="bg-white rounded-2xl border border-[#DCE5E0] p-4 mb-8 shadow-xs">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
           {/* Keyword Search */}
-          <div className="md:col-span-5 relative">
+          <div className="md:col-span-4 relative">
             <Search className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -156,12 +170,12 @@ export function JobsListingClient({
           </div>
 
           {/* City Dropdown */}
-          <div className="md:col-span-3 relative">
-            <MapPin className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <div className="md:col-span-2 relative">
+            <MapPin className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <select
               value={cityFilter}
               onChange={(e) => setCityFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all appearance-none cursor-pointer"
+              className="w-full pl-9 pr-3 py-2.5 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all appearance-none cursor-pointer"
             >
               <option value="">All Locations</option>
               {cities.map((c) => (
@@ -184,6 +198,22 @@ export function JobsListingClient({
               <option value="Industrial Training">Industrial Training</option>
               <option value="Qualified CA">Qualified CA</option>
               <option value="Other Finance Jobs">Other Finance</option>
+            </select>
+          </div>
+
+          {/* Experience Level Filter Dropdown */}
+          <div className="md:col-span-2 relative">
+            <Briefcase className="w-4 h-4 text-[#52676D] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <select
+              value={expFilter}
+              onChange={(e) => setExpFilter(e.target.value)}
+              className="w-full pl-9 pr-3 py-2.5 bg-[#F5F7F6] text-[#102D37] rounded-xl text-sm border border-transparent focus:border-[#08765D] focus:bg-white focus:outline-none transition-all appearance-none cursor-pointer font-medium"
+            >
+              {EXPERIENCE_SLABS.map((slab) => (
+                <option key={slab.id} value={slab.id}>
+                  {slab.label}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -211,7 +241,22 @@ export function JobsListingClient({
         {/* Desktop Quick Chips Bar */}
         <div className="mt-3 pt-3 border-t border-[#F0F4F2] flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold text-[#52676D]">Work Mode:</span>
+            <span className="font-semibold text-[#52676D]">Experience:</span>
+            {EXPERIENCE_SLABS.map((slab) => (
+              <button
+                key={slab.id}
+                onClick={() => setExpFilter(slab.id)}
+                className={`px-2.5 py-1 rounded-md transition-colors ${
+                  expFilter === slab.id
+                    ? 'bg-[#08765D] text-white font-medium shadow-2xs'
+                    : 'bg-[#F5F7F6] text-[#52676D] hover:bg-[#EAF4EF] hover:text-[#08765D]'
+                }`}
+              >
+                {slab.short}
+              </button>
+            ))}
+
+            <span className="ml-2 font-semibold text-[#52676D]">Work Mode:</span>
             {['', 'On-site', 'Hybrid', 'Remote'].map((mode) => (
               <button
                 key={mode}
@@ -226,7 +271,7 @@ export function JobsListingClient({
               </button>
             ))}
 
-            <span className="ml-3 font-semibold text-[#52676D]">Saved:</span>
+            <span className="ml-2 font-semibold text-[#52676D]">Saved:</span>
             <button
               onClick={() => setSavedOnly(!savedOnly)}
               className={`px-2.5 py-1 rounded-md transition-colors ${
@@ -328,6 +373,27 @@ export function JobsListingClient({
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase text-[#52676D] mb-2">
+                    Experience Level
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {EXPERIENCE_SLABS.map((slab) => (
+                      <button
+                        key={slab.id}
+                        onClick={() => setExpFilter(slab.id)}
+                        className={`p-2 rounded-lg text-xs font-medium border text-center transition-all ${
+                          expFilter === slab.id
+                            ? 'bg-[#08765D] text-white border-[#08765D] font-bold shadow-xs'
+                            : 'bg-[#F5F7F6] text-[#52676D] border-transparent hover:bg-[#EAF4EF]'
+                        }`}
+                      >
+                        {slab.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <div>

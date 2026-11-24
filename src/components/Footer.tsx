@@ -43,10 +43,10 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#a7e9d4] border border-[#25D366]/40 transition-colors"
-                title="Message on WhatsApp"
+                title="Connect with us on WhatsApp"
               >
                 <span className="w-2 h-2 rounded-full bg-[#25D366]"></span>
-                WhatsApp: {WHATSAPP_FEEDBACK_NUMBER}
+                Connect with us: {WHATSAPP_FEEDBACK_NUMBER}
               </a>
             </div>
           </div>
@@ -125,9 +125,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-[#bad1c5]">
               <li>
                 <Link href="/community" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  Community Hub
+                  WhatsApp Channels Hub
                   <span className="text-[10px] uppercase font-bold bg-[#25D366]/20 text-[#a7e9d4] px-1.5 py-0.2 rounded border border-[#25D366]/40">
-                    WhatsApp
+                    8 Channels
                   </span>
                 </Link>
               </li>
@@ -141,14 +141,14 @@ export function Footer() {
                   Core Finance Channel <ArrowUpRight className="w-3 h-3 text-[#76d7b2]" />
                 </a>
               </li>
-              <li>
+              <li className="pt-1.5 border-t border-[#1f4e5c]/60">
                 <a
                   href={WHATSAPP_FEEDBACK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors flex items-center gap-1 text-[#a7e9d4] font-medium"
                 >
-                  WhatsApp: {WHATSAPP_FEEDBACK_NUMBER}
+                  Connect with us: {WHATSAPP_FEEDBACK_NUMBER}
                 </a>
               </li>
               <li>

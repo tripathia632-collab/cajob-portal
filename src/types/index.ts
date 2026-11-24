@@ -14,6 +14,7 @@ export interface Job {
   workMode: WorkMode;
   pay?: string;
   experience?: string;
+  experienceSlab?: string;
   description: string;
   applyUrl?: string;
   applyEmail?: string;

@@ -172,6 +172,7 @@ export default function AdminDashboardPage() {
     workMode: 'Hybrid',
     pay: '',
     experience: '',
+    experienceSlab: 'Fresher / Trainee',
     applyUrl: '',
     description: '',
     responsibilities: '',
@@ -234,6 +235,7 @@ export default function AdminDashboardPage() {
       workMode: jobForm.workMode || 'On-site',
       pay: jobForm.pay || '',
       experience: jobForm.experience || '',
+      experienceSlab: jobForm.experienceSlab || '',
       description: jobForm.description || '',
       responsibilities: jobForm.responsibilities || '',
       requirements: jobForm.requirements || '',
@@ -1153,6 +1155,34 @@ export default function AdminDashboardPage() {
                     <option value="Hybrid">Hybrid</option>
                     <option value="Remote">Remote</option>
                   </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase text-[#52676D] mb-1">Experience Level / Slab</label>
+                  <select
+                    value={jobForm.experienceSlab || ''}
+                    onChange={(e) => setJobForm({ ...jobForm, experienceSlab: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-[#F5F7F6] rounded-xl text-xs border border-[#DCE5E0]"
+                  >
+                    <option value="">Auto-Detect from Text / Stage</option>
+                    <option value="Fresher / Trainee">Fresher / Trainee (0 yrs)</option>
+                    <option value="0-2 years">0 – 2 Years</option>
+                    <option value="2-5 years">2 – 5 Years</option>
+                    <option value="5-8 years">5 – 8 Years</option>
+                    <option value="8+ years">8+ Years</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase text-[#52676D] mb-1">Experience Text / Specifics</label>
+                  <input
+                    type="text"
+                    value={jobForm.experience || ''}
+                    onChange={(e) => setJobForm({ ...jobForm, experience: e.target.value })}
+                    placeholder="e.g. 1-3 years post-qualification"
+                    className="w-full px-3.5 py-2 bg-[#F5F7F6] rounded-xl text-xs border border-[#DCE5E0]"
+                  />
                 </div>
               </div>
 

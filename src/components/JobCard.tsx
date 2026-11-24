@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Job } from '@/types';
 import { Bookmark, Share2, ArrowUpRight, MapPin, Building2, Briefcase } from 'lucide-react';
-import { timeAgo } from '@/lib/utils';
+import { timeAgo, getExperienceDisplayLabel } from '@/lib/utils';
 
 interface JobCardProps {
   job: Job;
@@ -105,12 +105,10 @@ export function JobCard({ job, isSaved = false, onToggleSave }: JobCardProps) {
 
         {/* Experience & Pay Details */}
         <div className="text-xs text-[#52676D] flex items-center gap-3 mb-4">
-          {job.experience && (
-            <span className="flex items-center gap-1">
-              <Briefcase className="w-3.5 h-3.5" />
-              {job.experience}
-            </span>
-          )}
+          <span className="flex items-center gap-1 font-medium text-[#102D37]">
+            <Briefcase className="w-3.5 h-3.5 text-[#08765D]" />
+            {getExperienceDisplayLabel(job)}
+          </span>
           {job.pay && (
             <>
               <span>·</span>

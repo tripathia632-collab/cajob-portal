@@ -41,7 +41,7 @@ export function WhatsAppFloatingButton() {
           </div>
 
           <p className="text-[11px] text-[#52676D] leading-relaxed mb-3">
-            Have a question, feedback, or job query? Message the CAJob.in desk directly on WhatsApp.
+            Have a question, feedback, or job query? Connect with us directly on WhatsApp.
           </p>
 
           <a
@@ -50,9 +50,18 @@ export function WhatsAppFloatingButton() {
             rel="noopener noreferrer"
             className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-[#25D366] hover:bg-[#1EBE5D] rounded-xl shadow-xs transition-colors"
           >
-            <span>Start WhatsApp Chat</span>
+            <span>Connect with us on WhatsApp</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
+
+          <div className="mt-2.5 pt-2 border-t border-[#F0F4F2] text-center">
+            <a
+              href="/community"
+              className="text-[10px] font-semibold text-[#08765D] hover:underline"
+            >
+              Looking for WhatsApp Channels instead? View Hub →
+            </a>
+          </div>
         </div>
       )}
 

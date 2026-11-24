@@ -95,7 +95,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-semibold text-white">WhatsApp Feedback &amp; Queries</div>
+                    <div className="font-semibold text-white">Direct WhatsApp (1-on-1 Chat)</div>
                     <div className="text-[11px] text-[#76d7b2]">{WHATSAPP_FEEDBACK_NUMBER}</div>
                   </div>
                   <ArrowUpRight className="w-3.5 h-3.5 ml-auto text-[#76d7b2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -111,7 +111,7 @@ export default function ContactPage() {
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-semibold text-white">WhatsApp Channel</div>
+                    <div className="font-semibold text-white">WhatsApp Broadcast Channel</div>
                     <div className="text-[11px] text-[#bad1c5]">Core Finance for CAs</div>
                   </div>
                   <ArrowUpRight className="w-3.5 h-3.5 ml-auto text-[#76d7b2] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -142,7 +142,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-lg font-bold text-[#102D37]">Message Received</h3>
                 <p className="text-xs sm:text-sm text-[#52676D]">
-                  Thank you for writing to us. Our team will get back to you shortly at {form.email}.
+                  Thank you for writing to us. We will get back to you shortly at {form.email}.
                 </p>
               </div>
             ) : (

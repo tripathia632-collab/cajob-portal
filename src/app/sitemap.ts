@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blog',
     '/resources',
     '/tools',
+    '/tools/fixed-asset-register',
     '/tools/articleship-stipend-calculator',
     '/tools/articleship-transfer-checker',
     '/tools/ca-inhand-salary-estimator',

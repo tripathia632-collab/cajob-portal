@@ -2,16 +2,27 @@ import React from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { Calculator, ArrowUpRight, CheckCircle2, Wrench, Shield, Sparkles, ArrowLeft } from 'lucide-react';
+import { Calculator, ArrowUpRight, CheckCircle2, Wrench, Shield, Sparkles, ArrowLeft, Building2 } from 'lucide-react';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Interactive CA Web Tools & Calculators | CAJob.in',
-  description: 'Interactive web tools for CA students & finance professionals: Stipend calculators, ICAI transfer rule checkers, and salary tax estimators.',
+  description: 'Interactive web tools for CA students & finance professionals: Fixed Asset Register & Depreciation Engine, Stipend calculators, ICAI transfer rule checkers, and salary tax estimators.',
 };
+
+export const revalidate = 3600;
 
 export default function ToolsHubPage() {
   const tools = [
+    {
+      slug: 'fixed-asset-register',
+      title: 'Fixed Asset Register & Depreciation Engine',
+      description: 'Companies Act 2013 (Schedule II) & Income Tax Act 1961 (Sec 32) pro-rata daily depreciation, 180-day rule, shift adjustments, deferred tax, and bulk Excel import/export.',
+      badge: 'Flagship Tool · Schedule II & Sec 32',
+      icon: Building2,
+      status: 'Active',
+      featured: true,
+    },
     {
       slug: 'articleship-stipend-calculator',
       title: 'ICAI Articleship Stipend & Scheme Calculator',
@@ -19,6 +30,7 @@ export default function ToolsHubPage() {
       badge: 'Interactive Tool · Live',
       icon: Calculator,
       status: 'Active',
+      featured: false,
     },
     {
       slug: 'articleship-transfer-checker',
@@ -27,6 +39,7 @@ export default function ToolsHubPage() {
       badge: 'Rules Engine · Ready',
       icon: Shield,
       status: 'Active',
+      featured: false,
     },
     {
       slug: 'ca-inhand-salary-estimator',
@@ -35,6 +48,7 @@ export default function ToolsHubPage() {
       badge: 'Financial Model · Ready',
       icon: Sparkles,
       status: 'Active',
+      featured: false,
     },
   ];
 
@@ -68,23 +82,32 @@ export default function ToolsHubPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tools.map((t) => {
             const Icon = t.icon;
             return (
               <Link
                 key={t.slug}
                 href={`/tools/${t.slug}`}
-                className="group bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
+                className={`group bg-white rounded-3xl border p-6 sm:p-7 shadow-xs card-hover-effect flex flex-col justify-between ${
+                  t.featured ? 'border-[#08765D]/40 ring-1 ring-[#08765D]/20 bg-gradient-to-br from-white via-white to-[#EAF4EF]/30' : 'border-[#DCE5E0] hover:border-[#08765D]/60'
+                }`}
               >
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-6 h-6" />
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    {t.featured && (
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#08765D] text-white">
+                        ★ Featured Flagship
+                      </span>
+                    )}
                   </div>
                   <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#EAF4EF] text-[#08765D]">
                     {t.badge}
                   </span>
-                  <h3 className="text-lg font-bold text-[#102D37] tracking-tight mt-3 mb-2 group-hover:text-[#08765D] transition-colors">
+                  <h3 className="text-xl font-bold text-[#102D37] tracking-tight mt-3 mb-2 group-hover:text-[#08765D] transition-colors">
                     {t.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#52676D] leading-relaxed mb-6">

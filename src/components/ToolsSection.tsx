@@ -1,9 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
-import { Calculator, ShieldCheck, TrendingUp, ArrowUpRight, Wrench } from 'lucide-react';
+import { Calculator, ShieldCheck, TrendingUp, ArrowUpRight, Wrench, Building2 } from 'lucide-react';
 
 export function ToolsSection() {
   const tools = [
+    {
+      title: 'Fixed Asset Register & Depreciation',
+      badge: 'Flagship · Sch II & Sec 32',
+      description: 'Audit-ready FAR & pro-rata depreciation engine under Companies Act 2013 and Section 32 Income Tax Act with deferred tax & Excel import.',
+      href: '/tools/fixed-asset-register',
+      icon: Building2,
+      cta: 'Launch FAR Engine',
+      featured: true,
+    },
     {
       title: 'ICAI Articleship Stipend Calculator',
       badge: 'Interactive · New Scheme',
@@ -11,6 +20,7 @@ export function ToolsSection() {
       href: '/tools/articleship-stipend-calculator',
       icon: Calculator,
       cta: 'Launch Calculator',
+      featured: false,
     },
     {
       title: 'Articleship Transfer Rules Checker',
@@ -19,6 +29,7 @@ export function ToolsSection() {
       href: '/tools/articleship-transfer-checker',
       icon: ShieldCheck,
       cta: 'Check Eligibility',
+      featured: false,
     },
     {
       title: 'CA CTC to In-Hand Salary Estimator',
@@ -27,6 +38,7 @@ export function ToolsSection() {
       href: '/tools/ca-inhand-salary-estimator',
       icon: TrendingUp,
       cta: 'Calculate Take-Home',
+      featured: false,
     },
   ];
 
@@ -43,7 +55,7 @@ export function ToolsSection() {
               Interactive tools built for CA decisions
             </h2>
             <p className="text-sm sm:text-base text-[#52676D] mt-2">
-              No complex spreadsheets needed. In-browser calculators and compliance checkers for your CA career.
+              No complex spreadsheets needed. In-browser calculators, asset registers, and compliance checkers for your CA career.
             </p>
           </div>
 
@@ -56,15 +68,17 @@ export function ToolsSection() {
           </Link>
         </div>
 
-        {/* 3 Figma-Styled Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 4 Modern Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {tools.map((t) => {
             const Icon = t.icon;
             return (
               <Link
                 key={t.title}
                 href={t.href}
-                className="group bg-white rounded-3xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 sm:p-7 shadow-xs card-hover-effect flex flex-col justify-between"
+                className={`group bg-white rounded-3xl border p-6 shadow-xs card-hover-effect flex flex-col justify-between ${
+                  t.featured ? 'border-[#08765D]/40 ring-1 ring-[#08765D]/20 bg-gradient-to-b from-white to-[#EAF4EF]/20' : 'border-[#DCE5E0] hover:border-[#08765D]/60'
+                }`}
               >
                 <div>
                   <div className="w-12 h-12 rounded-2xl bg-[#EAF4EF] text-[#08765D] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -73,10 +87,10 @@ export function ToolsSection() {
                   <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-[#EAF4EF] text-[#08765D]">
                     {t.badge}
                   </span>
-                  <h3 className="text-xl font-bold text-[#102D37] tracking-tight mt-3 mb-2 group-hover:text-[#08765D] transition-colors">
+                  <h3 className="text-lg font-bold text-[#102D37] tracking-tight mt-3 mb-2 group-hover:text-[#08765D] transition-colors leading-snug">
                     {t.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#52676D] leading-relaxed mb-6">
+                  <p className="text-xs text-[#52676D] leading-relaxed mb-6">
                     {t.description}
                   </p>
                 </div>

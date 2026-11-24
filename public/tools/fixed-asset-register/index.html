@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cajob.in | Fixed Asset Register & Depreciation Engine (Companies Act & Income Tax)</title>
+  <meta name="description" content="Professional Fixed Asset Register and Depreciation calculation as per Companies Act 2013 (Schedule II) and Income Tax Act 1961 (Section 32) by CA Ashish Tripathi on cajob.in">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Sticky Top Bar Container (Header + Tabs flow naturally without overlapping) -->
+  <div class="top-nav-wrapper">
+    <!-- Top Brand Navigation Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <a href="/tools" class="brand-logo-badge" style="text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="Back to cajob.in Web Tools Hub">← cajob.in</a>
+        <div class="brand-title-wrap">
+          <h1>Fixed Asset Register & Depreciation Engine</h1>
+          <div class="brand-sub">Companies Act 2013 · Income Tax Act 1961 · Built by <strong>CA Ashish Tripathi</strong></div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Company Switcher -->
+        <div class="control-group">
+          <label>Entity:</label>
+          <select id="companySelector" class="control-select" onchange="APP.onCompanyChange(this.value)">
+            <!-- Populated dynamically -->
+          </select>
+          <button class="btn btn-sm btn-icon" title="Entity Profile & Settings" onclick="APP.openCompanyModal()">⚙️</button>
+        </div>
+
+        <!-- Financial Year Selector -->
+        <div class="control-group">
+          <label>Period / FY:</label>
+          <select id="fySelector" class="control-select" onchange="APP.onFYChange(this.value)">
+            <option value="2024">FY 2024-25 (01-Apr-2024 to 31-Mar-2025)</option>
+            <option value="2025">FY 2025-26 (01-Apr-2025 to 31-Mar-2026)</option>
+            <option value="2026">FY 2026-27 (01-Apr-2026 to 31-Mar-2027)</option>
+            <option value="2027">FY 2027-28 (01-Apr-2027 to 31-Mar-2028)</option>
+          </select>
+        </div>
+
+        <!-- Template & Import Shortcuts -->
+        <div class="header-cta-group">
+          <button class="btn btn-sm btn-secondary" onclick="APP.openTemplateModal()">📥 Template</button>
+          <button class="btn btn-sm btn-secondary" onclick="APP.openImportModal()">📤 Bulk Upload</button>
+          <button class="btn btn-sm btn-emerald" onclick="APP.loadSamplePortfolio()">⚡ 1-Click Sample Data</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Secondary Tab Navigation (Re-ordered in optimal logical sequence) -->
+    <nav class="sub-nav">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-tab="dashboard" onclick="APP.switchTab('dashboard')">
+          📊 Overview & Dashboard
+        </button>
+        <button class="nav-tab" data-tab="operations" onclick="APP.switchTab('operations')">
+          ⚡ Asset Operations & Lifecycle Hub <span class="tab-badge" id="tabTxnCount">0</span>
+        </button>
+        <button class="nav-tab" data-tab="assets" onclick="APP.switchTab('assets')">
+          📋 Fixed Asset Register <span class="tab-badge" id="tabAssetCount">0</span>
+        </button>
+        <button class="nav-tab" data-tab="companies-act" onclick="APP.switchTab('companies-act')">
+          🏢 Companies Act (Schedule II)
+        </button>
+        <button class="nav-tab" data-tab="income-tax" onclick="APP.switchTab('income-tax')">
+          📑 Income Tax Act (Section 32)
+        </button>
+        <button class="nav-tab" data-tab="deferred-tax" onclick="APP.switchTab('deferred-tax')">
+          ⚖️ Tax vs Book (Deferred Tax)
+        </button>
+        <button class="nav-tab" data-tab="reports" onclick="APP.switchTab('reports')">
+          📑 Audit Reports & Export
+        </button>
+      </div>
+
+      <div class="sub-nav-actions">
+        <button class="btn btn-sm btn-primary" onclick="APP.openAddAssetModal()">+ Add Asset</button>
+        <button class="btn btn-sm btn-secondary" onclick="APP.openBackupModal()" title="Backup & Restore">💾 Backup</button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- Print Header (Visible only when printing) -->
+    <div class="print-header">
+      <h2 id="printCompanyName">Entity Name</h2>
+      <p id="printSubtitle">Fixed Asset Register & Depreciation Schedules · cajob.in · By CA Ashish Tripathi</p>
+    </div>
+
+    <!-- 1. DASHBOARD VIEW -->
+    <section id="view-dashboard" class="tab-content active">
+      <!-- KPI Stats Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header"><span class="kpi-label">Gross Capitalised Cost</span><span>💼</span></div>
+          <div class="kpi-value" id="kpiGrossBlock">₹ 0.00</div>
+          <div class="kpi-sub"><span id="kpiTotalAssets">0</span> total assets in register</div>
+        </div>
+
+        <div class="kpi-card kpi-emerald">
+          <div class="kpi-header"><span class="kpi-label">Closing Net Book Value</span><span>📈</span></div>
+          <div class="kpi-value" id="kpiNetBlock">₹ 0.00</div>
+          <div class="kpi-sub">Carrying value under Schedule II</div>
+        </div>
+
+        <div class="kpi-card kpi-indigo">
+          <div class="kpi-header"><span class="kpi-label">Companies Act Depreciation</span><span>⏳</span></div>
+          <div class="kpi-value" id="kpiBookDepr">₹ 0.00</div>
+          <div class="kpi-sub">Current financial year charge</div>
+        </div>
+
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-header"><span class="kpi-label">Income Tax Act Depreciation</span><span>🏛️</span></div>
+          <div class="kpi-value" id="kpiTaxDepr">₹ 0.00</div>
+          <div class="kpi-sub">Section 32 allowable deduction</div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header"><span class="kpi-label">Capital Work in Progress</span><span>🏗️</span></div>
+          <div class="kpi-value" id="kpiCWIPValue">₹ 0.00</div>
+          <div class="kpi-sub"><span id="kpiCWIPCount">0</span> assets under installation</div>
+        </div>
+
+        <div class="kpi-card kpi-rose">
+          <div class="kpi-header"><span class="kpi-label">Exits / Disposals</span><span>🏷️</span></div>
+          <div class="kpi-value" id="kpiDisposalsValue">₹ 0.00</div>
+          <div class="kpi-sub">Net P&L: <strong id="kpiDisposalsPL">₹ 0.00</strong></div>
+        </div>
+      </div>
+
+      <!-- Charts & Visuals Grid -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Asset Mix by Category (Gross Block)</div>
+              <div class="card-subtitle">Distribution of fixed asset investments across balance sheet classes</div>
+            </div>
+          </div>
+          <div class="card-body" style="height: 320px; display: flex; align-items: center; justify-content: center;">
+            <canvas id="categoryDonutChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Companies Act vs Income Tax Depreciation</div>
+              <div class="card-subtitle">Comparison of annual statutory depreciation charge</div>
+            </div>
+          </div>
+          <div class="card-body" style="height: 320px; display: flex; align-items: center; justify-content: center;">
+            <canvas id="deprComparisonChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action & Compliance Banner -->
+      <div class="alert alert-info">
+        <span>💡</span>
+        <div>
+          <strong>Statutory Compliance Engine:</strong> Calculates daily pro-rata depreciation for Companies Act 2013 (Schedule II) from <em>Ready for Use Date</em>, and Income Tax Act 1961 (Section 32) with 180-day rule from <em>Put to Use Date</em>. Includes Section 32(1)(iia) Additional Depreciation & Section 50 Capital Gain/Loss verification.
+        </div>
+      </div>
+
+      <!-- Recent Asset Movements Table -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Recent Asset Lifecycle Movements</div>
+            <div class="card-subtitle">Latest recorded Disposals, Cost Additions, CWIP Capitalisations, and Transfers</div>
+          </div>
+          <button class="btn btn-sm btn-secondary" onclick="APP.switchTab('operations')">Go to Operations Hub →</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Asset ID & Name</th>
+                <th>Transaction Type</th>
+                <th>Reference</th>
+                <th class="num">Amount / Capex</th>
+                <th class="num">Sale Proceeds</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardRecentTxnsBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ASSET OPERATIONS & LIFECYCLE HUB (All scenarios in one unified workspace) -->
+    <section id="view-operations" class="tab-content" style="display: none;">
+      <!-- Scenario Action Launchpad Cards -->
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <div>
+            <div class="card-title">⚡ Asset Lifecycle Operations Launchpad</div>
+            <div class="card-subtitle">Execute any fixed asset scenario—acquisitions, subsequent capex additions, transfers, CWIP capitalisations, sales/disposals, scrappings, or write-offs.</div>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="APP.openRecordTxnModal()">+ Quick Transaction</button>
+        </div>
+        <div class="card-body" style="padding-bottom: 8px;">
+          <div class="action-grid">
+            <div class="action-card" onclick="APP.openAddAssetModal()">
+              <div class="action-card-icon" style="color: var(--primary);">➕</div>
+              <div class="action-card-title">1. New Acquisition</div>
+              <div class="action-card-sub">Add a new physical asset or capital work in progress</div>
+            </div>
+
+            <div class="action-card" onclick="APP.openQuickCapexModal()">
+              <div class="action-card-icon" style="color: var(--info);">🛠️</div>
+              <div class="action-card-title">2. Capex Addition</div>
+              <div class="action-card-sub">Record improvement, upgrade or overhaul cost to asset</div>
+            </div>
+
+            <div class="action-card" onclick="APP.openQuickTransferModal()">
+              <div class="action-card-icon" style="color: #6366f1;">🚚</div>
+              <div class="action-card-title">3. Asset Transfer</div>
+              <div class="action-card-sub">Relocate to new Location, Dept, Cost Centre or Custodian</div>
+            </div>
+
+            <div class="action-card" onclick="APP.openQuickCapitaliseModal()">
+              <div class="action-card-icon" style="color: var(--success);">🏗️</div>
+              <div class="action-card-title">4. Capitalise CWIP</div>
+              <div class="action-card-sub">Convert Work in Progress to Active on ready date</div>
+            </div>
+
+            <div class="action-card" onclick="APP.openQuickDisposalModal()">
+              <div class="action-card-icon" style="color: var(--warning);">🏷️</div>
+              <div class="action-card-title">5. Sale / Disposal</div>
+              <div class="action-card-sub">Record exit date, sale proceeds & compute P&L</div>
+            </div>
+
+            <div class="action-card" onclick="APP.openQuickScrapModal()">
+              <div class="action-card-icon" style="color: #9333ea;">♻️</div>
+              <div class="action-card-title">6. Scrap / Salvage</div>
+              <div class="action-card-sub">Retire unserviceable asset & record salvage proceeds</div>
+            </div>
+
+            <div class="action-card" onclick="APP.openQuickWriteOffModal()">
+              <div class="action-card-icon" style="color: var(--danger);">❌</div>
+              <div class="action-card-title">7. Write-Off</div>
+              <div class="action-card-sub">Write off destroyed, lost or obsolete assets</div>
+            </div>
+
+            <div class="action-card" onclick="APP.scrollToAuditTrail()">
+              <div class="action-card-icon" style="color: #475569;">↩️</div>
+              <div class="action-card-title">8. Reverse / Undo</div>
+              <div class="action-card-sub">Reverse mistaken transactions with full audit trail</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unified Audit Trail & Transaction Register -->
+      <div class="card" id="auditTrailSection">
+        <div class="card-header">
+          <div>
+            <div class="card-title">🛡️ Complete Lifecycle Audit Trail & Movement Register</div>
+            <div class="card-subtitle">Every asset transaction is tracked with date, voucher reference, proceeds, capex, and reversal status.</div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <select id="txnTypeFilter" class="filter-select" onchange="APP.renderTransactionsTable()">
+              <option value="">All Transaction Types</option>
+              <option value="Disposal / Sale">Disposal / Sale</option>
+              <option value="Cost Addition">Cost Addition (Capex)</option>
+              <option value="Transfer">Transfer</option>
+              <option value="Capitalise CWIP">Capitalise CWIP</option>
+              <option value="Scrap">Scrap</option>
+              <option value="Write-Off">Write-Off</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Txn ID</th>
+                <th>Effective Date</th>
+                <th>Asset Code & Name</th>
+                <th>Operation Type</th>
+                <th>Voucher / Ref</th>
+                <th class="num">Capex Addition (₹)</th>
+                <th class="num">Sale Proceeds (₹)</th>
+                <th>Details / Counterparty / Location</th>
+                <th>Audit Status</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="txnsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FIXED ASSET REGISTER (MASTER) VIEW -->
+    <section id="view-assets" class="tab-content" style="display: none;">
+      <!-- Search & Filters Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="assetSearchInput" class="search-input" placeholder="Search Asset ID, Tag, Name, Serial, Vendor..." oninput="APP.renderAssetsTable()">
+          </div>
+
+          <select id="filterCategory" class="filter-select" onchange="APP.renderAssetsTable()">
+            <option value="">All Categories</option>
+          </select>
+
+          <select id="filterStatus" class="filter-select" onchange="APP.renderAssetsTable()">
+            <option value="">All Statuses</option>
+            <option value="Active">Active</option>
+            <option value="CWIP">CWIP (Work in Progress)</option>
+            <option value="Disposed">Disposed / Sold</option>
+            <option value="Scrapped">Scrapped</option>
+            <option value="Written Off">Written Off</option>
+          </select>
+
+          <select id="filterLocation" class="filter-select" onchange="APP.renderAssetsTable()">
+            <option value="">All Locations</option>
+          </select>
+        </div>
+
+        <div class="toolbar-right">
+          <button class="btn btn-sm btn-secondary" onclick="FA_EXCEL_IO.exportAssetMasterXLSX(FA_STORAGE.getAssets(), FA_STORAGE.getActiveCompany())">📊 Export Register (.xlsx)</button>
+          <button class="btn btn-sm btn-primary" onclick="APP.openAddAssetModal()">+ Add New Asset</button>
+        </div>
+      </div>
+
+      <!-- Assets Table -->
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Asset Identification</th>
+              <th>Category & Class</th>
+              <th>Location & Custodian</th>
+              <th>Purchase & In-Service Dates</th>
+              <th class="num">Gross Cost (₹)</th>
+              <th>Dep. Method & Life</th>
+              <th>Tax Category</th>
+              <th>Status</th>
+              <th style="text-align: right;">Lifecycle Actions</th>
+            </tr>
+          </thead>
+          <tbody id="assetsTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. COMPANIES ACT (SCHEDULE II) VIEW -->
+    <section id="view-companies-act" class="tab-content" style="display: none;">
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="control-group" style="background: transparent; border: none; padding: 0;">
+            <label style="color: var(--text-main); font-weight: 700;">Schedule View:</label>
+            <select id="scheduleViewMode" class="filter-select" onchange="APP.renderBookSchedule()">
+              <option value="detail">Detailed Asset-by-Asset Schedule</option>
+              <option value="category">Category-Wise Balance Sheet Summary</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-sm btn-secondary" onclick="window.print()">🖨️ Print Schedule</button>
+          <button class="btn btn-sm btn-primary" onclick="APP.exportCompaniesActSchedule()">📊 Export Schedule (.xlsx)</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th rowspan="2" id="thScheduleName">Asset Code & Description</th>
+              <th rowspan="2" id="thScheduleMethod">Method & Life</th>
+              <th colspan="4" style="text-align: center; border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color); background: #eff6ff;">Gross Block (₹)</th>
+              <th colspan="4" style="text-align: center; border-right: 1px solid var(--border-color); background: #fdf2f8;">Accumulated Depreciation (₹)</th>
+              <th colspan="2" style="text-align: center; border-right: 1px solid var(--border-color); background: #ecfdf5;">Net Carrying Value (₹)</th>
+              <th rowspan="2" class="num">Disposal P&L (₹)</th>
+              <th rowspan="2">Audit Notes</th>
+            </tr>
+            <tr>
+              <th class="num" style="border-left: 1px solid var(--border-color);">Opening</th>
+              <th class="num">Additions</th>
+              <th class="num">Deductions</th>
+              <th class="num" style="border-right: 1px solid var(--border-color); font-weight: 700;">Closing</th>
+              <th class="num">Opening</th>
+              <th class="num">Depr. for Period</th>
+              <th class="num">Deductions</th>
+              <th class="num" style="border-right: 1px solid var(--border-color); font-weight: 700;">Closing</th>
+              <th class="num">Previous Year</th>
+              <th class="num" style="border-right: 1px solid var(--border-color); font-weight: 700;">Closing</th>
+            </tr>
+          </thead>
+          <tbody id="bookScheduleTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+          <tfoot id="bookScheduleTableFoot">
+            <!-- Totals populated -->
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. INCOME TAX ACT (SECTION 32) VIEW -->
+    <section id="view-income-tax" class="tab-content" style="display: none;">
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <label class="btn btn-sm btn-secondary" style="cursor: pointer;">
+            <input type="checkbox" id="includeAdditionalDepCheckbox" checked onchange="APP.renderTaxSchedule()">
+            Include Additional Dep. u/s 32(1)(iia) (20% / 10%)
+          </label>
+          <button class="btn btn-sm btn-secondary" onclick="APP.openTaxOpeningModal()">⚙️ Set Opening Block WDV</button>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-sm btn-secondary" onclick="window.print()">🖨️ Print Form 3CD</button>
+          <button class="btn btn-sm btn-primary" onclick="APP.exportTaxSchedule()">📊 Export 3CD Schedule (.xlsx)</button>
+        </div>
+      </div>
+
+      <!-- Form 3CD Clause 18 Schedule Table -->
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Block of Assets Description</th>
+              <th class="num">Rate %</th>
+              <th class="num">Opening WDV (₹)</th>
+              <th class="num">Additions ≥180 Days (₹)</th>
+              <th class="num">Additions &lt;180 Days (₹)</th>
+              <th class="num">Total Basis (₹)</th>
+              <th class="num">Deductions u/s 43(6) (₹)</th>
+              <th class="num">Net WDV before Dep. (₹)</th>
+              <th class="num">Normal Depr. (₹)</th>
+              <th class="num">Additional Depr. (₹)</th>
+              <th class="num">Total Allowable Depr. (₹)</th>
+              <th class="num">Closing WDV (₹)</th>
+              <th>Sec. 50 STCG / Notes</th>
+            </tr>
+          </thead>
+          <tbody id="taxScheduleTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+          <tfoot id="taxScheduleTableFoot">
+            <!-- Totals populated -->
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. TAX VS BOOK (DEFERRED TAX) VIEW -->
+    <section id="view-deferred-tax" class="tab-content" style="display: none;">
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="control-group">
+            <label>Corporate Tax Rate (AS 22 / Ind AS 12):</label>
+            <select id="deferredTaxRateSelect" class="filter-select" onchange="APP.renderDeferredTax()">
+              <option value="25.17">25.17% (Section 115BAA: Base 22% + 10% Surcharge + 4% Cess)</option>
+              <option value="26.00">26.00% (Base 25% + 4% Cess - Small Domestic Companies)</option>
+              <option value="29.12">29.12% (Base 25% + 7% Surcharge + 4% Cess)</option>
+              <option value="31.20">31.20% (Base 30% + 4% Cess - LLPs / Firms)</option>
+              <option value="34.944">34.944% (Base 30% + 12% Surcharge + 4% Cess)</option>
+            </select>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-sm btn-primary" onclick="APP.exportDeferredTax()">📊 Export Deferred Tax Schedule (.xlsx)</button>
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="grid-2" style="margin-bottom: 24px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Deferred Tax Position for the Financial Year</div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Depreciation as per Books (Companies Act 2013)</span>
+                <strong id="dtBookDepr">₹ 0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Depreciation as per Income Tax Act 1961</span>
+                <strong id="dtTaxDepr">₹ 0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Annual Timing Difference (Book Depr - Tax Depr)</span>
+                <strong id="dtTimingDiff">₹ 0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Effective Tax Rate Applied</span>
+                <strong id="dtTaxRateDisplay">25.17%</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding-top: 4px; font-size: 16px;">
+                <span class="cell-title" id="dtImpactLabel">Deferred Tax Impact for the Year:</span>
+                <strong id="dtImpactValue" style="color: var(--primary);">₹ 0.00</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Balance Sheet Carrying Value vs Tax Base</div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Closing Net Book Value (Financial Statements)</span>
+                <strong id="dtBookClosing">₹ 0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Closing WDV (Income Tax Blocks)</span>
+                <strong id="dtTaxClosing">₹ 0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 8px;">
+                <span class="cell-title">Cumulative Timing Difference (Carrying vs Tax Base)</span>
+                <strong id="dtCumulativeDiff">₹ 0.00</strong>
+              </div>
+              <div class="alert alert-info" style="margin-top: 10px;">
+                <span>📘</span>
+                <div>
+                  <strong>Auditor Note:</strong> If Book Depr > Tax Depr, timing difference is positive $\rightarrow$ <em>Deferred Tax Asset (DTA)</em> created. If Tax Depr > Book Depr $\rightarrow$ <em>Deferred Tax Liability (DTL)</em> created.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Itemized Category-Wise Timing Difference Schedule -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Category-Wise Timing Differences & Deferred Tax Computation</div>
+            <div class="card-subtitle">Granular working paper comparing Book Depreciation against Income Tax Depreciation by Asset Class</div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tax Block / Asset Class</th>
+                <th class="num">Books Depreciation (₹)</th>
+                <th class="num">Income Tax Depreciation (₹)</th>
+                <th class="num">Timing Difference (₹)</th>
+                <th>Deferred Tax Nature</th>
+                <th class="num">Tax Impact @ Applied Rate (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="dtCategoryTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+            <tfoot id="dtCategoryTableFoot">
+              <!-- Dynamically populated -->
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. AUDIT REPORTS & EXPORT CENTER VIEW -->
+    <section id="view-reports" class="tab-content" style="display: none;">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Fixed Asset Master Register</div></div>
+          <div class="card-body">
+            <p class="form-hint" style="margin-bottom: 16px;">Comprehensive register of all physical and intangible assets, location, department, custodian, invoice numbers, purchase dates, and capitalised costs.</p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="FA_EXCEL_IO.exportAssetMasterXLSX(FA_STORAGE.getAssets(), FA_STORAGE.getActiveCompany())">📥 Export Master Register (.xlsx)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Companies Act Schedule II</div></div>
+          <div class="card-body">
+            <p class="form-hint" style="margin-bottom: 16px;">Statutory balance sheet depreciation schedule showing Opening Gross Block, Additions, Deductions, Depreciation for the year, and Closing Net Block.</p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="APP.exportCompaniesActSchedule()">📥 Export Schedule II Report (.xlsx)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Income Tax Act Form 3CD</div></div>
+          <div class="card-body">
+            <p class="form-hint" style="margin-bottom: 16px;">Form 3CD Clause 18 Tax Audit compliant schedule showing Category-wise Opening WDV, Additions ≥ 180 days, &lt; 180 days, Deductions, and Section 50 gains.</p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="APP.exportTaxSchedule()">📥 Export Form 3CD Schedule (.xlsx)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Deferred Tax Schedule</div></div>
+          <div class="card-body">
+            <p class="form-hint" style="margin-bottom: 16px;">Working paper comparing Book Depreciation vs Tax Depreciation, timing differences, and DTA/DTL computation under AS 22 / Ind AS 12.</p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="APP.exportDeferredTax()">📥 Export Deferred Tax Working (.xlsx)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Official CA Import Template</div></div>
+          <div class="card-body">
+            <p class="form-hint" style="margin-bottom: 16px;">Pre-formatted Excel sheet with column headers, sample rows, and Schedule II & Tax block instructions to import your existing clients' registers.</p>
+            <button class="btn btn-emerald" style="width: 100%;" onclick="FA_EXCEL_IO.downloadImportTemplateXLSX()">📥 Download Template (.xlsx)</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-title">Printable CA Audit Schedule</div></div>
+          <div class="card-body">
+            <p class="form-hint" style="margin-bottom: 16px;">Formatted for physical printing or saving as PDF with formal entity headers, cajob.in branding, and CA certification block.</p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>cajob.in</strong> · The Premier Chartered Accountant & Financial Portal
+      </div>
+      <div class="footer-credits">
+        Architected & Developed by <strong>CA Ashish Tripathi</strong> · Ready for Web Hosting on <a href="https://cajob.in" target="_blank">cajob.in</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. ADD / EDIT ASSET MODAL -->
+  <div id="assetModal" class="modal-overlay">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="assetModalTitle">Add Fixed Asset</h3>
+        <button class="modal-close" onclick="APP.closeModal('assetModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="assetForm" onsubmit="APP.onSaveAsset(event)">
+          <!-- Hidden asset ID if editing -->
+          <input type="hidden" id="formAssetOriginalCode" value="">
+
+          <!-- Section: Asset Identity -->
+          <div class="form-section-title">1. Asset Identification</div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Asset ID / Code <span class="req">*</span></label>
+              <input type="text" id="formAssetCode" class="form-control" required placeholder="e.g. FA-001">
+            </div>
+            <div class="form-group">
+              <label>Asset Tag / Barcode</label>
+              <input type="text" id="formAssetTag" class="form-control" placeholder="e.g. LAP-PUN-001">
+            </div>
+            <div class="form-group">
+              <label>Asset Name <span class="req">*</span></label>
+              <input type="text" id="formAssetName" class="form-control" required placeholder="e.g. Dell Latitude 5420 Laptop">
+            </div>
+            <div class="form-group">
+              <label>Asset Category <span class="req">*</span></label>
+              <input type="text" id="formCategory" class="form-control" required placeholder="e.g. Computers & IT, Plant & Machinery">
+            </div>
+            <div class="form-group">
+              <label>Sub Category</label>
+              <input type="text" id="formSubCategory" class="form-control" placeholder="e.g. Laptops, Milling Machine">
+            </div>
+            <div class="form-group">
+              <label>Asset Status</label>
+              <select id="formStatus" class="form-control">
+                <option value="Active">Active</option>
+                <option value="CWIP">Capital Work in Progress (CWIP)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Make / Model</label>
+              <input type="text" id="formMakeModel" class="form-control" placeholder="e.g. Dell / Haas">
+            </div>
+            <div class="form-group">
+              <label>Serial Number</label>
+              <input type="text" id="formSerialNumber" class="form-control" placeholder="Manufacturer Serial No.">
+            </div>
+            <div class="form-group">
+              <label>Parent Asset ID (Component Accounting)</label>
+              <input type="text" id="formParentAssetCode" class="form-control" placeholder="Optional Parent Asset ID">
+            </div>
+          </div>
+
+          <!-- Section: Location & Responsibility -->
+          <div class="form-section-title">2. Location & Responsibility</div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Location / Branch / Plant</label>
+              <input type="text" id="formLocation" class="form-control" placeholder="e.g. Pune HO, Chakan Plant">
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <input type="text" id="formDepartment" class="form-control" placeholder="e.g. Finance, Production">
+            </div>
+            <div class="form-group">
+              <label>Cost Centre</label>
+              <input type="text" id="formCostCentre" class="form-control" placeholder="e.g. CC-FIN-01">
+            </div>
+            <div class="form-group">
+              <label>Custodian / Responsible Person</label>
+              <input type="text" id="formCustodian" class="form-control" placeholder="e.g. Rahul Verma">
+            </div>
+            <div class="form-group">
+              <label>Vendor Name</label>
+              <input type="text" id="formVendor" class="form-control" placeholder="e.g. TechWorld Solutions">
+            </div>
+            <div class="form-group">
+              <label>Invoice Number & PO Number</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                <input type="text" id="formInvoiceNumber" class="form-control" placeholder="Invoice No.">
+                <input type="text" id="formPoNumber" class="form-control" placeholder="PO No.">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: In-Service Dates & Cost -->
+          <div class="form-section-title">3. Acquisition & Statutory In-Service Dates</div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Purchase / Invoice Date <span class="req">*</span></label>
+              <input type="date" id="formPurchaseDate" class="form-control" required onchange="APP.onFormPurchaseDateChange(this.value)">
+            </div>
+            <div class="form-group">
+              <label>Ready for Use Date (Companies Act)</label>
+              <input type="date" id="formReadyToUseDate" class="form-control">
+              <div class="form-hint">AS 10 / Ind AS 16 depreciation start date</div>
+            </div>
+            <div class="form-group">
+              <label>Put to Use Date (Income Tax Act)</label>
+              <input type="date" id="formPutToUseDate" class="form-control">
+              <div class="form-hint">Section 32 start date (blank for CWIP)</div>
+            </div>
+            <div class="form-group">
+              <label>Gross Capitalised Cost (₹) <span class="req">*</span></label>
+              <input type="number" step="0.01" min="0" id="formAcquisitionCost" class="form-control" required placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>Opening Accumulated Dep. (Migrated)</label>
+              <input type="number" step="0.01" min="0" id="formOpeningAccumDep" class="form-control" value="0">
+            </div>
+            <div class="form-group">
+              <label>Opening Balance Date</label>
+              <input type="date" id="formOpeningBalanceDate" class="form-control">
+            </div>
+          </div>
+
+          <!-- Section: Companies Act 2013 Depreciation Settings -->
+          <div class="form-section-title">4. Companies Act 2013 (Schedule II) Settings</div>
+          <div class="form-grid-3">
+            <div class="form-group" style="grid-column: span 2;">
+              <label>Schedule II Asset Class Preset</label>
+              <select id="formScheduleClass" class="form-control" onchange="APP.onFormScheduleClassChange(this.value)">
+                <!-- Dynamically populated from STATUTORY_DATA -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Depreciation Method</label>
+              <select id="formBookMethod" class="form-control">
+                <option value="SLM">Straight Line Method (SLM)</option>
+                <option value="WDV">Written Down Value (WDV)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Useful Life (Years) <span class="req">*</span></label>
+              <input type="number" step="0.1" min="0.1" id="formUsefulLife" class="form-control" required placeholder="Years">
+            </div>
+            <div class="form-group">
+              <label>Residual Value %</label>
+              <input type="number" step="0.01" min="0" max="99.99" id="formResidualPct" class="form-control" value="5">
+              <div class="form-hint">Default 5% statutory floor</div>
+            </div>
+            <div class="form-group">
+              <label>Schedule II Shift</label>
+              <select id="formShiftType" class="form-control">
+                <option value="Single">Single Shift (Normal 1.0x)</option>
+                <option value="Double">Double Shift (+50% Depr 1.5x)</option>
+                <option value="Triple">Triple Shift (+100% Depr 2.0x)</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column: span 3;">
+              <label>Reason for Life / Residual Override</label>
+              <input type="text" id="formBookOverrideReason" class="form-control" placeholder="Technical justification if departing from Schedule II default life">
+            </div>
+          </div>
+
+          <!-- Section: Income Tax Act 1961 Settings -->
+          <div class="form-section-title">5. Income Tax Act 1961 (Section 32) Settings</div>
+          <div class="form-grid-3">
+            <div class="form-group" style="grid-column: span 2;">
+              <label>Income-tax Block of Assets <span class="req">*</span></label>
+              <select id="formTaxBlockCode" class="form-control" required>
+                <!-- Dynamically populated from STATUTORY_DATA -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Custom Tax Rate % (If block is Custom)</label>
+              <input type="number" step="0.01" min="0" max="100" id="formTaxCustomRate" class="form-control" placeholder="e.g. 15">
+            </div>
+            <div class="form-group">
+              <label>Tax Actual Cost (Section 43(1))</label>
+              <input type="number" step="0.01" min="0" id="formTaxActualCost" class="form-control" placeholder="Defaults to capitalised cost">
+            </div>
+            <div class="form-group" style="grid-column: span 2; display: flex; align-items: center; padding-top: 18px;">
+              <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                <input type="checkbox" id="formAdditionalDepEligible">
+                <span><strong>Eligible for Additional Depreciation u/s 32(1)(iia) (20% / 10%)</strong> (Manufacturing / Power plants)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section: Notes & Remarks -->
+          <div class="form-section-title">6. Notes & Internal Remarks</div>
+          <div class="form-group">
+            <textarea id="formNotes" class="form-control" rows="2" placeholder="Audit remarks, insurance policy reference, etc."></textarea>
+          </div>
+
+          <div class="modal-footer" style="padding-right: 0; padding-bottom: 0;">
+            <button type="button" class="btn btn-secondary" onclick="APP.closeModal('assetModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveAsset">Save Asset Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. RECORD ASSET CHANGE / TRANSACTION MODAL -->
+  <div id="txnModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="txnModalTitle">Record Asset Lifecycle Operation</h3>
+        <button class="modal-close" onclick="APP.closeModal('txnModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="txnForm" onsubmit="APP.onSaveTransaction(event)">
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Select Asset <span class="req">*</span></label>
+              <select id="txnAssetCode" class="form-control" required onchange="APP.onTxnAssetChange(this.value)">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Operation Type <span class="req">*</span></label>
+              <select id="txnType" class="form-control" required onchange="APP.onTxnTypeChange(this.value)">
+                <option value="Disposal / Sale">Disposal / Sale (Asset Exit)</option>
+                <option value="Cost Addition">Cost Addition (Subsequent Capex)</option>
+                <option value="Transfer">Transfer (Location / Custodian)</option>
+                <option value="Capitalise CWIP">Capitalise Work in Progress (CWIP)</option>
+                <option value="Scrap">Scrap / Salvage</option>
+                <option value="Write-Off">Write-Off (Destroyed / Damaged)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Effective Date <span class="req">*</span></label>
+              <input type="date" id="txnDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label>Voucher / Invoice Reference</label>
+              <input type="text" id="txnReference" class="form-control" placeholder="e.g. INV-DISP-24-01">
+            </div>
+          </div>
+
+          <!-- Dynamic Fields for Disposal / Scrap -->
+          <div id="txnDisposalFields" class="form-grid-2" style="background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <div class="form-group">
+              <label>Sale Consideration / Scrap Proceeds (₹)</label>
+              <input type="number" step="0.01" min="0" id="txnProceeds" class="form-control" value="0">
+            </div>
+            <div class="form-group">
+              <label>Expenses on Transfer / Demolition (₹)</label>
+              <input type="number" step="0.01" min="0" id="txnTransferExpenses" class="form-control" value="0">
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label>Buyer / Counterparty Name</label>
+              <input type="text" id="txnCounterparty" class="form-control" placeholder="Buyer or scrap dealer">
+            </div>
+          </div>
+
+          <!-- Dynamic Fields for Capex Addition -->
+          <div id="txnAdditionFields" class="form-grid-2" style="display: none; background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <div class="form-group">
+              <label>Capital Addition Amount (₹) <span class="req">*</span></label>
+              <input type="number" step="0.01" min="0" id="txnAmount" class="form-control" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label>Tax Cost (if different from book cost)</label>
+              <input type="number" step="0.01" min="0" id="txnTaxAmount" class="form-control" placeholder="Optional">
+            </div>
+          </div>
+
+          <!-- Dynamic Fields for Transfer -->
+          <div id="txnTransferFields" class="form-grid-2" style="display: none; background: var(--bg-main); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <div class="form-group">
+              <label>New Location / Branch</label>
+              <input type="text" id="txnNewLocation" class="form-control" placeholder="New Location">
+            </div>
+            <div class="form-group">
+              <label>New Department</label>
+              <input type="text" id="txnNewDept" class="form-control" placeholder="New Department">
+            </div>
+            <div class="form-group">
+              <label>New Cost Centre</label>
+              <input type="text" id="txnNewCostCentre" class="form-control" placeholder="New Cost Centre">
+            </div>
+            <div class="form-group">
+              <label>New Custodian / Owner</label>
+              <input type="text" id="txnNewCustodian" class="form-control" placeholder="New Custodian">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Remarks / Accounting Justification</label>
+            <textarea id="txnRemarks" class="form-control" rows="2" placeholder="Audit reasons for this transaction"></textarea>
+          </div>
+
+          <div class="modal-footer" style="padding-right: 0; padding-bottom: 0;">
+            <button type="button" class="btn btn-secondary" onclick="APP.closeModal('txnModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Transaction</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. BULK UPLOAD & VALIDATION MODAL -->
+  <div id="importModal" class="modal-overlay">
+    <div class="modal-dialog modal-dialog-lg">
+      <div class="modal-header">
+        <h3 class="modal-title">Bulk Import Fixed Assets (Excel & CSV)</h3>
+        <button class="modal-close" onclick="APP.closeModal('importModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info">
+          <span>💡</span>
+          <div>
+            Upload your asset register in <strong>.xlsx, .xls, or .csv</strong> format. You can download our pre-formatted official template below, fill in your asset records, and upload it directly. Every row will be validated against statutory rules!
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+          <button class="btn btn-secondary btn-sm" onclick="FA_EXCEL_IO.downloadImportTemplateXLSX()">📥 Download Excel Template (.xlsx)</button>
+          <button class="btn btn-secondary btn-sm" onclick="FA_EXCEL_IO.downloadImportTemplateCSV()">📥 Download CSV Template (.csv)</button>
+        </div>
+
+        <!-- Dropzone -->
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('importFileInput').click()">
+          <div class="upload-icon">📁</div>
+          <div style="font-size: 15px; font-weight: 700; color: var(--brand-navy); margin-bottom: 4px;">Choose an Excel / CSV file or drag it here</div>
+          <div class="form-hint">Supports .xlsx, .xls, .csv · Automatic row validation</div>
+          <input type="file" id="importFileInput" accept=".xlsx, .xls, .csv" style="display: none;" onchange="APP.onFileSelected(this.files[0])">
+        </div>
+
+        <!-- Validation Results Preview -->
+        <div id="importValidationReport" style="display: none; margin-top: 20px;">
+          <div class="form-section-title" id="importSummaryTitle">Validation Results</div>
+          
+          <div id="importErrorAlert" class="alert alert-warning" style="display: none;">
+            <span>⚠️</span>
+            <div id="importErrorSummaryText"></div>
+          </div>
+
+          <div class="table-responsive" id="importErrorTableWrap" style="max-height: 240px; margin-bottom: 16px; display: none;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Row #</th>
+                  <th>Asset ID</th>
+                  <th>Asset Name</th>
+                  <th>Validation Issue</th>
+                </tr>
+              </thead>
+              <tbody id="importErrorTableBody"></tbody>
+            </table>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px;">
+              <input type="checkbox" id="importOverwriteCheckbox">
+              <span>Overwrite existing assets if same Asset ID is found (otherwise skip or keep existing)</span>
+            </label>
+            <button class="btn btn-emerald" id="btnConfirmImport" onclick="APP.confirmImport()">✅ Import Valid Assets Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. TEMPLATE MODAL -->
+  <div id="templateModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Download Official Asset Register Template</h3>
+        <button class="modal-close" onclick="APP.closeModal('templateModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 16px; color: var(--text-muted);">
+          Our official template is designed by <strong>CA Ashish Tripathi</strong> to capture every statutory requirement for both Companies Act 2013 and Income Tax Act 1961. It includes column instructions, date format guides, and Schedule II & Tax block codes.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+          <div style="border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <strong>Excel Import Template (.xlsx)</strong>
+              <div class="form-hint">Includes 'Asset_Register_Import' sheet + 'Field_Instructions_Guide' sheet</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="FA_EXCEL_IO.downloadImportTemplateXLSX()">Download .xlsx</button>
+          </div>
+
+          <div style="border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <strong>CSV Import Template (.csv)</strong>
+              <div class="form-hint">Standard comma-separated format for quick copy-pasting</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="FA_EXCEL_IO.downloadImportTemplateCSV()">Download .csv</button>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span>💡</span>
+          <div>
+            <strong>Tip:</strong> You can also load our <strong>1-Click Sample Portfolio (16 Real-World Assets)</strong> anytime to immediately test the entire system without having to create an Excel file!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. SET TAX OPENING BALANCES MODAL -->
+  <div id="taxOpeningModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Set Income Tax Opening Block WDV</h3>
+        <button class="modal-close" onclick="APP.closeModal('taxOpeningModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="form-hint" style="margin-bottom: 14px;">
+          Under Section 32 of the Income Tax Act, depreciation is charged at the Block level. Enter the brought-forward Opening Written Down Value (WDV) as on 1st April of the current financial year for each applicable block.
+        </p>
+        <div id="taxOpeningBlocksContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 6px;">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="modal-footer" style="padding-right: 0; padding-bottom: 0; margin-top: 16px;">
+          <button type="button" class="btn btn-secondary" onclick="APP.closeModal('taxOpeningModal')">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="APP.saveTaxOpenings()">Save Opening Values</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. COMPANY PROFILE MODAL -->
+  <div id="companyModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Entity / Client Profile</h3>
+        <button class="modal-close" onclick="APP.closeModal('companyModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="companyForm" onsubmit="APP.onSaveCompany(event)">
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label>Company / Client Name <span class="req">*</span></label>
+            <input type="text" id="compName" class="form-control" required placeholder="e.g. Acme Industrial Technologies Ltd">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Business Sector <span class="req">*</span></label>
+              <select id="compSector" class="form-control" required>
+                <!-- Populated from STATUTORY_DATA.SECTORS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Corporate Identity Number (CIN)</label>
+              <input type="text" id="compCin" class="form-control" placeholder="e.g. L29244MH2018PLC301452">
+            </div>
+            <div class="form-group">
+              <label>Income-tax PAN</label>
+              <input type="text" id="compPan" class="form-control" placeholder="e.g. AABCA9845K">
+            </div>
+            <div class="form-group">
+              <label>GSTIN</label>
+              <input type="text" id="compGstin" class="form-control" placeholder="e.g. 27AABCA9845K1Z8">
+            </div>
+          </div>
+          <div class="modal-footer" style="padding-right: 0; padding-bottom: 0;">
+            <button type="button" class="btn btn-danger" id="btnDeleteCompany" onclick="APP.onDeleteCompany()" style="margin-right: auto;">Delete Entity</button>
+            <button type="button" class="btn btn-secondary" onclick="APP.closeModal('companyModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Entity</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. BACKUP / RESTORE MODAL -->
+  <div id="backupModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Application State Backup & Restore</h3>
+        <button class="modal-close" onclick="APP.closeModal('backupModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="form-hint" style="margin-bottom: 16px;">
+          All data is saved locally and privately in your browser. You can export a full JSON backup of all your companies, assets, and transactions, or restore from a previous backup.
+        </p>
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+          <button class="btn btn-primary" onclick="APP.exportBackupJSON()">💾 Download JSON Backup</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('restoreFileInput').click()">📂 Restore from JSON</button>
+          <input type="file" id="restoreFileInput" accept=".json" style="display: none;" onchange="APP.importBackupJSON(this.files[0])">
+        </div>
+        <div class="alert alert-warning">
+          <span>⚠️</span>
+          <div>
+            <strong>Privacy Guarantee:</strong> All calculations run 100% directly on your device. No client asset registers or financial data are transmitted to external servers.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendors & Core Scripts -->
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="vendor/chart.umd.min.js"></script>
+  <!-- Fallbacks to CDN if vendor files fail -->
+  <script>
+    if (typeof XLSX === "undefined") {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"><\/script>');
+    }
+    if (typeof Chart === "undefined") {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- Application Modules -->
+  <script src="js/statutory_data.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/excel_io.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

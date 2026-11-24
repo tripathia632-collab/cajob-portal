@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { GateHero } from '@/components/GateHero';
+import { CompaniesMarquee } from '@/components/CompaniesMarquee';
 import { FeaturedCategories } from '@/components/FeaturedCategories';
 import { ThreeStepProcess, GuidanceSection } from '@/components/GuidanceSection';
 import { ToolsSection } from '@/components/ToolsSection';
@@ -25,24 +26,8 @@ export default async function HomePage() {
         {/* Signature Gate Doorway & Orbiting Hero */}
         <GateHero />
 
-        {/* Employer Brands / Teams Banner */}
-        <section className="py-8 bg-white border-b border-[#DCE5E0]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-xs font-bold uppercase tracking-wider text-[#52676D]/70 mb-4">
-              Discover opportunities with leading firms & finance teams
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all duration-300">
-              <span className="font-extrabold text-base tracking-widest text-[#102D37]">MERIDIAN</span>
-              <span className="font-bold text-base tracking-wider text-[#102D37]">northstar</span>
-              <span className="font-semibold text-base tracking-wide text-[#102D37]">Finverse</span>
-              <span className="font-extrabold text-base tracking-widest text-[#102D37]">OAKLINE</span>
-              <span className="font-bold text-base tracking-wider text-[#102D37]">SUMMIT</span>
-              <span className="font-bold text-base text-[#102D37]">EY</span>
-              <span className="font-bold text-base text-[#102D37]">Deloitte</span>
-              <span className="font-bold text-base text-[#102D37]">Citi</span>
-            </div>
-          </div>
-        </section>
+        {/* Dynamic Continuous Marquee of Leading CA & Finance Destinations */}
+        <CompaniesMarquee />
 
         {/* Categories: Where do you want to go next? */}
         <FeaturedCategories />

@@ -9,10 +9,28 @@ import { Sparkles, CheckCircle2, ArrowUpRight, BookOpen, Clock, ArrowLeft } from
 export default function CoursesPage() {
   const [email, setEmail] = useState('');
   const [joined, setJoined] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleWaitlist = (e: React.FormEvent) => {
+  const handleWaitlist = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) setJoined(true);
+    if (!email) return;
+    setSubmitting(true);
+    try {
+      await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          source: 'Courses Waitlist (Cohort 1)',
+          message: 'Requested early access for practical finance & audit courses.',
+        }),
+      });
+      setJoined(true);
+    } catch {
+      setJoined(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const upcomingCourses = [
@@ -91,9 +109,10 @@ export default function CoursesPage() {
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#08765D] hover:bg-[#065F4B] text-white font-bold text-sm rounded-xl transition-colors whitespace-nowrap"
+                disabled={submitting}
+                className="px-6 py-3 bg-[#08765D] hover:bg-[#065F4B] text-white font-bold text-sm rounded-xl transition-colors whitespace-nowrap disabled:opacity-50"
               >
-                Join Waitlist
+                {submitting ? 'Joining...' : 'Join Waitlist'}
               </button>
             </form>
           )}

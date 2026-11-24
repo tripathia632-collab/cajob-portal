@@ -39,12 +39,28 @@ export function EmployerBanner() {
 export function NewsletterBanner() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    if (!email) return;
+    setLoading(true);
+    try {
+      await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          source: 'Opportunity Alerts & Newsletter',
+          message: 'Subscribed to verified CA opportunity alerts.',
+        }),
+      });
       setSubscribed(true);
       setEmail('');
+    } catch {
+      setSubscribed(true);
+    } finally {
+      setLoading(false);
     }
   };
 

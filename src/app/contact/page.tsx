@@ -8,11 +8,30 @@ import { Mail, Phone, MapPin, Send, CheckCircle2, ArrowLeft } from 'lucide-react
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!form.email) return;
+    setSubmitting(true);
+    try {
+      await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email,
+          name: form.name,
+          source: 'Contact Form Inquiry',
+          message: form.subject ? `Subject: ${form.subject} | Message: ${form.message}` : form.message,
+        }),
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -143,10 +162,11 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-[#08765D] hover:bg-[#065F4B] text-white font-semibold text-sm rounded-xl transition-colors flex items-center justify-center gap-2"
+                  disabled={submitting}
+                  className="w-full py-3 bg-[#08765D] hover:bg-[#065F4B] disabled:opacity-60 text-white font-semibold text-sm rounded-xl transition-colors flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
-                  Send Message
+                  {submitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             )}

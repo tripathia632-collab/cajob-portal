@@ -21,6 +21,10 @@ import {
   ArrowLeft,
   LogOut,
   X,
+  Inbox,
+  Download,
+  Mail,
+  UserCheck,
 } from 'lucide-react';
 import {
   SUPER_ADMIN_EMAIL,
@@ -40,10 +44,19 @@ import initialBlogs from '@/data/initial-blogs.json';
 import initialResources from '@/data/initial-resources.json';
 import { Job, Blog, Resource } from '@/types';
 
+interface WaitlistEntry {
+  id: string;
+  email: string;
+  name: string;
+  source: string;
+  message: string;
+  createdAt: string;
+}
+
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [authorized, setAuthorized] = useState<boolean | null>(null);
-  const [activeTab, setActiveTab] = useState<'jobs' | 'blogs' | 'resources' | 'tools' | 'users'>('jobs');
+  const [activeTab, setActiveTab] = useState<'jobs' | 'blogs' | 'resources' | 'tools' | 'waitlists' | 'users'>('jobs');
   const [currentAdmin, setCurrentAdmin] = useState(SUPER_ADMIN_EMAIL);
 
   // Strict session check on mount & live data sync
@@ -66,6 +79,12 @@ export default function AdminDashboardPage() {
     getResources().then((data) => {
       if (data && data.length > 0) setResources(data);
     });
+    fetch('/api/waitlist')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.waitlists) setWaitlists(data.waitlists);
+      })
+      .catch((err) => console.error('Failed to load waitlists:', err));
   }, [router]);
 
   // Dynamic state
@@ -104,6 +123,43 @@ export default function AdminDashboardPage() {
     SUPER_ADMIN_EMAIL,
   ]);
   const [newAdminEmail, setNewAdminEmail] = useState('');
+
+  // Waitlists & Leads state
+  const [waitlists, setWaitlists] = useState<WaitlistEntry[]>([]);
+  const [waitlistSearch, setWaitlistSearch] = useState('');
+  const [waitlistSourceFilter, setWaitlistSourceFilter] = useState('ALL');
+
+  const handleExportCSV = () => {
+    if (waitlists.length === 0) {
+      showToast('No leads available to export.');
+      return;
+    }
+    const headers = ['Name', 'Email', 'Source / Campaign', 'Message / Inquiry Details', 'Submitted At'];
+    const rows = waitlists.map((entry) => [
+      `"${(entry.name || '').replace(/"/g, '""')}"`,
+      `"${(entry.email || '').replace(/"/g, '""')}"`,
+      `"${(entry.source || '').replace(/"/g, '""')}"`,
+      `"${(entry.message || '').replace(/"/g, '""')}"`,
+      `"${new Date(entry.createdAt).toLocaleString('en-IN')}"`,
+    ]);
+
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `cajob-in-leads-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast(`Successfully exported ${waitlists.length} leads as CSV!`);
+  };
+
+  const handleDeleteLead = (id: string) => {
+    setWaitlists((prev) => prev.filter((item) => item.id !== id));
+    showToast('Lead record removed from view');
+  };
 
   // Modals
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
@@ -424,6 +480,7 @@ export default function AdminDashboardPage() {
             { id: 'blogs', label: `Guides & Blogs (${blogs.length})`, icon: BookOpen },
             { id: 'resources', label: `Free Resources (${resources.length})`, icon: FileText },
             { id: 'tools', label: `Web Tools Hub (${tools.length})`, icon: Wrench },
+            { id: 'waitlists', label: `Leads & Waitlists (${waitlists.length})`, icon: Inbox },
             { id: 'users', label: `Admin Access (${authorizedAdmins.length})`, icon: Users },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -691,6 +748,188 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* TAB: LEADS & WAITLISTS */}
+        {activeTab === 'waitlists' && (
+          <div className="space-y-6">
+            {/* Header / Stats Card */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#DCE5E0]">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-[#102D37]">Leads & Waitlist Inquiries</h2>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#EAF4EF] text-[#08765D] text-xs font-bold border border-[#bcdbc8]">
+                    {waitlists.length} Captured
+                  </span>
+                </div>
+                <p className="text-xs text-[#52676D] mt-0.5">
+                  Submissions from Courses early access, alerts/newsletter signups, employer postings, and contact forms.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleExportCSV}
+                  className="px-4 py-2.5 bg-[#08765D] hover:bg-[#065F4B] text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs"
+                >
+                  <Download className="w-4 h-4" />
+                  Export All Leads (CSV)
+                </button>
+              </div>
+            </div>
+
+            {/* Filter and Search Bar */}
+            <div className="bg-white p-4 rounded-2xl border border-[#DCE5E0] flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                {[
+                  { label: 'All Sources', key: 'ALL' },
+                  { label: 'Courses Waitlist', key: 'Courses' },
+                  { label: 'Alerts & Newsletter', key: 'Alerts' },
+                  { label: 'Employer Submissions', key: 'Employer' },
+                  { label: 'Contact Inquiries', key: 'Contact' },
+                ].map((item) => (
+                  <button
+                    key={item.key}
+                    onClick={() => setWaitlistSourceFilter(item.key)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      waitlistSourceFilter === item.key
+                        ? 'bg-[#102D37] text-white'
+                        : 'bg-[#F5F7F6] text-[#52676D] hover:bg-[#EAF4EF] hover:text-[#08765D]'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="relative w-full md:w-72">
+                <Search className="w-4 h-4 text-[#52676D] absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search email, name or text..."
+                  value={waitlistSearch}
+                  onChange={(e) => setWaitlistSearch(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 text-xs bg-[#F5F7F6] border border-[#DCE5E0] rounded-xl focus:outline-none focus:border-[#08765D]"
+                />
+              </div>
+            </div>
+
+            {/* Leads Table */}
+            <div className="bg-white rounded-2xl border border-[#DCE5E0] overflow-hidden shadow-xs">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-[#F5F7F6] text-[#52676D] border-b border-[#DCE5E0]">
+                      <th className="py-3.5 px-4 font-bold">Contact / Applicant</th>
+                      <th className="py-3.5 px-4 font-bold">Source / Channel</th>
+                      <th className="py-3.5 px-4 font-bold">Submitted Details / Message</th>
+                      <th className="py-3.5 px-4 font-bold whitespace-nowrap">Date & Time</th>
+                      <th className="py-3.5 px-4 font-bold text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#F0F4F2]">
+                    {waitlists
+                      .filter((lead) => {
+                        const matchesSearch =
+                          !waitlistSearch ||
+                          lead.email?.toLowerCase().includes(waitlistSearch.toLowerCase()) ||
+                          lead.name?.toLowerCase().includes(waitlistSearch.toLowerCase()) ||
+                          lead.source?.toLowerCase().includes(waitlistSearch.toLowerCase()) ||
+                          lead.message?.toLowerCase().includes(waitlistSearch.toLowerCase());
+
+                        const matchesSource =
+                          waitlistSourceFilter === 'ALL' ||
+                          lead.source?.toLowerCase().includes(waitlistSourceFilter.toLowerCase());
+
+                        return matchesSearch && matchesSource;
+                      })
+                      .map((lead) => (
+                        <tr key={lead.id} className="hover:bg-[#F9FBFA] transition-colors">
+                          <td className="py-3.5 px-4">
+                            <div className="font-bold text-[#102D37]">
+                              {lead.name || 'Anonymous User'}
+                            </div>
+                            <a
+                              href={`mailto:${lead.email}`}
+                              className="text-[#08765D] hover:underline flex items-center gap-1 mt-0.5 font-medium"
+                            >
+                              <Mail className="w-3 h-3" />
+                              {lead.email}
+                            </a>
+                          </td>
+
+                          <td className="py-3.5 px-4">
+                            <span className="inline-block px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[#EAF4EF] text-[#08765D] border border-[#bcdbc8] whitespace-nowrap">
+                              {lead.source}
+                            </span>
+                          </td>
+
+                          <td className="py-3.5 px-4 max-w-md">
+                            <div className="text-[#52676D] leading-relaxed break-words line-clamp-3">
+                              {lead.message || '—'}
+                            </div>
+                          </td>
+
+                          <td className="py-3.5 px-4 text-[#52676D] whitespace-nowrap">
+                            {lead.createdAt ? new Date(lead.createdAt).toLocaleDateString('en-IN', {
+                              day: '2-digit',
+                              month: 'short',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            }) : 'Recent'}
+                          </td>
+
+                          <td className="py-3.5 px-4 text-right whitespace-nowrap">
+                            <div className="flex items-center justify-end gap-2">
+                              <a
+                                href={`mailto:${lead.email}?subject=Regarding your inquiry on CAJob.in`}
+                                title="Reply via Email"
+                                className="p-1.5 text-[#08765D] hover:bg-[#EAF4EF] rounded-lg transition-colors"
+                              >
+                                <Mail className="w-4 h-4" />
+                              </a>
+                              <button
+                                onClick={() => handleDeleteLead(lead.id)}
+                                title="Remove from view"
+                                className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+
+                    {waitlists.filter((lead) => {
+                      const matchesSearch =
+                        !waitlistSearch ||
+                        lead.email?.toLowerCase().includes(waitlistSearch.toLowerCase()) ||
+                        lead.name?.toLowerCase().includes(waitlistSearch.toLowerCase()) ||
+                        lead.source?.toLowerCase().includes(waitlistSearch.toLowerCase()) ||
+                        lead.message?.toLowerCase().includes(waitlistSearch.toLowerCase());
+
+                      const matchesSource =
+                        waitlistSourceFilter === 'ALL' ||
+                        lead.source?.toLowerCase().includes(waitlistSourceFilter.toLowerCase());
+
+                      return matchesSearch && matchesSource;
+                    }).length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="py-12 text-center text-[#52676D]">
+                          <Inbox className="w-8 h-8 text-[#98A2B3] mx-auto mb-2" />
+                          <p className="font-semibold text-sm">No submissions found</p>
+                          <p className="text-xs text-[#8ca89a] mt-0.5">
+                            New submissions from forms and waitlists will automatically appear here.
+                          </p>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}

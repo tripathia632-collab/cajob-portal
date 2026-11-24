@@ -8,6 +8,7 @@ import { Building2, CheckCircle2, ArrowUpRight, ShieldCheck, Users, Sparkles, Ar
 
 export default function ForEmployersPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     employer: '',
     title: '',
@@ -20,9 +21,27 @@ export default function ForEmployersPage() {
     contactEmail: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!formData.contactEmail) return;
+    setSubmitting(true);
+    try {
+      await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.contactEmail,
+          name: formData.employer,
+          source: 'Employer Vacancy Submission',
+          message: `Role: ${formData.title} | Location: ${formData.city} | Stage: ${formData.careerStage} | Mode: ${formData.workMode}${formData.pay ? ' | Pay: ' + formData.pay : ''}${formData.applyUrl ? ' | Apply: ' + formData.applyUrl : ''}${formData.description ? ' | Info: ' + formData.description : ''}`,
+        }),
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -240,9 +259,10 @@ export default function ForEmployersPage() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 bg-[#08765D] hover:bg-[#065F4B] text-white font-bold text-sm rounded-xl shadow-xs transition-colors"
+                disabled={submitting}
+                className="w-full py-3.5 bg-[#08765D] hover:bg-[#065F4B] disabled:opacity-60 text-white font-bold text-sm rounded-xl shadow-xs transition-colors"
               >
-                Submit Vacancy for Verification
+                {submitting ? 'Submitting...' : 'Submit Vacancy for Verification'}
               </button>
             </form>
           )}

@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { GateHero } from '@/components/GateHero';
 import { FeaturedCategories } from '@/components/FeaturedCategories';
 import { ThreeStepProcess, GuidanceSection } from '@/components/GuidanceSection';
+import { ToolsSection } from '@/components/ToolsSection';
 import { EmployerBanner, NewsletterBanner } from '@/components/EmployerBanner';
 import { JobCard } from '@/components/JobCard';
 import { getJobs } from '@/lib/supabase';
@@ -79,6 +80,9 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Interactive CA Web Tools Section */}
+        <ToolsSection />
 
         {/* Three Step Process */}
         <ThreeStepProcess />

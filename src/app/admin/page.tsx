@@ -671,6 +671,72 @@ export default function AdminDashboardPage() {
                   })}
                 </div>
               </div>
+
+              {/* Super Admin Password Change Utility */}
+              <div className="pt-6 border-t border-[#F0F4F2] space-y-3">
+                <h3 className="text-xs font-bold uppercase text-[#52676D] tracking-wider">
+                  Security & Password Management (tripathia632@gmail.com)
+                </h3>
+                <p className="text-xs text-[#52676D]">
+                  Update your Super Admin password stored for direct portal login.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="password"
+                    id="new-pass-input"
+                    placeholder="Enter new admin password"
+                    className="px-4 py-2.5 bg-[#F5F7F6] rounded-xl text-sm border border-[#DCE5E0] focus:outline-none focus:border-[#08765D] max-w-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const input = document.getElementById('new-pass-input') as HTMLInputElement;
+                      if (input && input.value) {
+                        localStorage.setItem('cajob_admin_custom_password', input.value);
+                        input.value = '';
+                        showToast('Super Admin password successfully updated!');
+                      }
+                    }}
+                    className="px-5 py-2.5 bg-[#102D37] hover:bg-[#174450] text-white font-bold text-xs rounded-xl transition-colors whitespace-nowrap"
+                  >
+                    Update Password
+                  </button>
+                </div>
+              </div>
+
+              {/* One-Click Backup Export */}
+              <div className="pt-6 border-t border-[#F0F4F2] space-y-3">
+                <h3 className="text-xs font-bold uppercase text-[#52676D] tracking-wider">
+                  Data Portability & 1-Click Backup Export
+                </h3>
+                <p className="text-xs text-[#52676D]">
+                  Download a complete, offline JSON snapshot of all 64 jobs, 50 blogs, 3 resources, and tools.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const dataSnapshot = {
+                      exportedAt: new Date().toISOString(),
+                      jobs,
+                      blogs,
+                      resources,
+                      tools,
+                    };
+                    const blob = new Blob([JSON.stringify(dataSnapshot, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `cajob-complete-backup-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    showToast('Data snapshot backup exported!');
+                  }}
+                  className="px-5 py-2.5 bg-[#EAF4EF] text-[#08765D] hover:bg-[#08765D] hover:text-white border border-[#bcdbc8] font-bold text-xs rounded-xl transition-all inline-flex items-center gap-1.5"
+                >
+                  <FileText className="w-4 h-4" />
+                  Export Full System Backup (.JSON)
+                </button>
+              </div>
             </div>
           </div>
         )}

@@ -1,0 +1,82 @@
+================================================================================
+CAJOB.IN — CA ARTICLES & FINANCE JOB EVALUATION & COMPARISON WORKSHEET
+================================================================================
+Website: https://cajob.in | Free Career Resources
+Purpose: Systematically evaluate and compare competing job offers, articleship firms,
+         or industrial training opportunities to make an informed, strategic decision.
+
+--------------------------------------------------------------------------------
+HOW TO USE THIS WORKSHEET:
+Score each opportunity on a scale of 1 to 5 across the 7 critical pillars below.
+Weight each category based on your personal priorities (1 = low, 3 = high).
+Total Score = Sum of (Score * Weight)
+--------------------------------------------------------------------------------
+
+EVALUATION PARAMETERS:
+
+[PILLAR 1: QUALITY OF WORK & LEARNING EXPOSURE]
+Weight: [   ] (Recommended: 3)
+Factors to consider:
+• Will you handle end-to-end audit/advisory processes or merely repetitive vouching?
+• Are the clients listed entities, large private corporates, or small proprietor firms?
+• Will you work directly with Partners, Senior Managers, or only 2nd-year seniors?
+• Is there exposure to modern ERP systems (SAP S/4HANA, Oracle NetSuite, Tally Prime)?
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+[PILLAR 2: EXAM LEAVE & ACADEMIC SUPPORT]
+Weight: [   ] (Recommended: 3)
+Factors to consider:
+• Official exam leave policy: 3 months? 4 months? 5 months?
+• Does the firm/corporate respect exam preparation time or call students back during leave?
+• Work hours during non-peak season vs. peak audit season (April-September).
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+[PILLAR 3: COMPENSATION & STIPEND / SALARY]
+Weight: [   ] (Recommended: 2)
+Factors to consider:
+• Monthly stipend/salary vs. ICAI statutory minimum guidelines (use https://cajob.in/tools).
+• Travel allowances, client outstation DA (Daily Allowance), food allowances.
+• Annual increments for 2nd and 3rd year / performance bonuses.
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+[PILLAR 4: LOCATION & COMMUTE BURDEN]
+Weight: [   ] (Recommended: 2)
+Factors to consider:
+• Door-to-door commute time (excessive travel eats into CA Final study hours).
+• Hybrid work policy or requirement for daily on-site presence at client locations.
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+[PILLAR 5: BRAND VALUE & FUTURE MARKETABILITY]
+Weight: [   ] (Recommended: 2)
+Factors to consider:
+• Does the firm/company name open doors for Big 4, investment banking, or industry campus placement?
+• Peer network and alumni base across qualified CAs.
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+[PILLAR 6: FIRM CULTURE & WORK ENVIRONMENT]
+Weight: [   ] (Recommended: 2)
+Factors to consider:
+• Respect for trainees and juniors; approachable seniors.
+• Transparency in reviews, leaves, and reimbursement processing.
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+[PILLAR 7: INDUSTRIAL TRAINING & TRANSFER SUPPORT]
+Weight: [   ] (Recommended: 2)
+Factors to consider:
+• Does the Principal sign Form 109 NOC easily for 3rd-year Industrial Training?
+• Track record of previous trainees moving to corporate industrial training roles.
+• Opportunity A Score: [   / 5] | Opportunity B Score: [   / 5]
+
+--------------------------------------------------------------------------------
+SUMMARY DECISION MATRIX:
+Opportunity A (Firm / Company Name): ___________________ | Total Weighted Score: [    ]
+Opportunity B (Firm / Company Name): ___________________ | Total Weighted Score: [    ]
+
+DECISION RATIONALE:
+________________________________________________________________________________
+________________________________________________________________________________
+
+================================================================================
+Downloaded from CAJob.in — The Focused CA & Finance Career Platform
+Visit https://cajob.in for verified vacancies, stipend calculators and career tools.
+================================================================================

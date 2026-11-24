@@ -279,3 +279,21 @@ export async function createOrUpdateResource(res: Resource): Promise<Resource> {
   }
   return res;
 }
+
+export async function deleteBlog(slug: string): Promise<boolean> {
+  if (isSupabaseConfigured && supabase) {
+    const { error } = await supabase.from('blogs').delete().eq('slug', slug);
+    if (!error) return true;
+  }
+  inMemoryBlogs = inMemoryBlogs.filter((b) => b.slug !== slug);
+  return true;
+}
+
+export async function deleteResource(id: string): Promise<boolean> {
+  if (isSupabaseConfigured && supabase) {
+    const { error } = await supabase.from('resources').delete().eq('id', id);
+    if (!error) return true;
+  }
+  inMemoryResources = inMemoryResources.filter((r) => r.id !== id);
+  return true;
+}

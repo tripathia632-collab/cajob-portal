@@ -69,9 +69,8 @@ export default async function ResourcesPage() {
               <div>
                 <a
                   href={res.fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-4 bg-[#08765D] hover:bg-[#065F4B] text-white font-semibold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs"
+                  download
+                  className="w-full py-3 px-4 bg-[#08765D] hover:bg-[#065F4B] text-white font-semibold text-sm rounded-xl transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   Download Free Template

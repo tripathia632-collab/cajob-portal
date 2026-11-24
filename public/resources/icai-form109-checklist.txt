@@ -1,0 +1,53 @@
+================================================================================
+CAJOB.IN — ICAI ARTICLESHIP TRANSFER (FORM 109) COMPLIANCE CHECKLIST
+================================================================================
+Website: https://cajob.in | Free Career Resources
+Governing Regulation: Regulation 56 of the Chartered Accountants Regulations, 1988
+
+--------------------------------------------------------------------------------
+OVERVIEW OF TRANSFER PERMISSIBILITY UNDER ICAI NORMS:
+--------------------------------------------------------------------------------
+1. FIRST YEAR OF ARTICLESHIP:
+   • Unconditional transfer is permitted during the 1st year of articleship training.
+   • Neither the consent of the Principal nor ICAI prior approval is required.
+   • Form 109 must be executed and submitted via the Self Service Portal (SSP).
+
+2. SECOND YEAR OF ARTICLESHIP:
+   • General transfer is restricted unless falling under permitted grounds:
+     a) Medical grounds of the trainee or immediate family.
+     b) Relocation/shifting of family residence to another city (more than 50 km).
+     c) Death or permanent disability of the Principal / closure of firm.
+     d) Moving to Industrial Training in an approved financial corporate.
+     e) Mutual agreement with unconditional NOC from existing Principal.
+
+--------------------------------------------------------------------------------
+STEP-BY-STEP PROCEDURE ON ICAI SSP PORTAL:
+--------------------------------------------------------------------------------
+[ ] STEP 1: Professional Communication with Principal
+    • Discuss transfer plans professionally and transparently with your Principal.
+    • Complete all pending audit workpapers, vouching files, and tax return assignments.
+    • Return all firm laptops, access cards, client files, and tokens.
+
+[ ] STEP 2: Calculation of Stipend & Attendance
+    • Verify that stipend is cleared up to the last working day under ICAI Regulation 48.
+    • Calculate total leaves taken vs. maximum leave entitlement (1/6th of total training).
+    • Confirm that excess leaves are documented or adjusted properly.
+
+[ ] STEP 3: Initiation on ICAI Self Service Portal (SSP)
+    • Log into eservices.icai.org using your Student credentials.
+    • Navigate to "Article Functions" -> "Articleship Termination Form 109".
+    • Enter the exact date of termination.
+    • Input work experience details across Audit, Taxation, and Accounting.
+
+[ ] STEP 4: Principal Approval & Digital Signature
+    • The form moves to the Principal's SSP dashboard.
+    • Principal reviews work done, leaves taken, and approves Form 109.
+
+[ ] STEP 5: Registration with New Firm (Form 102 & 103)
+    • Form 102 (Deed of Articles) executed on non-judicial stamp paper with new Principal.
+    • Form 103 submitted on SSP within 30 days of joining the new firm.
+
+================================================================================
+Downloaded from CAJob.in — The Focused CA & Finance Career Platform
+Visit https://cajob.in for verified vacancies, stipend calculators and career tools.
+================================================================================

@@ -1,0 +1,70 @@
+================================================================================
+CAJOB.IN — THE DEFINITIVE CA ARTICLESHIP & FINANCE CV CHECKLIST
+================================================================================
+Website: https://cajob.in | Free Career Resources
+Standard: Tailored specifically for CA Students, Industrial Trainees & Qualified CAs
+
+--------------------------------------------------------------------------------
+1. HEADER & CONTACT INFORMATION
+--------------------------------------------------------------------------------
+[ ] Name in bold, 18-20 pt font, centered or left-aligned.
+[ ] Professional email address (e.g. name.surname@gmail.com; avoid unprofessional handles).
+[ ] Indian mobile number formatted cleanly (+91 XXXXX XXXXX).
+[ ] City, State (Full residential address is unnecessary and takes valuable space).
+[ ] Professional LinkedIn URL (customized handle without random numbers).
+[ ] ICAI Student Registration Number (SRN) clearly stated.
+[ ] Current CA Status clearly listed: Both Groups Cleared / Group 1 Cleared / Finalist.
+
+--------------------------------------------------------------------------------
+2. EDUCATION & ACADEMIC CREDENTIALS (TABLE FORMAT)
+--------------------------------------------------------------------------------
+Include a clean table sorted in reverse chronological order:
+[ ] CA Final (Attempt, Year, Marks / Both Groups if applicable).
+[ ] CA Intermediate (Month & Year of passing, Attempt, Percentage, Exemptions).
+[ ] CA Foundation / CPT (Marks / Distinction if applicable).
+[ ] Graduation: B.Com / BMS / BAF (College Name, University, CGPA or Percentage).
+[ ] Class XII (Board, School, Percentage).
+[ ] Class X (Board, School, Percentage).
+
+--------------------------------------------------------------------------------
+3. ARTICLESHIP / PRACTICAL EXPERIENCE (CRUCIAL SECTION)
+--------------------------------------------------------------------------------
+For each firm or corporate internship, specify:
+[ ] Firm Name, Location, Period (Month Year – Month Year / Present).
+[ ] Primary Area: Statutory Audit, Internal Audit, Direct Tax, GST, Due Diligence.
+[ ] Action verbs at start of each bullet: "Audited", "Verified", "Analyzed", "Reconciled".
+[ ] Quantifiable metrics: "Led audit team of 3 members for client with turnover of ₹500+ Cr".
+[ ] Sector exposure: Manufacturing, FMCG, Banking & NBFC, Technology, Real Estate.
+[ ] Specific Standards referenced: Ind AS 115, Ind AS 116, CARO 2020, Section 148, Tax Audit Form 3CD.
+[ ] Avoid generic lines like "Worked hard" or "Learned accounting".
+
+--------------------------------------------------------------------------------
+4. TECHNICAL & SOFTWARE SKILLS
+--------------------------------------------------------------------------------
+[ ] Accounting & ERP Tools: SAP (FICO / S/4HANA), Oracle, Tally Prime, Zoho Books.
+[ ] Advanced MS Excel: VLOOKUP, XLOOKUP, INDEX-MATCH, Pivot Tables, Power Query, What-If Analysis.
+[ ] Compliance Portals: Income Tax e-filing, MCA V3 portal, GST portal, TRACES.
+[ ] Presentation & Analytics: MS PowerPoint, Power BI, Tableau.
+
+--------------------------------------------------------------------------------
+5. CERTIFICATIONS & ICAI MANDATORY TRAININGS
+--------------------------------------------------------------------------------
+[ ] ICITSS (Information Technology Training) - Completion Date & Grade.
+[ ] ICITSS (Orientation Course) - Completion Date.
+[ ] AICITSS (Advanced ITT & MCS) - If applicable for Final candidates.
+[ ] Any external certificates: NISM, Financial Modeling, Power BI, IFRS diploma.
+
+--------------------------------------------------------------------------------
+6. FORMATTING, LAYOUT & POLISH CHECKLIST
+--------------------------------------------------------------------------------
+[ ] Total length: Strictly 1 page for CA Students / Articles; Max 2 pages for Qualified CAs with 3+ years experience.
+[ ] Margins: Consistent 0.5 to 0.75 inches on all sides.
+[ ] Typography: Clean professional fonts (Inter, Calibri, Arial, Garamond, Helvetica).
+[ ] Font sizes: 10-11 pt for body text, 12-14 pt for section headings.
+[ ] No spelling or grammar errors (check "Articleship" spelling; not "Articleship").
+[ ] File saved and sent strictly in PDF format: "CV_YourName_CAInter.pdf".
+
+================================================================================
+Downloaded from CAJob.in — The Focused CA & Finance Career Platform
+Visit https://cajob.in for verified vacancies, stipend calculators and career tools.
+================================================================================

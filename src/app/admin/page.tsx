@@ -22,7 +22,18 @@ import {
   LogOut,
   X,
 } from 'lucide-react';
-import { SUPER_ADMIN_EMAIL } from '@/lib/supabase';
+import {
+  SUPER_ADMIN_EMAIL,
+  getJobs,
+  getBlogs,
+  getResources,
+  createOrUpdateJob,
+  deleteJob,
+  createOrUpdateBlog,
+  deleteBlog,
+  createOrUpdateResource,
+  deleteResource,
+} from '@/lib/supabase';
 import { getStoredSession, isAuthorizedAdmin, clearSession } from '@/lib/auth';
 import initialJobs from '@/data/initial-jobs.json';
 import initialBlogs from '@/data/initial-blogs.json';
@@ -35,7 +46,7 @@ export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<'jobs' | 'blogs' | 'resources' | 'tools' | 'users'>('jobs');
   const [currentAdmin, setCurrentAdmin] = useState(SUPER_ADMIN_EMAIL);
 
-  // Strict session check on mount
+  // Strict session check on mount & live data sync
   useEffect(() => {
     const session = getStoredSession();
     if (!session || !isAuthorizedAdmin(session.user?.email)) {
@@ -44,6 +55,17 @@ export default function AdminDashboardPage() {
     }
     setCurrentAdmin(session.user.email);
     setAuthorized(true);
+
+    // Sync live database data
+    getJobs({ status: '' }).then((data) => {
+      if (data && data.length > 0) setJobs(data);
+    });
+    getBlogs().then((data) => {
+      if (data && data.length > 0) setBlogs(data);
+    });
+    getResources().then((data) => {
+      if (data && data.length > 0) setResources(data);
+    });
   }, [router]);
 
   // Dynamic state
@@ -142,7 +164,7 @@ export default function AdminDashboardPage() {
   };
 
   // Job Actions
-  const handleSaveJob = (e: React.FormEvent) => {
+  const handleSaveJob = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!jobForm.title || !jobForm.employer) return;
 
@@ -167,17 +189,28 @@ export default function AdminDashboardPage() {
     setJobs((prev) => [newJob, ...prev.filter((j) => j.id !== newJob.id)]);
     setIsJobModalOpen(false);
     showToast(`Job "${newJob.title}" saved successfully!`);
+
+    try {
+      await createOrUpdateJob(newJob);
+    } catch (err) {
+      console.error('Failed to sync job to database:', err);
+    }
   };
 
-  const handleDeleteJob = (id: string) => {
+  const handleDeleteJob = async (id: string) => {
     if (confirm('Are you sure you want to delete this job?')) {
       setJobs((prev) => prev.filter((j) => j.id !== id));
       showToast('Job listing removed.');
+      try {
+        await deleteJob(id);
+      } catch (err) {
+        console.error('Failed to delete job from database:', err);
+      }
     }
   };
 
   // Blog Actions
-  const handleSaveBlog = (e: React.FormEvent) => {
+  const handleSaveBlog = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!blogForm.title) return;
 
@@ -202,17 +235,28 @@ export default function AdminDashboardPage() {
     setBlogs((prev) => [newBlog, ...prev.filter((b) => b.slug !== newBlog.slug)]);
     setIsBlogModalOpen(false);
     showToast(`Article "${newBlog.title}" published successfully!`);
+
+    try {
+      await createOrUpdateBlog(newBlog);
+    } catch (err) {
+      console.error('Failed to sync blog to database:', err);
+    }
   };
 
-  const handleDeleteBlog = (slug: string) => {
+  const handleDeleteBlog = async (slug: string) => {
     if (confirm('Delete this article?')) {
       setBlogs((prev) => prev.filter((b) => b.slug !== slug));
       showToast('Article deleted.');
+      try {
+        await deleteBlog(slug);
+      } catch (err) {
+        console.error('Failed to delete blog from database:', err);
+      }
     }
   };
 
   // Resource Actions
-  const handleSaveResource = (e: React.FormEvent) => {
+  const handleSaveResource = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!resourceForm.title || !resourceForm.fileUrl) return;
 
@@ -231,11 +275,24 @@ export default function AdminDashboardPage() {
     setResources((prev) => [newRes, ...prev]);
     setIsResourceModalOpen(false);
     showToast(`Resource "${newRes.title}" uploaded!`);
+
+    try {
+      await createOrUpdateResource(newRes);
+    } catch (err) {
+      console.error('Failed to sync resource to database:', err);
+    }
   };
 
-  const handleDeleteResource = (id: string) => {
-    setResources((prev) => prev.filter((r) => r.id !== id));
-    showToast('Resource removed.');
+  const handleDeleteResource = async (id: string) => {
+    if (confirm('Delete this resource?')) {
+      setResources((prev) => prev.filter((r) => r.id !== id));
+      showToast('Resource removed.');
+      try {
+        await deleteResource(id);
+      } catch (err) {
+        console.error('Failed to delete resource from database:', err);
+      }
+    }
   };
 
   // Tool Actions

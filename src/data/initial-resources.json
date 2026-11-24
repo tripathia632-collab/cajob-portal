@@ -1,35 +1,46 @@
 [
   {
     "id": "res-1",
-    "title": "CV checklist",
+    "title": "CA Articleship & Finance CV Checklist",
     "category": "CV & Applications",
-    "fileType": "Text",
-    "description": "Review your CV for clarity, relevant experience, accurate details and a readable final document.",
-    "fileUrl": "https://drive.google.com/file/d/1KMyowuJDf-aeo1_ouli6nJnzMFqMCWLJ/view?usp=drive_link",
-    "publishedOn": "2026-11-23",
+    "fileType": "Checklist",
+    "description": "Comprehensive point-by-point CV review checklist covering contact details, Ind AS standards, Big 4 keywords, and formatting.",
+    "fileUrl": "/resources/cv-checklist.txt",
+    "publishedOn": "2026-11-24",
     "status": "Published",
-    "downloads": 142
+    "downloads": 482
   },
   {
     "id": "res-2",
-    "title": "Job application email",
+    "title": "Professional Job Application Email Scripts",
     "category": "CV & Applications",
-    "fileType": "Text",
-    "description": "An editable starting point for a clear application email, tailored to the employer and role.",
-    "fileUrl": "https://www.cajob.in/resources/application-email.txt",
-    "publishedOn": "2026-11-23",
+    "fileType": "Templates",
+    "description": "Ready-to-use editable cold email and referral scripts for CA Articleship, Industrial Training, and Qualified CA job applications.",
+    "fileUrl": "/resources/application-email.txt",
+    "publishedOn": "2026-11-24",
     "status": "Published",
-    "downloads": 227
+    "downloads": 619
   },
   {
     "id": "res-3",
-    "title": "Opportunity comparison worksheet",
+    "title": "Opportunity Evaluation & Comparison Matrix",
     "category": "Career Planning",
-    "fileType": "Text",
-    "description": "Compare the work, learning, pay, location and joining requirements before choosing an opportunity.",
-    "fileUrl": "https://www.cajob.in/resources/opportunity-comparison.txt",
-    "publishedOn": "2026-11-23",
+    "fileType": "Worksheet",
+    "description": "Score and compare competing job offers and articleship firms across work quality, partner exposure, exam leave, and stipend.",
+    "fileUrl": "/resources/opportunity-comparison.txt",
+    "publishedOn": "2026-11-24",
     "status": "Published",
-    "downloads": 312
+    "downloads": 534
+  },
+  {
+    "id": "res-4",
+    "title": "ICAI Articleship Transfer (Form 109) Guide",
+    "category": "Compliance",
+    "fileType": "Guide",
+    "description": "Complete step-by-step compliance checklist for articleship transfer under ICAI Regulation 56, leave computation, and SSP portal steps.",
+    "fileUrl": "/resources/icai-form109-checklist.txt",
+    "publishedOn": "2026-11-24",
+    "status": "Published",
+    "downloads": 398
   }
 ]

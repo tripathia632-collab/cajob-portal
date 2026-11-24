@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { NavigationProgress } from '@/components/NavigationProgress';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { WhatsAppFloatingButton } from '@/components/WhatsAppFloatingButton';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans bg-[#F5F7F6] text-[#102D37] selection:bg-[#EAF4EF] selection:text-[#08765D]">
         <NavigationProgress />
         {children}
+        <WhatsAppFloatingButton />
         <ScrollToTop />
       </body>
     </html>

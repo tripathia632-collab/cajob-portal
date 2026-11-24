@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/tools/articleship-stipend-calculator',
     '/tools/articleship-transfer-checker',
     '/tools/ca-inhand-salary-estimator',
+    '/community',
     '/about',
     '/contact',
     '/for-employers',

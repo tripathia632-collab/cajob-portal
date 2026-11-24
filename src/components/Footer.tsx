@@ -2,6 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
+import {
+  WHATSAPP_FEEDBACK_NUMBER,
+  WHATSAPP_FEEDBACK_URL,
+  OFFICIAL_WHATSAPP_CHANNEL_URL,
+} from '@/lib/community';
 
 export function Footer() {
   return (
@@ -27,11 +32,22 @@ export function Footer() {
               A clearer path to your next finance opportunity. Built specifically for CA students,
               Chartered Accountants, and finance professionals across India.
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-wrap items-center gap-2.5">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-[#174450] text-[#a7e9d4] border border-[#2a6575]">
                 <span className="w-2 h-2 rounded-full bg-[#76d7b2] animate-pulse"></span>
                 Direct Employer Applications
               </span>
+
+              <a
+                href={WHATSAPP_FEEDBACK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#a7e9d4] border border-[#25D366]/40 transition-colors"
+                title="Message on WhatsApp"
+              >
+                <span className="w-2 h-2 rounded-full bg-[#25D366]"></span>
+                WhatsApp: {WHATSAPP_FEEDBACK_NUMBER}
+              </a>
             </div>
           </div>
 
@@ -104,22 +120,50 @@ export function Footer() {
           {/* Column 3: Company & Connect */}
           <div className="space-y-3">
             <h3 className="text-sm font-semibold tracking-wider uppercase text-white/90">
-              Company
+              Community &amp; Contact
             </h3>
             <ul className="space-y-2 text-sm text-[#bad1c5]">
               <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  About us
+                <Link href="/community" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  Community Hub
+                  <span className="text-[10px] uppercase font-bold bg-[#25D366]/20 text-[#a7e9d4] px-1.5 py-0.2 rounded border border-[#25D366]/40">
+                    WhatsApp
+                  </span>
                 </Link>
               </li>
               <li>
+                <a
+                  href={OFFICIAL_WHATSAPP_CHANNEL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-1"
+                >
+                  Core Finance Channel <ArrowUpRight className="w-3 h-3 text-[#76d7b2]" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={WHATSAPP_FEEDBACK_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors flex items-center gap-1 text-[#a7e9d4] font-medium"
+                >
+                  WhatsApp: {WHATSAPP_FEEDBACK_NUMBER}
+                </a>
+              </li>
+              <li>
                 <Link href="/contact" className="hover:text-white transition-colors">
-                  Contact
+                  Contact Us
                 </Link>
               </li>
               <li>
                 <Link href="/for-employers" className="hover:text-white transition-colors">
                   For employers
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About us
                 </Link>
               </li>
             </ul>

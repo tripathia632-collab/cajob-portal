@@ -7,6 +7,7 @@ import { CompaniesMarquee } from '@/components/CompaniesMarquee';
 import { FeaturedCategories } from '@/components/FeaturedCategories';
 import { ThreeStepProcess, GuidanceSection } from '@/components/GuidanceSection';
 import { ToolsSection } from '@/components/ToolsSection';
+import { CommunitySection } from '@/components/CommunitySection';
 import { EmployerBanner, NewsletterBanner } from '@/components/EmployerBanner';
 import { JobCard } from '@/components/JobCard';
 import { getJobs } from '@/lib/supabase';
@@ -75,6 +76,9 @@ export default async function HomePage() {
 
         {/* Blogs & Free Resources */}
         <GuidanceSection />
+
+        {/* WhatsApp Channels & CA Community Section */}
+        <CommunitySection />
 
         {/* Employer CTA Banner */}
         <EmployerBanner />

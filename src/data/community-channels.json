@@ -1,0 +1,50 @@
+[
+  {
+    "id": "core-finance-cas",
+    "name": "Core Finance for CAs",
+    "type": "whatsapp-channel",
+    "category": "Investment Banking & Corporate Finance",
+    "tagline": "Exclusive market intelligence, M&A, equity research, corporate finance, and FP&A alerts for Chartered Accountants.",
+    "url": "https://whatsapp.com/channel/0029VbE2GOCEKyZ9add17k29",
+    "badge": "Official WhatsApp Channel · Active",
+    "status": "Active",
+    "memberCount": "Active Community",
+    "featured": true
+  },
+  {
+    "id": "articleship-vacancies-alert",
+    "name": "CA Articleship Vacancy Alerts",
+    "type": "whatsapp-group",
+    "category": "Articleship Intake & Transfers",
+    "tagline": "Instant alerts for Big 4, top mid-size firm article assistant vacancies and transfer openings across India.",
+    "url": "https://whatsapp.com/channel/0029VbE2GOCEKyZ9add17k29",
+    "badge": "Upcoming Group",
+    "status": "Coming Soon",
+    "memberCount": "Opening Soon",
+    "featured": false
+  },
+  {
+    "id": "industrial-training-hub",
+    "name": "CA Industrial Training Network",
+    "type": "whatsapp-group",
+    "category": "Corporate & Banking Trainees",
+    "tagline": "ICAI-compliant corporate industrial training opportunities in leading FMCGs, MNCs, consulting & investment banks.",
+    "url": "https://whatsapp.com/channel/0029VbE2GOCEKyZ9add17k29",
+    "badge": "Upcoming Group",
+    "status": "Coming Soon",
+    "memberCount": "Opening Soon",
+    "featured": false
+  },
+  {
+    "id": "qualified-ca-careers",
+    "name": "Qualified CA Executive Circle",
+    "type": "whatsapp-channel",
+    "category": "Post-Qualification Careers",
+    "tagline": "Senior & leadership opportunities in Statutory Audit, Direct Tax, International Tax, M&A, and Corporate CFO Offices.",
+    "url": "https://whatsapp.com/channel/0029VbE2GOCEKyZ9add17k29",
+    "badge": "Upcoming Channel",
+    "status": "Coming Soon",
+    "memberCount": "Opening Soon",
+    "featured": false
+  }
+]

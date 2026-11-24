@@ -131,6 +131,14 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
               </Link>
 
               <Link
+                href="/community"
+                className="text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors flex items-center gap-1.5"
+              >
+                Community
+                <span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-pulse"></span>
+              </Link>
+
+              <Link
                 href="/courses"
                 className="text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors flex items-center gap-1.5"
               >
@@ -279,6 +287,14 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
               className="block px-3 py-2 text-base font-medium text-[#102D37] hover:bg-[#EAF4EF] rounded-lg"
             >
               Web Tools Hub
+            </Link>
+            <Link
+              href="/community"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between px-3 py-2 text-base font-medium text-[#102D37] hover:bg-[#EAF4EF] rounded-lg"
+            >
+              <span>Community &amp; WhatsApp Channels</span>
+              <span className="w-2 h-2 rounded-full bg-[#25D366]"></span>
             </Link>
             <Link
               href="/courses"

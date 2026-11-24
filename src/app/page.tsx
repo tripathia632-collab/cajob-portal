@@ -72,7 +72,7 @@ export default async function HomePage() {
         {/* Three Step Process */}
         <ThreeStepProcess />
 
-        {/* Career Guides & Free Resources */}
+        {/* Blogs & Free Resources */}
         <GuidanceSection />
 
         {/* Employer CTA Banner */}

@@ -17,10 +17,10 @@ export async function generateMetadata({ params }: BlogArticlePageProps): Promis
   const { slug } = await params;
   const blog = await getBlogBySlug(slug);
   if (!blog) {
-    return { title: 'Article Not Found | CAJob.in' };
+    return { title: 'Blog Not Found | CAJob.in' };
   }
   return {
-    title: `${blog.title} | CAJob.in Career Guides`,
+    title: `${blog.title} | CAJob.in Blogs`,
     description: blog.summary,
   };
 }
@@ -33,7 +33,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     notFound();
   }
 
-  // Related guides & related jobs
+  // Related blogs & related jobs
   const allBlogs = await getBlogs();
   const relatedBlogs = allBlogs
     .filter((b) => b.slug !== blog.slug && b.category === blog.category)
@@ -51,7 +51,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
         <nav className="flex items-center gap-1.5 text-xs text-[#52676D] mb-6">
           <Link href="/" className="hover:text-[#102D37]">Home</Link>
           <ChevronRight className="w-3.5 h-3.5" />
-          <Link href="/blog" className="hover:text-[#102D37]">Career guides</Link>
+          <Link href="/blog" className="hover:text-[#102D37]">Blogs</Link>
           <ChevronRight className="w-3.5 h-3.5" />
           <span className="text-[#102D37] font-semibold truncate max-w-xs">{blog.title}</span>
         </nav>
@@ -62,7 +62,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#08765D] hover:underline mb-6"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          Back to all guides
+          Back to all blogs
         </Link>
 
         {/* Article Header Card */}
@@ -160,7 +160,7 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
             className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#102D37] hover:text-[#08765D] bg-white hover:bg-[#EAF4EF] border border-[#DCE5E0] hover:border-[#08765D]/40 rounded-xl transition-all shadow-2xs"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to all career guides
+            Back to all blogs
           </Link>
         </div>
       </main>

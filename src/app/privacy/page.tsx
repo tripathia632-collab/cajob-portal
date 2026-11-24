@@ -34,7 +34,7 @@ export default function PrivacyPage() {
 
             <h2 className="text-lg font-bold text-[#102D37] pt-4">3. Information We Collect</h2>
             <p>
-              You can browse all jobs, read career guides, and access calculators without creating an account or providing personal details. If you choose to subscribe to email alerts, submit a contact inquiry, or create an account, we collect only the necessary credentials (such as your email address and name).
+              You can browse all jobs, read blogs, and access calculators without creating an account or providing personal details. If you choose to subscribe to email alerts, submit a contact inquiry, or create an account, we collect only the necessary credentials (such as your email address and name).
             </p>
 
             <h2 className="text-lg font-bold text-[#102D37] pt-4">4. Compliance with India&apos;s DPDP Act</h2>

@@ -70,7 +70,7 @@ export function GuidanceSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Card 1: Career Guides */}
+          {/* Card 1: Blogs */}
           <Link
             href="/blog"
             className="group bg-white rounded-2xl border border-[#DCE5E0] hover:border-[#08765D]/60 p-6 shadow-xs card-hover-effect flex flex-col justify-between"
@@ -78,19 +78,19 @@ export function GuidanceSection() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#EAF4EF] text-[#08765D]">
-                  Read · 50+ Guides
+                  Read · 50+ Blogs
                 </span>
                 <BookOpen className="w-4 h-4 text-[#08765D]" />
               </div>
               <h3 className="text-xl font-bold text-[#102D37] tracking-tight mb-2 group-hover:text-[#08765D] transition-colors">
-                Career guides
+                Blogs
               </h3>
               <p className="text-sm text-[#52676D] leading-relaxed mb-6">
                 Make informed moves with interview frameworks, firm selection tips, and practical technical prep.
               </p>
             </div>
             <div className="inline-flex items-center gap-1 text-xs font-bold text-[#08765D]">
-              Read the guides
+              Read all blogs
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </div>
           </Link>

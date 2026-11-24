@@ -71,7 +71,7 @@ export default function AboutPage() {
             </div>
             <h3 className="text-xl font-bold text-[#102D37]">Zero Fee to Candidates</h3>
             <p className="text-sm text-[#52676D] leading-relaxed">
-              Applying for jobs and accessing career guides, templates and calculators is and will always remain completely free.
+              Applying for jobs and accessing blogs, templates and calculators is and will always remain completely free.
             </p>
           </div>
         </div>

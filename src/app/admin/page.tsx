@@ -477,7 +477,7 @@ export default function AdminDashboardPage() {
         <div className="flex flex-wrap items-center gap-2 border-b border-[#DCE5E0] pb-4 mb-8">
           {[
             { id: 'jobs', label: `Jobs (${jobs.length})`, icon: Briefcase },
-            { id: 'blogs', label: `Guides & Blogs (${blogs.length})`, icon: BookOpen },
+            { id: 'blogs', label: `Blogs (${blogs.length})`, icon: BookOpen },
             { id: 'resources', label: `Free Resources (${resources.length})`, icon: FileText },
             { id: 'tools', label: `Web Tools Hub (${tools.length})`, icon: Wrench },
             { id: 'waitlists', label: `Leads & Waitlists (${waitlists.length})`, icon: Inbox },
@@ -592,7 +592,7 @@ export default function AdminDashboardPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-[#DCE5E0]">
               <div>
-                <h2 className="text-xl font-bold text-[#102D37]">Career Guides & Articles ({blogs.length})</h2>
+                <h2 className="text-xl font-bold text-[#102D37]">Blogs &amp; Articles ({blogs.length})</h2>
                 <p className="text-xs text-[#52676D]">Editorial content, articleship advice, interview guides</p>
               </div>
 
@@ -601,7 +601,7 @@ export default function AdminDashboardPage() {
                 className="px-4 py-2.5 bg-[#08765D] hover:bg-[#065F4B] text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs"
               >
                 <Plus className="w-4 h-4" />
-                Write New Guide
+                Write New Blog
               </button>
             </div>
 
@@ -1215,7 +1215,7 @@ export default function AdminDashboardPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 max-h-[90vh] overflow-y-auto space-y-6 shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-[#DCE5E0]">
-              <h3 className="text-xl font-bold text-[#102D37]">Write New Career Guide</h3>
+              <h3 className="text-xl font-bold text-[#102D37]">Write New Blog</h3>
               <button onClick={() => setIsBlogModalOpen(false)} className="p-1 text-[#52676D] hover:text-[#102D37]">
                 <X className="w-5 h-5" />
               </button>

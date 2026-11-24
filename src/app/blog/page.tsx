@@ -8,8 +8,8 @@ import { formatDate } from '@/lib/utils';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Career Guides & Practical Advice | CAJob.in',
-  description: '50+ comprehensive career guides for CA articleship, industrial training, interview frameworks, and finance skills.',
+  title: 'Blogs & Practical Advice | CAJob.in',
+  description: '50+ comprehensive blogs for CA articleship, industrial training, interview frameworks, and finance skills.',
 };
 
 
@@ -34,16 +34,16 @@ export default async function BlogPage() {
             Back to Home
           </Link>
           <span className="text-[#DCE5E0]">/</span>
-          <span className="text-[#102D37] font-semibold">Career Guides</span>
+          <span className="text-[#102D37] font-semibold">Blogs</span>
         </nav>
 
         {/* Header */}
         <div className="mb-10 text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold tracking-widest uppercase text-[#08765D]">
-            CA Career Learning
+            CA Career Blogs
           </span>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#102D37] tracking-tight mt-2">
-            Career guides & practical insights
+            Blogs &amp; practical insights
           </h1>
           <p className="text-sm sm:text-base text-[#52676D] mt-3">
             Hand-curated frameworks, firm selection checklists, and interview preparation for CA students and finance professionals.
@@ -61,7 +61,7 @@ export default async function BlogPage() {
                 <div className="lg:col-span-8 space-y-4">
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 text-xs font-bold uppercase rounded-md bg-[#EAF4EF] text-[#08765D]">
-                      Featured Guide · {blogs[0].category}
+                      Featured Blog · {blogs[0].category}
                     </span>
                     <span className="text-xs text-[#52676D] flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" />
@@ -75,7 +75,7 @@ export default async function BlogPage() {
                     {blogs[0].summary}
                   </p>
                   <div className="pt-2 flex items-center gap-2 text-xs font-bold text-[#08765D]">
-                    <span>Read full guide</span>
+                    <span>Read full blog</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -118,7 +118,7 @@ export default async function BlogPage() {
               <div className="pt-4 border-t border-[#F0F4F2] flex items-center justify-between text-xs">
                 <span className="text-[#52676D]">{formatDate(blog.publishedOn)}</span>
                 <span className="font-bold text-[#08765D] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                  Read article <ArrowUpRight className="w-3.5 h-3.5" />
+                  Read blog <ArrowUpRight className="w-3.5 h-3.5" />
                 </span>
               </div>
             </Link>

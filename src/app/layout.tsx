@@ -13,7 +13,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'CAJob.in — The Focused CA & Finance Career Platform',
   description:
-    'Find articleship, industrial training, qualified Chartered Accountant jobs, and finance careers. Verified vacancies, career guides, free templates and web tools.',
+    'Find articleship, industrial training, qualified Chartered Accountant jobs, and finance careers. Verified vacancies, blogs, free templates and web tools.',
   icons: {
     icon: '/brand/doorway-icon.png',
     shortcut: '/brand/doorway-icon.png',

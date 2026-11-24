@@ -112,7 +112,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
                 href="/blog"
                 className="text-sm font-medium text-[#52676D] hover:text-[#102D37] transition-colors"
               >
-                Career guides
+                Blogs
               </Link>
 
               <Link
@@ -264,7 +264,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-base font-medium text-[#102D37] hover:bg-[#EAF4EF] rounded-lg"
             >
-              Career Guides & Articles
+              Blogs
             </Link>
             <Link
               href="/resources"

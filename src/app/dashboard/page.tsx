@@ -5,17 +5,19 @@ import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { User, Bookmark, FileText, Wrench, ShieldCheck, ArrowUpRight, ArrowLeft } from 'lucide-react';
-import { SUPER_ADMIN_EMAIL } from '@/lib/supabase';
+import { getStoredSession, isAuthorizedAdmin } from '@/lib/auth';
 
 export default function CandidateDashboardPage() {
   const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    const email = localStorage.getItem('cajob_user_email') || 'candidate@example.com';
-    setUserEmail(email);
+    const session = getStoredSession();
+    if (session?.user?.email) {
+      setUserEmail(session.user.email);
+    }
   }, []);
 
-  const isAdmin = userEmail.toLowerCase() === SUPER_ADMIN_EMAIL.toLowerCase();
+  const isAdmin = isAuthorizedAdmin(userEmail);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F5F7F6]">

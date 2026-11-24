@@ -101,12 +101,12 @@ export default function ToolsHubPage() {
           })}
         </div>
 
-        {/* Admin note */}
-        <div className="mt-12 bg-white rounded-2xl border border-[#DCE5E0] p-6 text-center max-w-xl mx-auto">
+        {/* Suggest a tool box */}
+        <div className="mt-12 bg-white rounded-2xl border border-[#DCE5E0] p-6 text-center max-w-xl mx-auto shadow-2xs">
           <p className="text-xs text-[#52676D]">
-            As an Administrator, you can upload new tools or embed interactive web apps directly through the{' '}
-            <Link href="/admin" className="text-[#08765D] font-bold hover:underline">
-              Admin CMS Dashboard
+            Have a suggestion for a new CA calculator or ICAI compliance checker?{' '}
+            <Link href="/contact" className="text-[#08765D] font-semibold hover:underline">
+              Send us your request
             </Link>
             .
           </p>

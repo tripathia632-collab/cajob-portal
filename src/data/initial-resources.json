@@ -1,0 +1,35 @@
+[
+  {
+    "id": "res-1",
+    "title": "CV checklist",
+    "category": "CV & Applications",
+    "fileType": "Text",
+    "description": "Review your CV for clarity, relevant experience, accurate details and a readable final document.",
+    "fileUrl": "https://drive.google.com/file/d/1KMyowuJDf-aeo1_ouli6nJnzMFqMCWLJ/view?usp=drive_link",
+    "publishedOn": "2026-11-23",
+    "status": "Published",
+    "downloads": 142
+  },
+  {
+    "id": "res-2",
+    "title": "Job application email",
+    "category": "CV & Applications",
+    "fileType": "Text",
+    "description": "An editable starting point for a clear application email, tailored to the employer and role.",
+    "fileUrl": "https://www.cajob.in/resources/application-email.txt",
+    "publishedOn": "2026-11-23",
+    "status": "Published",
+    "downloads": 227
+  },
+  {
+    "id": "res-3",
+    "title": "Opportunity comparison worksheet",
+    "category": "Career Planning",
+    "fileType": "Text",
+    "description": "Compare the work, learning, pay, location and joining requirements before choosing an opportunity.",
+    "fileUrl": "https://www.cajob.in/resources/opportunity-comparison.txt",
+    "publishedOn": "2026-11-23",
+    "status": "Published",
+    "downloads": 312
+  }
+]

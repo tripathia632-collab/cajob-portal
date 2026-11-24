@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --navy: #102D37;
+  --navy-dark: #0A1E25;
+  --green: #08765D;
+  --green-hover: #065F4B;
+  --mint: #EAF4EF;
+  --mint-hover: #D8ECE1;
+  --bg-page: #F5F7F6;
+  --line: #DCE5E0;
+  --muted: #52676D;
+  --white: #FFFFFF;
+  --lime: #D9F29B;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: var(--bg-page);
+  --foreground: var(--navy);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--navy);
+  font-family: var(--font-inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Orbit Animations for Gate Hero */
+@keyframes purpose-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes purpose-counter {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-orbit-slow {
+  animation: purpose-orbit 60s linear infinite;
+}
+
+.animate-counter-slow {
+  animation: purpose-counter 60s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-orbit-slow,
+  .animate-counter-slow {
+    animation: none !important;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F4F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD6D0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9DB4A8;
 }

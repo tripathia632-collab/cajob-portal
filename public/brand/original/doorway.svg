@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 192" role="img" aria-label="CAJob.in — Open your next chapter" ><title>CAJob.in — Open your next chapter</title><defs>
+ <linearGradient id="dark-icon-front" x1="42" y1="26" x2="131" y2="166" gradientUnits="userSpaceOnUse"><stop stop-color="#e5ffb8"/><stop offset=".32" stop-color="#c7f39d"/><stop offset=".7" stop-color="#76d7b2"/><stop offset="1" stop-color="#48adab"/></linearGradient>
+ <linearGradient id="dark-icon-side" x1="94" y1="9" x2="149" y2="162" gradientUnits="userSpaceOnUse"><stop stop-color="#b0e9bb"/><stop offset=".4" stop-color="#5faba6"/><stop offset="1" stop-color="#256477"/></linearGradient>
+ <linearGradient id="dark-icon-inner" x1="92" y1="38" x2="123" y2="148" gradientUnits="userSpaceOnUse"><stop stop-color="#34716d"/><stop offset="1" stop-color="#4f9794"/></linearGradient>
+ <linearGradient id="dark-icon-threshold" x1="44" y1="165" x2="120" y2="183" gradientUnits="userSpaceOnUse"><stop stop-color="#c9f6a7"/><stop offset=".5" stop-color="#8ed8b6"/><stop offset="1" stop-color="#2f7c88"/></linearGradient>
+ </defs>
+ <path d="M82 18L98 9C128 9 150 34 150 69V153L134 162V78C134 43 112 18 82 18Z" fill="url(#dark-icon-side)"/>
+ <path d="M82 39L98 30C114 30 126 47 126 70V144L110 153V79C110 56 98 39 82 39Z" fill="url(#dark-icon-inner)"/>
+ <path d="M30 162V78C30 43 52 18 82 18C112 18 134 43 134 78V162L110 153V79C110 56 98 39 82 39C66 39 54 56 54 79V153Z" fill="url(#dark-icon-front)"/>
+ <path d="M35 145V78C35 46 55 23 82 23" fill="none" stroke="#f3ffd9" stroke-opacity=".6" stroke-width="1.35"/>
+ <path d="M55 150V79C55 57 67 40 82 40" fill="none" stroke="#e1ffcc" stroke-opacity=".67" stroke-width="1.2"/>
+ <path d="M134 79V158" stroke="#a6e8ce" stroke-opacity=".45" stroke-width="1"/>
+ <path d="M139 116V143" stroke="#a5ddd2" stroke-opacity=".6" stroke-width="1"/>
+ <path d="M54 165L82 174L110 165L120 169L82 183L44 170Z" fill="url(#dark-icon-threshold)"/>
+ <path d="M57 167L82 175L107 167" fill="none" stroke="#dbffc0" stroke-opacity=".75" stroke-width="1"/></svg>

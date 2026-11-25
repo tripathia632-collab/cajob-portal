@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="og-glow" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#174857" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#102D37" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#081A20" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="og-door-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#08765D" stop-opacity="0.4"/>
+      <stop offset="70%" stop-color="#76D7B2" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#102D37" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="dark-icon-front" x1="42" y1="26" x2="131" y2="166" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e5ffb8"/><stop offset=".32" stop-color="#c7f39d"/><stop offset=".7" stop-color="#76d7b2"/><stop offset="1" stop-color="#48adab"/>
+    </linearGradient>
+    <linearGradient id="dark-icon-side" x1="94" y1="9" x2="149" y2="162" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b0e9bb"/><stop offset=".4" stop-color="#5faba6"/><stop offset="1" stop-color="#256477"/>
+    </linearGradient>
+    <linearGradient id="dark-icon-inner" x1="92" y1="38" x2="123" y2="148" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34716d"/><stop offset="1" stop-color="#4f9794"/>
+    </linearGradient>
+    <linearGradient id="dark-icon-threshold" x1="44" y1="165" x2="120" y2="183" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c9f6a7"/><stop offset=".5" stop-color="#8ed8b6"/><stop offset="1" stop-color="#2f7c88"/>
+    </linearGradient>
+    <pattern id="og-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1" fill="#76D7B2" fill-opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#og-glow)"/>
+  <rect width="1200" height="630" fill="url(#og-grid)"/>
+  <ellipse cx="600" cy="240" rx="420" ry="240" fill="url(#og-door-glow)"/>
+
+  <!-- Pill -->
+  <g transform="translate(600 65)">
+    <rect x="-140" y="-15" width="280" height="30" rx="15" fill="#174450" fill-opacity="0.8" stroke="#2a6575" stroke-width="1.2"/>
+    <circle cx="-115" cy="0" r="3.5" fill="#76D7B2"/>
+    <text x="-102" y="4" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" letter-spacing="1.5" fill="#A7E9D4">CAREER PLATFORM FOR CAS</text>
+  </g>
+
+  <!-- Doorway Icon -->
+  <g transform="translate(525 105) scale(0.85)">
+    <path d="M82 18L98 9C128 9 150 34 150 69V153L134 162V78C134 43 112 18 82 18Z" fill="url(#dark-icon-side)"/>
+    <path d="M82 39L98 30C114 30 126 47 126 70V144L110 153V79C110 56 98 39 82 39Z" fill="url(#dark-icon-inner)"/>
+    <path d="M30 162V78C30 43 52 18 82 18C112 18 134 43 134 78V162L110 153V79C110 56 98 39 82 39C66 39 54 56 54 79V153Z" fill="url(#dark-icon-front)"/>
+    <path d="M35 145V78C35 46 55 23 82 23" fill="none" stroke="#f3ffd9" stroke-opacity=".6" stroke-width="1.35"/>
+    <path d="M55 150V79C55 57 67 40 82 40" fill="none" stroke="#e1ffcc" stroke-opacity=".67" stroke-width="1.2"/>
+    <path d="M134 79V158" stroke="#a6e8ce" stroke-opacity=".45" stroke-width="1"/>
+    <path d="M139 116V143" stroke="#a5ddd2" stroke-opacity=".6" stroke-width="1"/>
+    <path d="M54 165L82 174L110 165L120 169L82 183L44 170Z" fill="url(#dark-icon-threshold)"/>
+    <path d="M57 167L82 175L107 167" fill="none" stroke="#dbffc0" stroke-opacity=".75" stroke-width="1"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(600 310)">
+    <text text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="56" font-weight="900" letter-spacing="-1">
+      <tspan fill="#FFFFFF">cajob</tspan><tspan fill="#76D7B2">.in</tspan>
+    </text>
+    <text y="42" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="18" font-weight="600" fill="#EAF4EF" letter-spacing="0.4">
+      The Dedicated Career Platform for CAs &amp; Finance
+    </text>
+  </g>
+
+  <!-- Palette Swatches Strip -->
+  <g transform="translate(150 420)">
+    <!-- Swatch 1 -->
+    <g transform="translate(0 0)">
+      <rect width="130" height="70" rx="12" fill="#102D37" stroke="#1F4E5C" stroke-width="1.5"/>
+      <text x="65" y="38" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#FFFFFF">#102D37</text>
+      <text x="65" y="56" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#8CA89A">Midnight</text>
+    </g>
+    <!-- Swatch 2 -->
+    <g transform="translate(154 0)">
+      <rect width="130" height="70" rx="12" fill="#08765D" stroke="#0FA885" stroke-width="1.5"/>
+      <text x="65" y="38" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#FFFFFF">#08765D</text>
+      <text x="65" y="56" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#A7E9D4">Emerald</text>
+    </g>
+    <!-- Swatch 3 -->
+    <g transform="translate(308 0)">
+      <rect width="130" height="70" rx="12" fill="#76D7B2" stroke="#A7E9D4" stroke-width="1.5"/>
+      <text x="65" y="38" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#102D37">#76D7B2</text>
+      <text x="65" y="56" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#102D37">Sea Glass</text>
+    </g>
+    <!-- Swatch 4 -->
+    <g transform="translate(462 0)">
+      <rect width="130" height="70" rx="12" fill="#D0F69E" stroke="#E5FFB8" stroke-width="1.5"/>
+      <text x="65" y="38" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#102D37">#D0F69E</text>
+      <text x="65" y="56" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#102D37">Pastel Lime</text>
+    </g>
+    <!-- Swatch 5 -->
+    <g transform="translate(616 0)">
+      <rect width="130" height="70" rx="12" fill="#EAF4EF" stroke="#BCDEC8" stroke-width="1.5"/>
+      <text x="65" y="38" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#102D37">#EAF4EF</text>
+      <text x="65" y="56" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#102D37">Soft Sage</text>
+    </g>
+    <!-- Swatch 6 -->
+    <g transform="translate(770 0)">
+      <rect width="130" height="70" rx="12" fill="#FFFFFF" stroke="#E1ECE5" stroke-width="1.5"/>
+      <text x="65" y="38" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#102D37">#FFFFFF</text>
+      <text x="65" y="56" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="600" fill="#102D37">Snow White</text>
+    </g>
+  </g>
+
+  <!-- Bottom Badges -->
+  <g transform="translate(600 550)">
+    <text text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="600" fill="#76D7B2" letter-spacing="1.5">
+      ARTICLESHIP · INDUSTRIAL TRAINING · QUALIFIED CA · CORE FINANCE
+    </text>
+    <text y="28" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="500" fill="#5F8379">
+      cajob.in · Official Brand Colors &amp; Identity
+    </text>
+  </g>
+</svg>

@@ -293,7 +293,7 @@ export function Navbar({ userEmail: initialUserEmail }: NavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center justify-between px-3 py-2 text-base font-medium text-[#102D37] hover:bg-[#EAF4EF] rounded-lg"
             >
-              <span>WhatsApp Channels Hub</span>
+              <span>WhatsApp Community</span>
               <span className="w-2 h-2 rounded-full bg-[#25D366]"></span>
             </Link>
             <Link

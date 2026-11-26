@@ -77,7 +77,7 @@ export default async function HomePage() {
         {/* Blogs & Free Resources */}
         <GuidanceSection />
 
-        {/* WhatsApp Channels & CA Community Section */}
+        {/* WhatsApp Community & Feedback Section */}
         <CommunitySection />
 
         {/* Employer CTA Banner */}
